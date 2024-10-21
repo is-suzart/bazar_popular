@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 const Color primaryColor = Color(0xff2F45CA);
 const Color blackColor = Color(0xff18182C);
-const Color backgroundColor = Color(0xffFAFAFA);
+const Color backgroundColor = Color(0xffF9F9F9);
 ThemeData bazarPopularTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: const Color(0xff2F45CA), // Your main color
@@ -14,6 +14,7 @@ ThemeData bazarPopularTheme = ThemeData(
         displaySmall: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         bodyLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
         bodyMedium: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+        bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
         headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w900),
         headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
         headlineSmall: TextStyle(fontSize: 18, fontWeight: FontWeight.w700))),
