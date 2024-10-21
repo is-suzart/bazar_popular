@@ -30,16 +30,23 @@ ThemeData bazarPopularTheme = ThemeData(
     ),
     useMaterial3: true);
 
-var buttonStyles = {
+Map<String, ButtonStyle> buttonStyles = {
   'primary': ButtonStyle(
-    padding: WidgetStateProperty.all<EdgeInsets>(
-        const EdgeInsets.symmetric(vertical: 20, horizontal: 24)),
-    backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
-    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-    ),
-  )
+      padding: WidgetStateProperty.all<EdgeInsets>(
+          const EdgeInsets.symmetric(vertical: 20, horizontal: 24)),
+      backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
+      foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      )),
+  'textButton': ButtonStyle(
+      padding: WidgetStateProperty.all<EdgeInsets>(
+          const EdgeInsets.symmetric(vertical: 20, horizontal: 24)),
+      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      ))
 };

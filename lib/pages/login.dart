@@ -183,6 +183,7 @@ class _LoginFormState extends State<LoginForm> {
                       width: double.infinity,
                       margin: const EdgeInsets.symmetric(vertical: 24),
                       child: TextButton(
+                          style: buttonStyles['textButton'],
                           onPressed: togglePasswordVisibility,
                           child: Text("Esqueci minha senha",
                               style: Theme.of(context)
@@ -199,7 +200,9 @@ class _LoginFormState extends State<LoginForm> {
                       margin: const EdgeInsets.symmetric(vertical: 24),
                       width: double.infinity,
                       child: ElevatedButton(
-                          onPressed: null,
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/home');
+                          },
                           child: Text("Login"),
                           style: buttonStyles['primary']),
                     ),
