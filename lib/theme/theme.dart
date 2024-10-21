@@ -29,3 +29,17 @@ ThemeData bazarPopularTheme = ThemeData(
       surface: backgroundColor,
     ),
     useMaterial3: true);
+
+var buttonStyles = {
+  'primary': ButtonStyle(
+    padding: WidgetStateProperty.all<EdgeInsets>(
+        const EdgeInsets.symmetric(vertical: 20, horizontal: 24)),
+    backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
+    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+    ),
+  )
+};

@@ -40,9 +40,9 @@ class LoginPage extends StatelessWidget {
                       ],
                       rowSizes: [1.0.fr],
                       children: [
-                        LoginInfos().withGridPlacement(
+                        const LoginInfos().withGridPlacement(
                             columnSpan: 5, columnStart: 1, rowStart: 0),
-                        LoginForm().withGridPlacement(
+                        const LoginForm().withGridPlacement(
                             columnSpan: 5, columnStart: 6, rowStart: 0),
                       ],
                     );
@@ -101,7 +101,6 @@ class _LoginFormState extends State<LoginForm> {
 
   void togglePasswordVisibility() {
     setState(() {
-      print("rodei");
       showPassword = !showPassword;
     });
   }
@@ -109,7 +108,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 48),
+      padding: const EdgeInsets.symmetric(vertical: 48),
       child: Card(
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 64),
@@ -136,49 +135,90 @@ class _LoginFormState extends State<LoginForm> {
 
                 Column(
                   children: [
-                    TextField(
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(color: blackColor),
-                      decoration: InputDecoration(
-                          fillColor: backgroundColor,
-                          filled: true,
-                          label: Text("Email",
-                              style: Theme.of(context).textTheme.bodySmall!),
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(8)),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 24)),
-                    ),
-                    TextField(
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 16),
+                      child: TextField(
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
                             .copyWith(color: blackColor),
-                        obscureText: showPassword,
                         decoration: InputDecoration(
                             fillColor: backgroundColor,
                             filled: true,
-                            suffixIcon: IconButton(
-                                onPressed: togglePasswordVisibility,
-                                icon: Icon(Icons.remove_red_eye_rounded)),
-                            label: Text(
-                              "Senha",
-                              style: Theme.of(context).textTheme.bodySmall!,
-                            ),
+                            label: Text("Email",
+                                style: Theme.of(context).textTheme.bodySmall!),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(8)),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 24))),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 24)),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 16),
+                      child: TextField(
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: blackColor),
+                          obscureText: showPassword,
+                          decoration: InputDecoration(
+                              fillColor: backgroundColor,
+                              filled: true,
+                              suffixIcon: IconButton(
+                                  onPressed: togglePasswordVisibility,
+                                  icon:
+                                      const Icon(Icons.remove_red_eye_rounded)),
+                              label: Text(
+                                "Senha",
+                                style: Theme.of(context).textTheme.bodySmall!,
+                              ),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(8)),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 24))),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(vertical: 24),
+                      child: TextButton(
+                          onPressed: togglePasswordVisibility,
+                          child: Text("Esqueci minha senha",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                    color: primaryColor,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: primaryColor,
+                                    decorationThickness: 2,
+                                  ))),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 24),
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          onPressed: null,
+                          child: Text("Login"),
+                          style: buttonStyles['primary']),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 24),
+                      width: double.infinity,
+                      child: const OutlinedButton(
+                          onPressed: null,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.g_mobiledata),
+                              Text("Login com Google")
+                            ],
+                          )),
+                    ),
                   ],
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(onPressed: null, child: Text("Login")),
-                )
 
                 // OutlinedButton(
                 //     onPressed: null,
