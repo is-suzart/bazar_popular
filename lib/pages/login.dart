@@ -181,7 +181,7 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     Container(
                       width: double.infinity,
-                      margin: const EdgeInsets.symmetric(vertical: 24),
+                      margin: const EdgeInsets.only(bottom: 36),
                       child: TextButton(
                           style: buttonStyles['textButton'],
                           onPressed: togglePasswordVisibility,
@@ -197,7 +197,7 @@ class _LoginFormState extends State<LoginForm> {
                                   ))),
                     ),
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 24),
+                      margin: const EdgeInsets.symmetric(vertical: 16),
                       width: double.infinity,
                       child: ElevatedButton(
                           onPressed: () {
@@ -207,11 +207,12 @@ class _LoginFormState extends State<LoginForm> {
                           style: buttonStyles['primary']),
                     ),
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 24),
+                      margin: const EdgeInsets.symmetric(vertical: 16),
                       width: double.infinity,
-                      child: const OutlinedButton(
-                          onPressed: null,
-                          child: Row(
+                      child: OutlinedButton(
+                        style: buttonStyles["outlined"],
+                          onPressed: () {},
+                          child: const Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
