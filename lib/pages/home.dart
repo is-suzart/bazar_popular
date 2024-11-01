@@ -45,9 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-               Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     "Seu Bazar Popular!",
@@ -61,9 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           .textTheme
                           .headlineSmall!
                           .copyWith(color: primaryColor)),
-                  Image.asset(
-                    'assets/bazar icon.png',
-                    width: 500,
+                  Center(
+                    child: Image.asset(
+                      'assets/bazar icon.png',
+                      width: 500,
+                    ),
                   )
                 ],
               ),
@@ -73,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: onPressed, child: const Text("Mudar texto"))
               ])
             ]),
-      ),// This trailing comma makes auto-formatting nicer for build methods.
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

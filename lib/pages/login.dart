@@ -22,6 +22,16 @@ class LoginPage extends StatelessWidget {
               Breakpoints.smallAndUp: SlotLayout.from(
                   key: const Key("loginBodyMobile"),
                   builder: (context) {
+                    return Stack(
+                      children: [
+                        LoginInfos(screenType: "mobile"),
+                        //LoginForm()
+                      ],
+                    );
+                  }),
+              Breakpoints.largeAndUp: SlotLayout.from(
+                  key: const Key("loginBodyMobile"),
+                  builder: (context) {
                     return LayoutGrid(
                       columnGap: 24,
                       columnSizes: [
@@ -40,10 +50,12 @@ class LoginPage extends StatelessWidget {
                       ],
                       rowSizes: [1.0.fr],
                       children: [
-                        const LoginInfos().withGridPlacement(
-                            columnSpan: 5, columnStart: 1, rowStart: 0),
+                        LoginInfos(
+                          screenType: 'desktop',
+                        ).withGridPlacement(
+                            columnSpan: 6, columnStart: 1, rowStart: 0),
                         const LoginForm().withGridPlacement(
-                            columnSpan: 5, columnStart: 6, rowStart: 0),
+                            columnSpan: 4, columnStart: 7, rowStart: 0),
                       ],
                     );
                   })
@@ -52,7 +64,17 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginInfos extends StatelessWidget {
-  const LoginInfos({super.key});
+  const LoginInfos({super.key, required this.screenType});
+
+  final String screenType;
+
+  double bazarArtSize(context) {
+    if (screenType == 'desktop') {
+      return MediaQuery.of(context).size.width / 3.9;
+    } else {
+      return MediaQuery.of(context).size.width * 0.8;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,30 +83,49 @@ class LoginInfos extends StatelessWidget {
         alignment: Alignment.center,
         child: Column(
             mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                        text: TextSpan(
-                      text: "Seu Bazar Popular!",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineLarge!
-                          .copyWith(color: blackColor),
-                    )),
-                    Text("E revolucionário!",
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 16),
+                child: Column(
+                    mainAxisAlignment: screenType == 'desktop'
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.center,
+                    crossAxisAlignment: screenType == 'desktop'
+                        ? CrossAxisAlignment.start
+                        : CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Seu Bazar Popular!",
+                        textAlign:
+                            screenType == 'mobile' ? TextAlign.center : null,
                         style: Theme.of(context)
                             .textTheme
-                            .headlineSmall!
-                            .copyWith(color: primaryColor))
-                  ]),
-              Image.asset(
-                'assets/bazar icon.png',
-                width: MediaQuery.of(context).size.width / 3.5,
-              )
+                            .headlineLarge!
+                            .copyWith(color: blackColor, fontSize: 40),
+                      ),
+                      Text("E revolucionário!",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(color: primaryColor))
+                    ]),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 36),
+                width: bazarArtSize(context),
+                child: Image.asset(
+                  'assets/bazar icon.png',
+                  width: bazarArtSize(context),
+                ),
+              ),
+              if (screenType == "mobile")
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text("Avançar para login"),
+                  style: buttonStyles['primary'],
+                )
             ]));
   }
 }
@@ -210,7 +251,7 @@ class _LoginFormState extends State<LoginForm> {
                       margin: const EdgeInsets.symmetric(vertical: 16),
                       width: double.infinity,
                       child: OutlinedButton(
-                        style: buttonStyles["outlined"],
+                          style: buttonStyles["outlined"],
                           onPressed: () {},
                           child: const Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
