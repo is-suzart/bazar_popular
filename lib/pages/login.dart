@@ -4,8 +4,20 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+  @override
+  State<LoginPage> createState() => LoginPageState();
+}
+
+class LoginPageState extends State<LoginPage> {
+  bool showLoginInfoMobile = true;
+
+  void toggleLoginInfo() {
+    setState(() {
+      showLoginInfoMobile = !showLoginInfoMobile;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +35,40 @@ class LoginPage extends StatelessWidget {
                   key: const Key("loginBodyMobile"),
                   builder: (context) {
                     return Stack(
-                      children: [
-                        LoginInfos(screenType: "mobile"),
-                        //LoginForm()
+                      children: <Widget>[
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          transitionBuilder:
+                              (Widget child, Animation<double> animation) {
+                            final inAnimation = Tween<Offset>(
+                                    begin: const Offset(1.0, 0.0),
+                                    end: const Offset(0.0, 0.0))
+                                .animate(animation);
+                            final outAnimation = Tween<Offset>(
+                                    begin: const Offset(0.0, 0.0),
+                                    end: const Offset(-1.0, 0.0))
+                                .animate(animation);
+                            return SlideTransition(
+                                position:
+                                    animation.status == AnimationStatus.reverse
+                                        ? outAnimation
+                                        : inAnimation,
+                                child: child);
+                          },
+                          child: showLoginInfoMobile
+                              ? Column(
+                                  key: const ValueKey(1),
+                                  children: [
+                                    const LoginInfos(screenType: "mobile"),
+                                    ElevatedButton(
+                                      onPressed: toggleLoginInfo,
+                                      style: buttonStyles['primary'],
+                                      child: const Text("Avançar para login"),
+                                    )
+                                  ],
+                                )
+                              : const LoginForm(key: ValueKey(2)),
+                        )
                       ],
                     );
                   }),
@@ -50,7 +93,7 @@ class LoginPage extends StatelessWidget {
                       ],
                       rowSizes: [1.0.fr],
                       children: [
-                        LoginInfos(
+                        const LoginInfos(
                           screenType: 'desktop',
                         ).withGridPlacement(
                             columnSpan: 6, columnStart: 1, rowStart: 0),
@@ -87,7 +130,7 @@ class LoginInfos extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                margin: EdgeInsets.symmetric(vertical: 16),
+                margin: const EdgeInsets.symmetric(vertical: 16),
                 child: Column(
                     mainAxisAlignment: screenType == 'desktop'
                         ? MainAxisAlignment.start
@@ -120,12 +163,6 @@ class LoginInfos extends StatelessWidget {
                   width: bazarArtSize(context),
                 ),
               ),
-              if (screenType == "mobile")
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Avançar para login"),
-                  style: buttonStyles['primary'],
-                )
             ]));
   }
 }
@@ -244,8 +281,8 @@ class _LoginFormState extends State<LoginForm> {
                           onPressed: () {
                             Navigator.pushNamed(context, '/home');
                           },
-                          child: Text("Login"),
-                          style: buttonStyles['primary']),
+                          style: buttonStyles['primary'],
+                          child: const Text("Login")),
                     ),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 16),

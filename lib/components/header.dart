@@ -12,7 +12,7 @@ class _HeaderState extends State<Header> {
   Widget build(BuildContext context) {
     return Container(
       height: 56,
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: Colors.white, boxShadow: [
         BoxShadow(
