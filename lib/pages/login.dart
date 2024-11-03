@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -176,11 +177,19 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   bool showPassword = false;
+  String email = "";
+  String password = "";
 
   void togglePasswordVisibility() {
     setState(() {
       showPassword = !showPassword;
     });
+  }
+
+  void simulateLogin() {
+    if (email != "" && password != "") {
+      context.go("/home");
+    }
   }
 
   @override
@@ -216,6 +225,11 @@ class _LoginFormState extends State<LoginForm> {
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 16),
                       child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            email = value;
+                          });
+                        },
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
@@ -235,6 +249,11 @@ class _LoginFormState extends State<LoginForm> {
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 16),
                       child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              password = value;
+                            });
+                          },
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -278,9 +297,7 @@ class _LoginFormState extends State<LoginForm> {
                       margin: const EdgeInsets.symmetric(vertical: 16),
                       width: double.infinity,
                       child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/home');
-                          },
+                          onPressed: simulateLogin,
                           style: buttonStyles['primary'],
                           child: const Text("Login")),
                     ),
