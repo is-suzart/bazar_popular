@@ -1,4 +1,3 @@
-import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatefulWidget {
@@ -25,15 +24,9 @@ class _HeaderState extends State<Header> {
       ]),
       child: Row(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset("assets/logo-bp.png"),
-          TextButton(
-              onPressed: () {},
-              child: Center(
-                child: Text("cadastrar"),
-              ),
-              style: buttonStyles['textButton'])
         ],
       ),
     );

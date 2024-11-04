@@ -1,4 +1,3 @@
-import 'package:bazar_popular/components/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:bazar_popular/theme/theme.dart';
@@ -28,7 +27,7 @@ class LoginPageState extends State<LoginPage> {
               Breakpoints.smallAndUp: SlotLayout.from(
                   key: const Key("Header Mobile"),
                   builder: (context) {
-                    return const Header();
+                    return const HeaderLogin();
                   })
             }),
             body: SlotLayout(config: {
@@ -176,13 +175,13 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  bool showPassword = false;
+  bool hidePassword = true;
   String email = "";
   String password = "";
 
   void togglePasswordVisibility() {
     setState(() {
-      showPassword = !showPassword;
+      hidePassword = !hidePassword;
     });
   }
 
@@ -258,7 +257,7 @@ class _LoginFormState extends State<LoginForm> {
                               .textTheme
                               .bodySmall!
                               .copyWith(color: blackColor),
-                          obscureText: showPassword,
+                          obscureText: hidePassword,
                           decoration: InputDecoration(
                               fillColor: backgroundColor,
                               filled: true,
@@ -316,6 +315,23 @@ class _LoginFormState extends State<LoginForm> {
                             ],
                           )),
                     ),
+                                        Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.only(bottom: 36),
+                      child: TextButton(
+                          style: buttonStyles['textButton'],
+                          onPressed: togglePasswordVisibility,
+                          child: Text("Criar conta",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                    color: primaryColor,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: primaryColor,
+                                    decorationThickness: 2,
+                                  ))),
+                    ),
                   ],
                 ),
 
@@ -329,6 +345,34 @@ class _LoginFormState extends State<LoginForm> {
                 //     ))
               ]),
         ),
+      ),
+    );
+  }
+}
+
+class HeaderLogin extends StatelessWidget {
+  const HeaderLogin({super.key});
+
+   @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.25),
+          spreadRadius: 0,
+          blurRadius: 4,
+          offset: const Offset(0, 0),
+        )
+      ]),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset("assets/logo-bp.png"),
+        ],
       ),
     );
   }
