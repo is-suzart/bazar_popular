@@ -1,5 +1,7 @@
+import 'package:bazar_popular/helpers/routes.dart';
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -30,52 +32,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        leading: const Icon(Icons.menu_rounded),
-        title: Center(
-            child: Image.asset(
-          "assets/logo-bp.png",
-          width: 100,
-        )),
-      ),
-      body: Center(
-        child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Seu Bazar Popular!",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineLarge!
-                        .copyWith(color: blackColor),
-                  ),
-                  Text("E revolucionário!",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(color: primaryColor)),
-                  Center(
-                    child: Image.asset(
-                      'assets/bazar icon.png',
-                      width: 500,
-                    ),
-                  )
-                ],
-              ),
-              Column(children: [
-                Text(texto),
-                ElevatedButton(
-                    onPressed: onPressed, child: const Text("Mudar texto"))
-              ])
-            ]),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    return Center( child: Column(
+      children: [
+        Text("eu sou a home",style: Theme.of(context).textTheme.headlineMedium,),
+        ElevatedButton(onPressed: () {
+          context.go("/produto");
+        }, child: Text("ir para produto"))
+      ],
+    ));
   }
 }
