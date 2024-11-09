@@ -1,4 +1,3 @@
-import 'package:bazar_popular/helpers/routes.dart';
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -37,7 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
         Text("eu sou a home",style: Theme.of(context).textTheme.headlineMedium,),
         ElevatedButton(onPressed: () {
           context.go("/produto");
-        }, child: Text("ir para produto"))
+        }, child: const Text("ir para produto")),
+        //BazarCard(img: 'https://placehold.co/1200x1200')
       ],
     ));
   }

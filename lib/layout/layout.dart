@@ -1,4 +1,4 @@
-import 'package:bazar_popular/pages/login.dart';
+import 'package:bazar_popular/layout/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
@@ -21,7 +21,7 @@ class _LayoutBazarState extends State<LayoutBazar> {
           Breakpoints.smallAndUp : SlotLayout.from(
             key: const Key("layout-mobile"),
             builder: (context) {
-              return const HeaderLogin();
+              return const Header();
             })
         }),
       body: SlotLayout(

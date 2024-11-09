@@ -187,7 +187,7 @@ class _LoginFormState extends State<LoginForm> {
 
   void simulateLogin() {
     if (email != "" && password != "") {
-      context.go("/home");
+      context.go("/");
     }
   }
 
