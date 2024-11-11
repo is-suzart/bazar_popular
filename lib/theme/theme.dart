@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 const Color primaryColor = Color(0xff2F45CA);
 const Color blackColor = Color(0xff18182C);
+const Color greyColor = Color(0xff6B6B6B);
 const Color backgroundColor = Color(0xffF9F9F9);
 final List<FlexibleTrackSize> twelveGrid = [1.0.fr,1.0.fr,1.0.fr,1.0.fr,1.0.fr,1.0.fr,1.0.fr,1.0.fr,1.0.fr,1.0.fr,1.0.fr,1.0.fr];
 

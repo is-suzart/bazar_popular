@@ -1,3 +1,4 @@
+import 'package:bazar_popular/components/card.dart';
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -31,14 +32,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center( child: Column(
+    return Container(
+      padding: const EdgeInsets.fromLTRB(64, 32, 65, 24),
+      child:     Column(
       children: [
-        Text("eu sou a home",style: Theme.of(context).textTheme.headlineMedium,),
-        ElevatedButton(onPressed: () {
-          context.go("/produto");
-        }, child: const Text("ir para produto")),
-        //BazarCard(img: 'https://placehold.co/1200x1200')
-      ],
-    ));
+        Expanded(
+          child: GridView.count(
+          crossAxisCount: 4,
+          shrinkWrap: true,
+          childAspectRatio: 9/12,
+          crossAxisSpacing: 16,
+          children: [
+            BazarCard(img: "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas"),
+            BazarCard(img: "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas"),
+            BazarCard(img: "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas"),
+            BazarCard(img: "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas")
+          ],))
+        
+      ]),
+    );
+
   }
 }
