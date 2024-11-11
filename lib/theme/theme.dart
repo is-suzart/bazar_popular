@@ -36,7 +36,7 @@ ThemeData bazarPopularTheme = ThemeData(
 Map<String, ButtonStyle> buttonStyles = {
   'primary': ButtonStyle(
       padding: WidgetStateProperty.all<EdgeInsets>(
-          const EdgeInsets.symmetric(vertical: 20, horizontal: 24)),
+          const EdgeInsets.symmetric(vertical: 18, horizontal: 24)),
       backgroundColor: WidgetStateProperty.all<Color>(primaryColor),
       foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -46,7 +46,7 @@ Map<String, ButtonStyle> buttonStyles = {
 )),
   'textButton': ButtonStyle(
       padding: WidgetStateProperty.all<EdgeInsets>(
-          const EdgeInsets.symmetric(vertical: 20, horizontal: 24)),
+          const EdgeInsets.symmetric(vertical: 18, horizontal: 24)),
       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0)

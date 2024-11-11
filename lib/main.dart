@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Bazar Popular',
       theme: bazarPopularTheme,
       routerConfig: router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

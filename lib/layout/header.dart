@@ -1,6 +1,7 @@
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:go_router/go_router.dart';
 
 class Header extends StatefulWidget {
   const Header({super.key});
@@ -14,7 +15,7 @@ class _HeaderState extends State<Header> {
   Widget build(BuildContext context) {
     return Container(
       height: 56,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 64),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: Colors.white, boxShadow: [
         BoxShadow(
@@ -29,11 +30,14 @@ class _HeaderState extends State<Header> {
           columnSizes: twelveGrid, rowSizes: [1.0.fr],
           children: [
             Container(
+              padding: const EdgeInsets.symmetric(vertical: 2),
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   child: Image.asset("assets/logo-bp.png"),
-                  onTap: () {},
+                  onTap: () {
+                    context.go("/");
+                  },
                 ),
               ),
             ).withGridPlacement(columnSpan: 2, columnStart: 0, rowStart: 0),
