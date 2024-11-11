@@ -1,4 +1,6 @@
+import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
 class Header extends StatefulWidget {
   const Header({super.key});
@@ -22,7 +24,73 @@ class _HeaderState extends State<Header> {
           offset: const Offset(0, 0),
         )
       ]),
-      child: Row(
+      child: Center(
+        child: LayoutGrid(
+          columnSizes: twelveGrid, rowSizes: [1.0.fr],
+          children: [
+            Container(
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  child: Image.asset("assets/logo-bp.png"),
+                  onTap: () {},
+                ),
+              ),
+            ).withGridPlacement(columnSpan: 2, columnStart: 0, rowStart: 0),
+            Center(
+              child: TextField(
+                style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: blackColor),
+                        decoration: InputDecoration(
+                            fillColor: backgroundColor,
+                            filled: true,
+                            prefixIcon: const Icon(Icons.search_rounded),
+                            label: Text("Buscar por itens revolucionários",
+                                style: Theme.of(context).textTheme.bodySmall!),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(8)),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 24)),
+              ),
+            ).withGridPlacement(columnSpan: 4, columnStart: 4, rowStart: 0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(right: 24),
+                  alignment: Alignment.center,
+                  child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    child: const Icon(Icons.shopping_bag_rounded),
+                    onTap: () {},
+                    ),
+                  ) ,
+                ),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    child: Icon(Icons.person),
+                    onTap: () {},
+                  ),
+                )
+                
+              ],
+            ).withGridPlacement(columnSpan: 2, columnStart: 10, rowStart: 0)
+          ]),
+      )
+    );
+  }
+}
+
+
+/*
+
+Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -39,6 +107,4 @@ class _HeaderState extends State<Header> {
           )
         ],
       ),
-    );
-  }
-}
+*/
