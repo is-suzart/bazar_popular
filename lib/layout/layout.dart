@@ -26,8 +26,8 @@ class _LayoutBazarState extends State<LayoutBazar> {
         }),
       body: SlotLayout(
         config: {
-          Breakpoints.largeAndUp : SlotLayout.from(
-            key: const Key("layout-desktop"),
+          Breakpoints.smallAndUp : SlotLayout.from(
+            key: const Key("layout-final"),
             builder: (context) {
               return widget.child;
             })

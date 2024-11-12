@@ -1,5 +1,6 @@
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
 class BazarCard extends StatefulWidget {
   const BazarCard({super.key, required this.img});
@@ -27,7 +28,7 @@ class BazarCardState extends State<BazarCard> {
                   // Adicione padding ao redor do texto
 
                   child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0,horizontal: 32.0),
+                      padding:  const EdgeInsets.symmetric(vertical: 16.0,horizontal: 16.0),
                       child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

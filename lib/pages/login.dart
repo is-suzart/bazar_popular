@@ -191,6 +191,11 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
+  void _openModalForgotPassword(){
+    //showModalBottomSheet(context: context, builder: (ctx) => Text("oi!"));
+    //showAboutDialog(context: context)
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -280,7 +285,7 @@ class _LoginFormState extends State<LoginForm> {
                       margin: const EdgeInsets.only(bottom: 36),
                       child: TextButton(
                           style: buttonStyles['textButton'],
-                          onPressed: togglePasswordVisibility,
+                          onPressed: _openModalForgotPassword,
                           child: Text("Esqueci minha senha",
                               style: Theme.of(context)
                                   .textTheme
