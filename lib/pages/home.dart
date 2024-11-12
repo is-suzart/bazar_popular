@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
               key: const Key("home-body"),
               builder: (context) {
                 return Container(
-                  padding: !isLargeScreen ? const EdgeInsets.fromLTRB(64, 32, 64, 24) : const EdgeInsets.fromLTRB(16, 32, 16, 24),
+                  padding: isLargeScreen ? const EdgeInsets.fromLTRB(64, 32, 64, 24) : const EdgeInsets.fromLTRB(16, 32, 16, 24),
                   child: Column(children: [
                     Expanded(
                         child: GridView.count(
