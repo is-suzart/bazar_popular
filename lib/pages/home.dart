@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: GridView.count(
                       crossAxisCount: isLargeScreen ? 4 : isLargeTablet ? 3 : 2,
                       shrinkWrap: true,
-                      childAspectRatio: isExtraLargeScreen ? 9 / 12 : isLargeScreen? 8.3 / 12 : isLargeTablet? 8.1 / 12 : !isTabletScreen ? 7 / 12 :  7.0 / 12,
+                      childAspectRatio: isExtraLargeScreen ? 9 / 12 : isLargeScreen ? 8.3 / 12 : isLargeTablet ? 8.1 / 12 : !isTabletScreen ? 7 / 12 :  7.0 / 12,
                       mainAxisSpacing: 16,
                       crossAxisSpacing: 16,
                       children: const [

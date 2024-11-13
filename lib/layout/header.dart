@@ -2,6 +2,8 @@ import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+
 
 class Header extends StatefulWidget {
   const Header({super.key});
@@ -13,9 +15,10 @@ class Header extends StatefulWidget {
 class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
+    final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
     return Container(
       height: 56,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 64),
+      padding: isLargeScreen ? const EdgeInsets.symmetric(vertical: 8, horizontal: 64) : const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: Colors.white, boxShadow: [
         BoxShadow(
@@ -40,7 +43,8 @@ class _HeaderState extends State<Header> {
                   },
                 ),
               ),
-            ).withGridPlacement(columnSpan: 2, columnStart: 0, rowStart: 0),
+            ).withGridPlacement(columnSpan: isLargeScreen ? 2 : 10, columnStart: 0, rowStart: 0),
+            if(isLargeScreen)
             Center(
               child: TextField(
                 style: Theme.of(context)

@@ -206,8 +206,8 @@ class _LoginFormState extends State<LoginForm> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
 
         children:  [
-          Text("Vamos recuperar camarada!",style: Theme.of(context).textTheme.bodySmall!.copyWith(color: blackColor,fontWeight: FontWeight.bold)),
           Text("Esqueceu sua senha?",style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: primaryColor)),
+          Text("Vamos recuperar camarada!",style: Theme.of(context).textTheme.bodySmall!.copyWith(color: blackColor,fontWeight: FontWeight.bold)),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 36),
             child: TextField(
