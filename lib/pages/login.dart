@@ -178,6 +178,7 @@ class _LoginFormState extends State<LoginForm> {
   bool hidePassword = true;
   String email = "";
   String password = "";
+  String forgotEmail = "";
 
   void togglePasswordVisibility() {
     setState(() {
@@ -193,7 +194,57 @@ class _LoginFormState extends State<LoginForm> {
 
   void _openModalForgotPassword(){
     //showModalBottomSheet(context: context, builder: (ctx) => Text("oi!"));
-    //showAboutDialog(context: context)
+    showDialog(context: context,
+    builder: (context) {
+      return SimpleDialog(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+        children: [
+          Align( alignment: Alignment.topRight, child: IconButton( icon: Icon(Icons.close, color: Colors.grey), onPressed: () { Navigator.pop(context); }, ), ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 36,horizontal: 48),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+
+        children:  [
+          Text("Vamos recuperar camarada!",style: Theme.of(context).textTheme.bodySmall!.copyWith(color: blackColor,fontWeight: FontWeight.bold)),
+          Text("Esqueceu sua senha?",style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: primaryColor)),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 36),
+            child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              forgotEmail = value;
+                            });
+                          },
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: blackColor),
+                          decoration: InputDecoration(
+                              fillColor: backgroundColor,
+                              filled: true,
+                              prefixIcon: const Icon(Icons.mail_outline_outlined) ,
+                              label: Text(
+                                "Digite seu email",
+                                style: Theme.of(context).textTheme.bodySmall!,
+                              ),
+                              border: OutlineInputBorder(
+                                  borderSide: const BorderSide(width: 1.0,color: Color(0xFFE0E0E0),strokeAlign: BorderSide.strokeAlignInside),
+                                  borderRadius: BorderRadius.circular(8)),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 24))
+            
+          ),
+          ),
+          
+          ElevatedButton(onPressed: (){}, child: Center(child: Text("Recuperar senha")),style: buttonStyles['primary'],)
+        ],
+      ),
+          )
+          
+        ]
+      ) ; 
+    });
   }
 
   @override
