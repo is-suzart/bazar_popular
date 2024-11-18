@@ -1,7 +1,5 @@
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
-
 class BazarCard extends StatefulWidget {
   const BazarCard({super.key, required this.img});
 

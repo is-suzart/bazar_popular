@@ -1,3 +1,4 @@
+import 'package:bazar_popular/components/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:bazar_popular/theme/theme.dart';
@@ -16,7 +17,8 @@ class LoginPageState extends State<LoginPage> {
   void toggleLoginInfo() {
     setState(() {
       showLoginInfoMobile = !showLoginInfoMobile;
-    });
+    }
+);
   }
 
   @override
@@ -28,8 +30,10 @@ class LoginPageState extends State<LoginPage> {
                   key: const Key("Header Mobile"),
                   builder: (context) {
                     return const HeaderLogin();
-                  })
-            }),
+                  }
+)
+            }
+),
             body: SlotLayout(config: {
               Breakpoints.smallAndUp: SlotLayout.from(
                   key: const Key("loginBodyMobile"),
@@ -39,7 +43,7 @@ class LoginPageState extends State<LoginPage> {
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 300),
                           transitionBuilder:
-                              (Widget child, Animation<double> animation) {
+(Widget child, Animation<double> animation) {
                             final inAnimation = Tween<Offset>(
                                     begin: const Offset(1.0, 0.0),
                                     end: const Offset(0.0, 0.0))
@@ -51,27 +55,28 @@ class LoginPageState extends State<LoginPage> {
                             return SlideTransition(
                                 position:
                                     animation.status == AnimationStatus.reverse
-                                        ? outAnimation
-                                        : inAnimation,
+? outAnimation
+: inAnimation,
                                 child: child);
                           },
                           child: showLoginInfoMobile
-                              ? Column(
+? Column(
                                   key: const ValueKey(1),
                                   children: [
                                     const LoginInfos(screenType: "mobile"),
                                     ElevatedButton(
                                       onPressed: toggleLoginInfo,
                                       style: buttonStyles['primary'],
-                                      child: const Text("Avançar para login"),
-                                    )
-                                  ],
-                                )
-                              : const LoginForm(key: ValueKey(2)),
-                        )
-                      ],
-                    );
-                  }),
+                                      child: const Text("Avançar para login")
+)
+                                  ]
+)
+: const LoginForm(key: ValueKey(2))
+)
+                      ]
+);
+                  }
+),
               Breakpoints.largeAndUp: SlotLayout.from(
                   key: const Key("loginBodyMobile"),
                   builder: (context) {
@@ -94,15 +99,17 @@ class LoginPageState extends State<LoginPage> {
                       rowSizes: [1.0.fr],
                       children: [
                         const LoginInfos(
-                          screenType: 'desktop',
-                        ).withGridPlacement(
+                          screenType: 'desktop'
+).withGridPlacement(
                             columnSpan: 6, columnStart: 1, rowStart: 0),
                         const LoginForm().withGridPlacement(
-                            columnSpan: 4, columnStart: 7, rowStart: 0),
-                      ],
-                    );
-                  })
-            })));
+                            columnSpan: 4, columnStart: 7, rowStart: 0)
+                      ]
+);
+                  }
+)
+            }
+)));
   }
 }
 
@@ -114,7 +121,8 @@ class LoginInfos extends StatelessWidget {
   double bazarArtSize(context) {
     if (screenType == 'desktop') {
       return MediaQuery.of(context).size.width / 3.9;
-    } else {
+    }
+else {
       return MediaQuery.of(context).size.width * 0.6;
     }
   }
@@ -133,11 +141,11 @@ class LoginInfos extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(vertical: 16),
                 child: Column(
                     mainAxisAlignment: screenType == 'desktop'
-                        ? MainAxisAlignment.start
-                        : MainAxisAlignment.center,
+? MainAxisAlignment.start
+: MainAxisAlignment.center,
                     crossAxisAlignment: screenType == 'desktop'
-                        ? CrossAxisAlignment.start
-                        : CrossAxisAlignment.center,
+? CrossAxisAlignment.start
+: CrossAxisAlignment.center,
                     children: [
                       Text(
                         "Seu Bazar Popular!",
@@ -146,23 +154,23 @@ class LoginInfos extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .headlineLarge!
-                            .copyWith(color: blackColor, fontSize: 40),
-                      ),
+                            .copyWith(color: blackColor, fontSize: 40)
+),
                       Text("E revolucionário!",
                           style: Theme.of(context)
                               .textTheme
                               .headlineSmall!
                               .copyWith(color: primaryColor))
-                    ]),
-              ),
+                    ])
+),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 36),
                 width: bazarArtSize(context),
                 child: Image.asset(
                   'assets/bazar icon.png',
-                  width: bazarArtSize(context),
-                ),
-              ),
+                  width: bazarArtSize(context)
+)
+)
             ]));
   }
 }
@@ -183,7 +191,8 @@ class _LoginFormState extends State<LoginForm> {
   void togglePasswordVisibility() {
     setState(() {
       hidePassword = !hidePassword;
-    });
+    }
+);
   }
 
   void simulateLogin() {
@@ -197,11 +206,14 @@ class _LoginFormState extends State<LoginForm> {
       return SimpleDialog(
         contentPadding: const EdgeInsets.symmetric(horizontal: 48,vertical: 24),
         children: [
-          Align( alignment: Alignment.topRight, child: IconButton( icon: const Icon(Icons.close, color: Colors.grey), onPressed: () { Navigator.pop(context); }, ), ),
+          Align(alignment: Alignment.topRight, child: IconButton(icon: const Icon(Icons.close, color: Colors.grey), onPressed: () { Navigator.pop(context);
+}
+)),
           const SignUp()
-        ],
-      );
-    });
+        ]
+);
+    }
+);
   }
   void _openModalForgotPassword(){
     //showModalBottomSheet(context: context, builder: (ctx) => Text("oi!"));
@@ -210,52 +222,40 @@ class _LoginFormState extends State<LoginForm> {
       return SimpleDialog(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
         children: [
-          Align( alignment: Alignment.topRight, child: IconButton( icon: const Icon(Icons.close, color: Colors.grey), onPressed: () { Navigator.pop(context); }, ), ),
+          Align(alignment: Alignment.topRight, child: IconButton(icon: const Icon(Icons.close, color: Colors.grey), onPressed: () { Navigator.pop(context);
+}
+)),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 36,horizontal: 48),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
 
-        children:  [
+        children: [
           Text("Esqueceu sua senha?",style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: primaryColor)),
           Text("Vamos recuperar camarada!",style: Theme.of(context).textTheme.bodySmall!.copyWith(color: blackColor,fontWeight: FontWeight.bold)),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 36),
-            child: TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              forgotEmail = value;
-                            });
-                          },
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(color: blackColor),
-                          decoration: InputDecoration(
-                              fillColor: backgroundColor,
-                              filled: true,
-                              prefixIcon: const Icon(Icons.mail_outline_outlined) ,
-                              label: Text(
-                                "Digite seu email",
-                                style: Theme.of(context).textTheme.bodySmall!,
-                              ),
-                              border: OutlineInputBorder(
-                                  borderSide: const BorderSide(width: 1.0,color: Color(0xFFE0E0E0),strokeAlign: BorderSide.strokeAlignInside),
-                                  borderRadius: BorderRadius.circular(8)),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 24))
-            
-          ),
-          ),
+            child: 
+            BazarInput(
+              placeholder: "Digite seu email",
+              onchaged: (p0) {
+                forgotEmail = p0;
+              },
+              icon: const Icon(Icons.mail_outline_outlined),
+              hasBorder: true
+)
+),
           
-          ElevatedButton(onPressed: (){},style: buttonStyles['primary'], child: Center(child: Text("Recuperar senha")),)
-        ],
-      ),
-          )
+          ElevatedButton(onPressed: (){
+},style: buttonStyles['primary'], child: Center(child: Text("Recuperar senha")))
+        ]
+)
+)
           
         ]
-      ) ; 
-    });
+);
+}
+);
   }
 
   @override
@@ -282,66 +282,35 @@ class _LoginFormState extends State<LoginForm> {
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!
-                            .copyWith(color: blackColor)),
-                  ],
-                ),
+                            .copyWith(color: blackColor))
+                  ]
+),
 
                 Column(
                   children: [
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 16),
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            email = value;
-                          });
-                        },
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
-                            .copyWith(color: blackColor),
-                        decoration: InputDecoration(
-                            fillColor: backgroundColor,
-                            filled: true,
-                            label: Text("Email",
-                                style: Theme.of(context).textTheme.bodySmall!),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(8)),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 24)),
-                      ),
-                    ),
+                      child: BazarInput(placeholder: "Email",onchaged: (p0) {
+                        setState(() {
+                          email = p0;
+                        }
+);
+                      }
+)
+),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 16),
-                      child: TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              password = value;
-                            });
-                          },
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(color: blackColor),
-                          obscureText: hidePassword,
-                          decoration: InputDecoration(
-                              fillColor: backgroundColor,
-                              filled: true,
-                              suffixIcon: IconButton(
-                                  onPressed: togglePasswordVisibility,
-                                  icon:
-                                      const Icon(Icons.remove_red_eye_rounded)),
-                              label: Text(
-                                "Senha",
-                                style: Theme.of(context).textTheme.bodySmall!,
-                              ),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(8)),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 24))),
-                    ),
+                      child: 
+                      BazarInput(
+                        onchaged: (p0) {
+                          setState(() {
+                            password = p0;
+                          }
+);
+                        },
+                        placeholder: "Senha")
+
+),
                     Container(
                       width: double.infinity,
                       margin: const EdgeInsets.only(bottom: 36),
@@ -356,32 +325,33 @@ class _LoginFormState extends State<LoginForm> {
                                     color: primaryColor,
                                     decoration: TextDecoration.underline,
                                     decorationColor: primaryColor,
-                                    decorationThickness: 2,
-                                  ))),
-                    ),
+                                    decorationThickness: 2
+)))
+),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 16),
                       width: double.infinity,
                       child: ElevatedButton(
                           onPressed: simulateLogin,
                           style: buttonStyles['primary'],
-                          child: const Text("Login")),
-                    ),
+                          child: const Text("Login"))
+),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 16),
                       width: double.infinity,
                       child: OutlinedButton(
                           style: buttonStyles["outlined"],
-                          onPressed: () {},
+                          onPressed: () {
+},
                           child: const Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Icon(Icons.g_mobiledata),
                               Text("Login com Google")
-                            ],
-                          )),
-                    ),
+                            ]
+))
+),
                                         Container(
                       width: double.infinity,
                       margin: const EdgeInsets.only(bottom: 36),
@@ -396,24 +366,24 @@ class _LoginFormState extends State<LoginForm> {
                                     color: primaryColor,
                                     decoration: TextDecoration.underline,
                                     decorationColor: primaryColor,
-                                    decorationThickness: 2,
-                                  ))),
-                    ),
-                  ],
-                ),
+                                    decorationThickness: 2
+)))
+)
+                  ]
+)
 
                 // OutlinedButton(
-                //     onPressed: null,
+                //     onPressed: null
                 //     child: Row(
                 //       children: [
-                //         Icon(Icons.g_mobiledata),
+                //         Icon(Icons.g_mobiledata)
                 //         Text("Login com Google")
-                //       ],
+                //       ]
                 //     ))
-              ]),
-        ),
-      ),
-    );
+              ])
+)
+)
+);
   }
 }
 
@@ -431,17 +401,17 @@ class HeaderLogin extends StatelessWidget {
           color: Colors.black.withOpacity(0.25),
           spreadRadius: 0,
           blurRadius: 4,
-          offset: const Offset(0, 0),
-        )
+          offset: const Offset(0, 0)
+)
       ]),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset("assets/logo-bp.png"),
-        ],
-      ),
-    );
+          Image.asset("assets/logo-bp.png")
+        ]
+)
+);
   }
 }
 
@@ -454,21 +424,65 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  String name = "";
+  String email = "";
+  String telephone = "";
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Stack(children: [
       Container(
-        child: Column(
-          children: [
-            Text("Estamos muito feliz de ver você aqui!",style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: primaryColor),),
-            Text("Seja bem vindo camarada!",style: Theme.of(context).textTheme.headlineLarge,),
-            TextField(),
-            TextField(),
-            TextField(),
-          ],
-        ),
-      )
+          margin: const EdgeInsets.symmetric(vertical: 16),
+          child: Column(children: [
+        Text("Estamos muito feliz de ver você aqui!",
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .copyWith(color: primaryColor)),
+        Text("Seja bem vindo camarada!",
+            style: Theme.of(context).textTheme.headlineLarge),
+            const SizedBox(height: 24),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 8),
+            child: BazarInput(
+                placeholder: "Qual seu nome?",
+                hasBorder: true,
+                onchaged: (p0) {
+                  setState(() {
+                    name = p0;
+                  });
+                })),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 8),
+            child: BazarInput(
+                placeholder: "Qual seu email?",
+                hasBorder: true,
+                onchaged: (p0) {
+                  setState(() {
+                    email = p0;
+                  });
+                })),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 8),
+            child: BazarInput(
+                placeholder: "Qual seu telefone?",
+                hasBorder: true,
+                onchaged: (p0) {
+                  setState(() {
+                    telephone = p0;
+                  });
+                })),
+        Container(
+          width: double.infinity,
+          margin: const EdgeInsets.only(top: 24),
+          child:         ElevatedButton(
+            onPressed: () {},
+            child: Text("Avançar"),
+            style: buttonStyles['primary']),
+        )
+
+      ]))
     ]);
   }
 }
