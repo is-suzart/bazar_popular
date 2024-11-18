@@ -115,7 +115,7 @@ class LoginInfos extends StatelessWidget {
     if (screenType == 'desktop') {
       return MediaQuery.of(context).size.width / 3.9;
     } else {
-      return MediaQuery.of(context).size.width * 0.8;
+      return MediaQuery.of(context).size.width * 0.6;
     }
   }
 
@@ -191,7 +191,18 @@ class _LoginFormState extends State<LoginForm> {
       context.go("/");
     }
   }
-
+  void _openModalSignUp() {
+    showDialog(context: context, 
+    builder: (context) {
+      return SimpleDialog(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 48,vertical: 24),
+        children: [
+          Align( alignment: Alignment.topRight, child: IconButton( icon: const Icon(Icons.close, color: Colors.grey), onPressed: () { Navigator.pop(context); }, ), ),
+          const SignUp()
+        ],
+      );
+    });
+  }
   void _openModalForgotPassword(){
     //showModalBottomSheet(context: context, builder: (ctx) => Text("oi!"));
     showDialog(context: context,
@@ -199,7 +210,7 @@ class _LoginFormState extends State<LoginForm> {
       return SimpleDialog(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
         children: [
-          Align( alignment: Alignment.topRight, child: IconButton( icon: Icon(Icons.close, color: Colors.grey), onPressed: () { Navigator.pop(context); }, ), ),
+          Align( alignment: Alignment.topRight, child: IconButton( icon: const Icon(Icons.close, color: Colors.grey), onPressed: () { Navigator.pop(context); }, ), ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 36,horizontal: 48),
             child: Column(
@@ -237,7 +248,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           ),
           
-          ElevatedButton(onPressed: (){}, child: Center(child: Text("Recuperar senha")),style: buttonStyles['primary'],)
+          ElevatedButton(onPressed: (){},style: buttonStyles['primary'], child: Center(child: Text("Recuperar senha")),)
         ],
       ),
           )
@@ -376,7 +387,7 @@ class _LoginFormState extends State<LoginForm> {
                       margin: const EdgeInsets.only(bottom: 36),
                       child: TextButton(
                           style: buttonStyles['textButton'],
-                          onPressed: togglePasswordVisibility,
+                          onPressed: _openModalSignUp,
                           child: Text("Criar conta",
                               style: Theme.of(context)
                                   .textTheme
@@ -431,5 +442,33 @@ class HeaderLogin extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Stack(children: [
+      Container(
+        child: Column(
+          children: [
+            Text("Estamos muito feliz de ver você aqui!",style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: primaryColor),),
+            Text("Seja bem vindo camarada!",style: Theme.of(context).textTheme.headlineLarge,),
+            TextField(),
+            TextField(),
+            TextField(),
+          ],
+        ),
+      )
+    ]);
   }
 }
