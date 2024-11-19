@@ -49,7 +49,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                             child: const BazarInput(
                               placeholder: "Digite seu email",
                               formControlName: 'recovery-email',
-                              icon: Icon(Icons.mail_outline_outlined),
+                              prefixIcon: Icon(Icons.mail_outline_outlined),
                               hasBorder: true,
                               //errorText: "Digite um email válido",
                             )),

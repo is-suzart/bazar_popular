@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  final _loginController = LoginController();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -50,12 +51,15 @@ class LoginPageState extends State<LoginPage> {
                                         : inAnimation,
                                 child: child);
                           },
-                          child: LoginController().showLoginInfoMobile
+                          child: _loginController.showLoginInfoMobile
                               ? Column(key: const ValueKey(1), children: [
                                   const LoginInfos(screenType: "mobile"),
                                   ElevatedButton(
-                                      onPressed:
-                                          LoginController().toggleLoginInfo,
+                                      onPressed: () {
+                                        setState(() {
+                                          _loginController.toggleLoginInfo();
+                                        });
+                                      },
                                       style: buttonStyles['primary'],
                                       child: const Text("Avançar para login"))
                                 ])
@@ -217,9 +221,19 @@ class _LoginFormState extends State<LoginForm> {
                             Container(
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 16),
-                                child: const BazarInput(
+                                child: BazarInput(
                                     placeholder: "Senha",
-                                    formControlName: 'password')),
+                                    formControlName: 'password',
+                                    obscureText: _loginController.showInputPasswordContent,
+                                    suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _loginController.toggleInputPasswordContentVisibility();
+                                    });
+                                  },
+                                  icon:
+                                      const Icon(Icons.remove_red_eye_rounded)),
+                                    )),
                             Container(
                                 width: double.infinity,
                                 margin: const EdgeInsets.only(bottom: 36),

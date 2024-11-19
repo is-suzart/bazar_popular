@@ -4,14 +4,16 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class BazarInput extends StatelessWidget {
-  const BazarInput({super.key,required this.placeholder, this.onchaged,this.icon,this.hasBorder,this.inputFormatter,this.formControlName,this.errorText});
+  const BazarInput({super.key,required this.placeholder, this.onchaged,this.prefixIcon,this.hasBorder,this.inputFormatter,this.formControlName,this.errorText,this.suffixIcon,this.obscureText});
   final String placeholder;
   final void Function(String)? onchaged;
-  final Icon? icon;
+  final Icon? prefixIcon;
   final bool? hasBorder;
   final MaskTextInputFormatter? inputFormatter;
   final String? formControlName;
   final String? errorText;
+  final Widget? suffixIcon;
+  final bool? obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,13 @@ class BazarInput extends StatelessWidget {
                                   vertical: 8, horizontal: 24),
                               fillColor: backgroundColor,
                               filled: true,
-                              prefixIcon: icon ?? icon ,
+                              prefixIcon: prefixIcon ?? prefixIcon ,
+                              suffixIcon: suffixIcon ?? suffixIcon,
                               label: Text(
                                 placeholder,
                                 style: Theme.of(context).textTheme.bodySmall!,
-                              ))
+                              )),
+                              obscureText: obscureText != null ? obscureText == true : false,
     );
   }
 }

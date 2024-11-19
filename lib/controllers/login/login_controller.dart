@@ -2,6 +2,11 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 class LoginController {
   bool showLoginInfoMobile = true;
+  bool showInputPasswordContent = true;
+
+  void toggleInputPasswordContentVisibility(){
+    showInputPasswordContent = !showInputPasswordContent;
+  }
 
   void toggleLoginInfo() {
     showLoginInfoMobile = !showLoginInfoMobile;
