@@ -4,7 +4,8 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:reactive_forms/reactive_forms.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
   @override
@@ -184,9 +185,13 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   bool hidePassword = true;
-  String email = "";
-  String password = "";
-  String forgotEmail = "";
+    final loginForm = FormGroup({
+    'login-email': FormControl<String>(validators: [Validators.required,Validators.email]),
+    'login-password': FormControl<String>(validators: [Validators.required]),
+  });
+  final recoveryPasswordForm = FormGroup({
+    'recovery-email': FormControl<String>(validators: [Validators.required,Validators.email])
+  });
 
   void togglePasswordVisibility() {
     setState(() {
@@ -196,9 +201,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void simulateLogin() {
-    if (email != "" && password != "") {
-      context.go("/");
-    }
+    print(loginForm.value);
   }
   void _openModalSignUp() {
     showDialog(context: context, 
@@ -227,7 +230,7 @@ class _LoginFormState extends State<LoginForm> {
 )),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 36,horizontal: 48),
-            child: Column(
+            child: ReactiveForm(formGroup: recoveryPasswordForm, child:  Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
 
         children: [
@@ -236,20 +239,19 @@ class _LoginFormState extends State<LoginForm> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 36),
             child: 
-            BazarInput(
+            const BazarInput(
               placeholder: "Digite seu email",
-              onchaged: (p0) {
-                forgotEmail = p0;
-              },
-              icon: const Icon(Icons.mail_outline_outlined),
-              hasBorder: true
+              formControlName: 'recovery-email',
+              icon: Icon(Icons.mail_outline_outlined),
+              hasBorder: true,
+              //errorText: "Digite um email válido",
 )
 ),
           
           ElevatedButton(onPressed: (){
-},style: buttonStyles['primary'], child: Center(child: Text("Recuperar senha")))
+},style: buttonStyles['primary'], child: const Center(child: Text("Recuperar senha")))
         ]
-)
+))
 )
           
         ]
@@ -260,7 +262,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ReactiveForm(formGroup: loginForm, child: Container(
       padding: const EdgeInsets.symmetric(vertical: 48),
       child: Card(
         child: Container(
@@ -290,25 +292,12 @@ class _LoginFormState extends State<LoginForm> {
                   children: [
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 16),
-                      child: BazarInput(placeholder: "Email",onchaged: (p0) {
-                        setState(() {
-                          email = p0;
-                        }
-);
-                      }
-)
+                      child: const BazarInput(placeholder: "Email",formControlName: 'login-email')
 ),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 16),
                       child: 
-                      BazarInput(
-                        onchaged: (p0) {
-                          setState(() {
-                            password = p0;
-                          }
-);
-                        },
-                        placeholder: "Senha")
+                     const BazarInput(placeholder: "Senha",formControlName: 'login-password')
 
 ),
                     Container(
@@ -383,7 +372,7 @@ class _LoginFormState extends State<LoginForm> {
               ])
 )
 )
-);
+));
   }
 }
 
@@ -424,65 +413,82 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String name = "";
-  String email = "";
-  String telephone = "";
+  final form = FormGroup({
+    'name': FormControl<String>(validators: [Validators.required]),
+    'email': FormControl<String>(validators: [Validators.required, Validators.email]),
+    'telephone': FormControl<String>(validators: [Validators.required]),
+  });
+
+  final telephoneMaskFormatter = MaskTextInputFormatter(
+    mask: '(##) #####-####',
+    filter: {"#": RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.lazy,
+  );
+
+  void _onSubmit() {
+    if (form.valid) {
+      // Processa os dados do formulário
+      print(form.value);
+    } else {
+      // Exibe mensagens de erro ou feedback
+      form.markAllAsTouched();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Stack(children: [
+    return ReactiveForm(formGroup: form, child: Stack(children: [
       Container(
-          margin: const EdgeInsets.symmetric(vertical: 16),
-          child: Column(children: [
-        Text("Estamos muito feliz de ver você aqui!",
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(color: primaryColor)),
-        Text("Seja bem vindo camarada!",
-            style: Theme.of(context).textTheme.headlineLarge),
-            const SizedBox(height: 24),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 16),
+        child: Column(children: [
+          Text(
+            "Estamos muito feliz de ver você aqui!",
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: primaryColor),
+          ),
+          Text(
+            "Seja bem vindo camarada!",
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
+          const SizedBox(height: 24),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const BazarInput(
+              placeholder: "Qual seu nome?",
+              hasBorder: true,
+              formControlName: 'name',
+              //errorText: "Campo obrigatório",
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const BazarInput(
+              placeholder: "Qual seu email?",
+              formControlName: 'email',
+              hasBorder: true,
+              //errorText: "Digite um email válido",
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
             child: BazarInput(
-                placeholder: "Qual seu nome?",
-                hasBorder: true,
-                onchaged: (p0) {
-                  setState(() {
-                    name = p0;
-                  });
-                })),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 8),
-            child: BazarInput(
-                placeholder: "Qual seu email?",
-                hasBorder: true,
-                onchaged: (p0) {
-                  setState(() {
-                    email = p0;
-                  });
-                })),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 8),
-            child: BazarInput(
-                placeholder: "Qual seu telefone?",
-                hasBorder: true,
-                onchaged: (p0) {
-                  setState(() {
-                    telephone = p0;
-                  });
-                })),
-        Container(
-          width: double.infinity,
-          margin: const EdgeInsets.only(top: 24),
-          child:         ElevatedButton(
-            onPressed: () {},
-            child: Text("Avançar"),
-            style: buttonStyles['primary']),
-        )
-
-      ]))
-    ]);
+              placeholder: "Qual seu telefone?",
+              formControlName: 'telephone',
+              hasBorder: true,
+              inputFormatter: telephoneMaskFormatter,
+              //errorText: "Digite um telefone válido",
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(top: 24),
+            child: ElevatedButton(
+              onPressed: _onSubmit,
+              style: buttonStyles['primary'],
+              child: const Text("Avançar"),
+            ),
+          ),
+        ]),
+      )
+    ]));
   }
 }
