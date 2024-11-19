@@ -1,6 +1,6 @@
 import 'package:bazar_popular/layout/layout.dart';
 import 'package:bazar_popular/pages/home.dart';
-import 'package:bazar_popular/pages/login.dart';
+import 'package:bazar_popular/pages/login/login.dart';
 import 'package:bazar_popular/pages/produto.dart';
 import 'package:go_router/go_router.dart';
 
