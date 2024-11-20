@@ -7,6 +7,8 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,7 +17,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  final _loginController = LoginController();
+  final LoginController _loginController = LoginController();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -56,9 +58,7 @@ class LoginPageState extends State<LoginPage> {
                                   const LoginInfos(screenType: "mobile"),
                                   ElevatedButton(
                                       onPressed: () {
-                                        setState(() {
                                           _loginController.toggleLoginInfo();
-                                        });
                                       },
                                       style: buttonStyles['primary'],
                                       child: const Text("Avançar para login"))
@@ -151,7 +151,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _loginController = LoginController();
+  final LoginController _loginController = LoginController();
 
   void _openModalSignUp() {
     showDialog(
@@ -221,19 +221,20 @@ class _LoginFormState extends State<LoginForm> {
                             Container(
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 16),
-                                child: BazarInput(
+                                child: Observer(
+                                  builder: (context) {
+                                    return BazarInput(
                                     placeholder: "Senha",
                                     formControlName: 'password',
                                     obscureText: _loginController.showInputPasswordContent,
                                     suffixIcon: IconButton(
                                   onPressed: () {
-                                    setState(() {
                                       _loginController.toggleInputPasswordContentVisibility();
-                                    });
                                   },
                                   icon:
                                       const Icon(Icons.remove_red_eye_rounded)),
-                                    )),
+                                    );
+                                  })),
                             Container(
                                 width: double.infinity,
                                 margin: const EdgeInsets.only(bottom: 36),

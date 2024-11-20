@@ -1,8 +1,14 @@
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:mobx/mobx.dart';
 
-class  Signupcontroller {
-    final form = FormGroup({
+part 'sign_up_controller.g.dart';
+
+class SignupController = _SignupController with _$SignupController;
+
+abstract class _SignupController with Store {
+  @observable
+  var form = FormGroup({
     'name': FormControl<String>(validators: [Validators.required]),
     'email': FormControl<String>(validators: [Validators.required, Validators.email]),
     'telephone': FormControl<String>(validators: [Validators.required]),
@@ -14,13 +20,20 @@ class  Signupcontroller {
     type: MaskAutoCompletionType.lazy,
   );
 
+  @computed
+  bool get isFormValid => form.valid;
+
+  @action
+  void markFieldsAsTouched() {
+    form.markAllAsTouched();
+  }
+
+  @action
   void onSubmit() {
     if (form.valid) {
-      // Processa os dados do formulário
       print(form.value);
     } else {
-      // Exibe mensagens de erro ou feedback
-      form.markAllAsTouched();
+      markFieldsAsTouched();
     }
   }
 }

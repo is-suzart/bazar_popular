@@ -12,7 +12,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final _signupController = Signupcontroller();
+  final SignupController _signupController = SignupController();
 
   @override
   Widget build(BuildContext context) {

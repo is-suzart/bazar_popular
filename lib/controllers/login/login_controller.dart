@@ -1,13 +1,21 @@
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:mobx/mobx.dart';
+part 'login_controller.g.dart';
 
-class LoginController {
+
+class LoginController = _LoginController with _$LoginController;
+
+abstract class _LoginController with Store {
+  @observable
   bool showLoginInfoMobile = true;
+  @observable
   bool showInputPasswordContent = true;
 
+  @action
   void toggleInputPasswordContentVisibility(){
     showInputPasswordContent = !showInputPasswordContent;
   }
-
+  @action
   void toggleLoginInfo() {
     showLoginInfoMobile = !showLoginInfoMobile;
   }
@@ -23,7 +31,7 @@ class LoginController {
     }
     return null; // Nenhum erro
   }
-
+  @action
   Future<void> performLogin() async {
     // Simulação de chamada de API ou lógica de autenticação
     final email = form.control('email').value;
