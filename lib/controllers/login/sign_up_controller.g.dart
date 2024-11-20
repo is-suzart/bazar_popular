@@ -17,6 +17,22 @@ mixin _$SignupController on _SignupController, Store {
               name: '_SignupController.isFormValid'))
           .value;
 
+  late final _$stepAtom =
+      Atom(name: '_SignupController.step', context: context);
+
+  @override
+  int get step {
+    _$stepAtom.reportRead();
+    return super.step;
+  }
+
+  @override
+  set step(int value) {
+    _$stepAtom.reportWrite(value, super.step, () {
+      super.step = value;
+    });
+  }
+
   late final _$formAtom =
       Atom(name: '_SignupController.form', context: context);
 
@@ -35,6 +51,28 @@ mixin _$SignupController on _SignupController, Store {
 
   late final _$_SignupControllerActionController =
       ActionController(name: '_SignupController', context: context);
+
+  @override
+  void nextStep() {
+    final _$actionInfo = _$_SignupControllerActionController.startAction(
+        name: '_SignupController.nextStep');
+    try {
+      return super.nextStep();
+    } finally {
+      _$_SignupControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void previousStep() {
+    final _$actionInfo = _$_SignupControllerActionController.startAction(
+        name: '_SignupController.previousStep');
+    try {
+      return super.previousStep();
+    } finally {
+      _$_SignupControllerActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void markFieldsAsTouched() {
@@ -61,6 +99,7 @@ mixin _$SignupController on _SignupController, Store {
   @override
   String toString() {
     return '''
+step: ${step},
 form: ${form},
 isFormValid: ${isFormValid}
     ''';

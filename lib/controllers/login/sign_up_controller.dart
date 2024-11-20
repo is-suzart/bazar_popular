@@ -8,10 +8,17 @@ class SignupController = _SignupController with _$SignupController;
 
 abstract class _SignupController with Store {
   @observable
+  int step = 0;
+
+  @observable
   var form = FormGroup({
     'name': FormControl<String>(validators: [Validators.required]),
     'email': FormControl<String>(validators: [Validators.required, Validators.email]),
     'telephone': FormControl<String>(validators: [Validators.required]),
+    'password': FormControl<String>(validators: [Validators.min(8)]),
+    'repeat-password': FormControl<String>(validators: [Validators.min(8)]),
+    'state': FormControl<String>(validators: []),
+    'city': FormControl<String>(validators: []),
   });
 
   final telephoneMaskFormatter = MaskTextInputFormatter(
@@ -22,6 +29,17 @@ abstract class _SignupController with Store {
 
   @computed
   bool get isFormValid => form.valid;
+
+  @action
+  void nextStep() {
+    step++;
+  }
+
+  @action
+  void previousStep() {
+    step--;
+  }
+
 
   @action
   void markFieldsAsTouched() {
