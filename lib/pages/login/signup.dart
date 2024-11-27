@@ -144,8 +144,8 @@ class _SignUpState extends State<SignUp> {
                             direction: Axis.horizontal,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ElevatedButton(onPressed: null, style: buttonStyles['textButton'], child: Text('Voltar')),
-                              ElevatedButton(onPressed: null, style: buttonStyles['primary'], child: Text('Cadastrar'))
+                              ElevatedButton(onPressed: null, style: buttonStyles['textButton'], child: const Text('Voltar')),
+                              ElevatedButton(onPressed: null, style: buttonStyles['primary'], child: const Text('Cadastrar'))
                             ],) ,
                           )
 

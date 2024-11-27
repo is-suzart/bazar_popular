@@ -1,11 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:mobx/mobx.dart';
+import 'package:bazar_popular/services/login_service.dart';
+import 'package:go_router/go_router.dart';
+
 part 'login_controller.g.dart';
 
 
-class LoginController = _LoginController with _$LoginController;
+class LoginController = LoginControllerStore with _$LoginController;
 
-abstract class _LoginController with Store {
+
+abstract class LoginControllerStore with Store {
   @observable
   bool showLoginInfoMobile = true;
   @observable
@@ -36,10 +41,11 @@ abstract class _LoginController with Store {
     // Simulação de chamada de API ou lógica de autenticação
     final email = form.control('email').value;
     final password = form.control('password').value;
-
-    print('Autenticando $email com senha $password...');
-    await Future.delayed(const Duration(seconds: 1)); // Simulando delay da API
-    print('Login bem-sucedido!');
+    final response = await LoginService().login(email, password);
+    print(response);
+    if(response.status) {
+      GoRouter.of(context as BuildContext).go('/home');
+    }
   }
 }
 

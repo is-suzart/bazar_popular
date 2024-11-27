@@ -82,7 +82,7 @@ class _HeaderState extends State<Header> {
                 MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
-                    child: Icon(Icons.person),
+                    child: const Icon(Icons.person),
                     onTap: () {},
                   ),
                 )

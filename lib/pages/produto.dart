@@ -12,7 +12,7 @@ class Produto extends StatelessWidget {
         Text("eu sou o produto",style: Theme.of(context).textTheme.headlineMedium,),
         ElevatedButton(onPressed: () {
           context.go("/");
-        }, child: Text("ir para home"))
+        }, child: const Text("ir para home"))
       ],
     ));
   }

@@ -4,9 +4,9 @@ import 'package:mobx/mobx.dart';
 
 part 'sign_up_controller.g.dart';
 
-class SignupController = _SignupController with _$SignupController;
+class SignupController = SignupControllerBase with _$SignupController;
 
-abstract class _SignupController with Store {
+abstract class SignupControllerBase with Store {
   @observable
   int step = 0;
 

@@ -8,9 +8,9 @@ part of 'login_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$LoginController on _LoginController, Store {
+mixin _$LoginController on LoginControllerStore, Store {
   late final _$showLoginInfoMobileAtom =
-      Atom(name: '_LoginController.showLoginInfoMobile', context: context);
+      Atom(name: 'LoginControllerStore.showLoginInfoMobile', context: context);
 
   @override
   bool get showLoginInfoMobile {
@@ -25,8 +25,8 @@ mixin _$LoginController on _LoginController, Store {
     });
   }
 
-  late final _$showInputPasswordContentAtom =
-      Atom(name: '_LoginController.showInputPasswordContent', context: context);
+  late final _$showInputPasswordContentAtom = Atom(
+      name: 'LoginControllerStore.showInputPasswordContent', context: context);
 
   @override
   bool get showInputPasswordContent {
@@ -43,35 +43,35 @@ mixin _$LoginController on _LoginController, Store {
   }
 
   late final _$performLoginAsyncAction =
-      AsyncAction('_LoginController.performLogin', context: context);
+      AsyncAction('LoginControllerStore.performLogin', context: context);
 
   @override
   Future<void> performLogin() {
     return _$performLoginAsyncAction.run(() => super.performLogin());
   }
 
-  late final _$_LoginControllerActionController =
-      ActionController(name: '_LoginController', context: context);
+  late final _$LoginControllerStoreActionController =
+      ActionController(name: 'LoginControllerStore', context: context);
 
   @override
   void toggleInputPasswordContentVisibility() {
-    final _$actionInfo = _$_LoginControllerActionController.startAction(
-        name: '_LoginController.toggleInputPasswordContentVisibility');
+    final _$actionInfo = _$LoginControllerStoreActionController.startAction(
+        name: 'LoginControllerStore.toggleInputPasswordContentVisibility');
     try {
       return super.toggleInputPasswordContentVisibility();
     } finally {
-      _$_LoginControllerActionController.endAction(_$actionInfo);
+      _$LoginControllerStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void toggleLoginInfo() {
-    final _$actionInfo = _$_LoginControllerActionController.startAction(
-        name: '_LoginController.toggleLoginInfo');
+    final _$actionInfo = _$LoginControllerStoreActionController.startAction(
+        name: 'LoginControllerStore.toggleLoginInfo');
     try {
       return super.toggleLoginInfo();
     } finally {
-      _$_LoginControllerActionController.endAction(_$actionInfo);
+      _$LoginControllerStoreActionController.endAction(_$actionInfo);
     }
   }
 
