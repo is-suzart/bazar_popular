@@ -1,4 +1,19 @@
 import 'package:bazar_popular/models/user_models.dart';
+
+
+class LoginResult {
+  final ResponseLogin? success;
+  final ErrorResponse? error;
+  final String? exception;
+
+  LoginResult({this.success, this.error, this.exception});
+
+  bool get isSuccess => success != null;
+  bool get isError => error != null;
+  bool get isException => exception != null;
+}
+
+
 class ResponseUser{
     String status;
     UserModels user;
@@ -28,4 +43,10 @@ class ErrorResponse{
     String message;
 
     ErrorResponse(this.status, this.message);
+    factory ErrorResponse.fromJson(Map<String, dynamic> json) {
+        return ErrorResponse(
+        json['status'] ?? "",
+        json['message'] ?? "",
+        );
+    }
 }

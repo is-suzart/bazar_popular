@@ -46,7 +46,7 @@ mixin _$LoginController on LoginControllerStore, Store {
       AsyncAction('LoginControllerStore.performLogin', context: context);
 
   @override
-  Future<void> performLogin(dynamic context) {
+  Future<void> performLogin(BuildContext context) {
     return _$performLoginAsyncAction.run(() => super.performLogin(context));
   }
 
@@ -70,6 +70,28 @@ mixin _$LoginController on LoginControllerStore, Store {
         name: 'LoginControllerStore.toggleLoginInfo');
     try {
       return super.toggleLoginInfo();
+    } finally {
+      _$LoginControllerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void openModalSignUp(dynamic context) {
+    final _$actionInfo = _$LoginControllerStoreActionController.startAction(
+        name: 'LoginControllerStore.openModalSignUp');
+    try {
+      return super.openModalSignUp(context);
+    } finally {
+      _$LoginControllerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void openModalForgotPassword(dynamic context) {
+    final _$actionInfo = _$LoginControllerStoreActionController.startAction(
+        name: 'LoginControllerStore.openModalForgotPassword');
+    try {
+      return super.openModalForgotPassword(context);
     } finally {
       _$LoginControllerStoreActionController.endAction(_$actionInfo);
     }

@@ -1,6 +1,5 @@
 import 'package:bazar_popular/components/input.dart';
 import 'package:bazar_popular/controllers/login/login_controller.dart';
-import 'package:bazar_popular/pages/login/forgot_password.dart';
 import 'package:bazar_popular/pages/login/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
@@ -8,7 +7,6 @@ import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -58,7 +56,7 @@ class LoginPageState extends State<LoginPage> {
                                   const LoginInfos(screenType: "mobile"),
                                   ElevatedButton(
                                       onPressed: () {
-                                          _loginController.toggleLoginInfo();
+                                        _loginController.toggleLoginInfo();
                                       },
                                       style: buttonStyles['primary'],
                                       child: const Text("Avançar para login"))
@@ -153,35 +151,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final LoginController _loginController = LoginController();
 
-  void _openModalSignUp() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return SimpleDialog(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 48, vertical: 24),
-              children: [
-                Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                        icon: const Icon(Icons.close, color: Colors.grey),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        })),
-                const SignUp()
-              ]);
-        });
-  }
-
-  void _openModalForgotPassword() {
-    //showModalBottomSheet(context: context, builder: (ctx) => Text("oi!"));
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const Forgotpassword();
-        });
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return ReactiveForm(
@@ -216,31 +186,32 @@ class _LoginFormState extends State<LoginForm> {
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 16),
                                 child: const BazarInput(
-                                    placeholder: "Email",
+                                    placeholder: "Email", 
                                     formControlName: 'email')),
                             Container(
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 16),
-                                child: Observer(
-                                  builder: (context) {
-                                    return BazarInput(
+                                child: Observer(builder: (context) {
+                                  return BazarInput(
                                     placeholder: "Senha",
                                     formControlName: 'password',
-                                    obscureText: _loginController.showInputPasswordContent,
+                                    obscureText: _loginController
+                                        .showInputPasswordContent,
                                     suffixIcon: IconButton(
-                                  onPressed: () {
-                                      _loginController.toggleInputPasswordContentVisibility();
-                                  },
-                                  icon:
-                                      const Icon(Icons.remove_red_eye_rounded)),
-                                    );
-                                  })),
+                                        onPressed: () {
+                                          _loginController
+                                              .toggleInputPasswordContentVisibility();
+                                        },
+                                        icon: const Icon(
+                                            Icons.remove_red_eye_rounded)),
+                                  );
+                                })),
                             Container(
                                 width: double.infinity,
                                 margin: const EdgeInsets.only(bottom: 36),
                                 child: TextButton(
                                     style: buttonStyles['textButton'],
-                                    onPressed: _openModalForgotPassword,
+                                    onPressed: () => _loginController.openModalForgotPassword(context),
                                     child: Text("Esqueci minha senha",
                                         style: Theme.of(context)
                                             .textTheme
@@ -256,7 +227,8 @@ class _LoginFormState extends State<LoginForm> {
                                     const EdgeInsets.symmetric(vertical: 16),
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                    onPressed: () => _loginController.performLogin(context),
+                                    onPressed: () =>
+                                        _loginController.performLogin(context),
                                     style: buttonStyles['primary'],
                                     child: const Text("Login"))),
                             Container(
@@ -280,7 +252,7 @@ class _LoginFormState extends State<LoginForm> {
                                 margin: const EdgeInsets.only(bottom: 36),
                                 child: TextButton(
                                     style: buttonStyles['textButton'],
-                                    onPressed: _openModalSignUp,
+                                    onPressed: () =>  _loginController.openModalSignUp(context),
                                     child: Text("Criar conta",
                                         style: Theme.of(context)
                                             .textTheme
