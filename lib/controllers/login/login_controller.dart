@@ -37,14 +37,13 @@ abstract class LoginControllerStore with Store {
     return null; // Nenhum erro
   }
   @action
-  Future<void> performLogin() async {
+  Future<void> performLogin(context) async {
     // Simulação de chamada de API ou lógica de autenticação
     final email = form.control('email').value;
     final password = form.control('password').value;
     final response = await LoginService().login(email, password);
-    print(response);
-    if(response.status) {
-      GoRouter.of(context as BuildContext).go('/home');
+    if(response.status == 'success') {
+      GoRouter.of(context).go('/');
     }
   }
 }

@@ -256,7 +256,7 @@ class _LoginFormState extends State<LoginForm> {
                                     const EdgeInsets.symmetric(vertical: 16),
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                    onPressed: _loginController.performLogin,
+                                    onPressed: () => _loginController.performLogin(context),
                                     style: buttonStyles['primary'],
                                     child: const Text("Login"))),
                             Container(
