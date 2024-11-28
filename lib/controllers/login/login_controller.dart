@@ -1,14 +1,12 @@
 import 'package:bazar_popular/models/reponse_models.dart';
 import 'package:bazar_popular/pages/login/forgot_password.dart';
 import 'package:bazar_popular/pages/login/signup.dart';
-import 'package:bazar_popular/theme/theme.dart';
+import 'package:bazar_popular/shared/state_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:mobx/mobx.dart';
 import 'package:bazar_popular/services/login_service.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quickalert/quickalert.dart';
-
 part 'login_controller.g.dart';
 
 
@@ -51,19 +49,6 @@ abstract class LoginControllerStore with Store {
   }
 
   @action
-  void openErrorDialog(BuildContext context,String text) {
-    QuickAlert.show(
-      context: context, 
-      type: QuickAlertType.error,
-      text: text,
-      title: "Erro",
-      confirmBtnText: "Entendido!" ,
-      confirmBtnColor: primaryColor,
-      cancelBtnTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white)
-    );
-  }
-
-  @action
   void openModalForgotPassword(BuildContext context) {
     //showModalBottomSheet(context: context, builder: (ctx) => Text("oi!"));
     showDialog(
@@ -85,12 +70,12 @@ abstract class LoginControllerStore with Store {
     }
     return null; // Nenhum erro
   }
-  @action
+@action
  Future<void> performLogin(BuildContext context) async {
   final email = form.control('email').value;
   final password = form.control('password').value;
 
-  final LoginResult result = await LoginService().login(email, password);
+  final SignResult result = await LoginService().login(email, password);
 
   if (result.isSuccess) {
     GoRouter.of(context).go('/');

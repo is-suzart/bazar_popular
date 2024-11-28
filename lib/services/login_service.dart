@@ -7,7 +7,7 @@ class LoginService {
 
   final String _baseUrl = 'http://localhost:8080';
 
-  Future<LoginResult> login(String email, String password) async {
+  Future<SignResult> login(String email, String password) async {
   final prefs = await SharedPreferences.getInstance();
 
   try {
@@ -23,19 +23,46 @@ class LoginService {
       }),
     );
 
-    final res = jsonDecode(utf8.decode(response.bodyBytes));
+    final result = jsonDecode(utf8.decode(response.bodyBytes));
 
     if (response.statusCode == 200) {
-      final ResponseLogin data = ResponseLogin.fromJson(res);
+      final ResponseSign data = ResponseSign.fromJson(result);
       await prefs.setString('auth_token', data.token);
       await prefs.setString('user_id', data.id);
-      return LoginResult(success: data);
+      return SignResult(success: data);
     } else {
-      final ErrorResponse errorData = ErrorResponse.fromJson(res);
-      return LoginResult(error: errorData);
+      final ErrorResponse errorData = ErrorResponse.fromJson(result);
+      return SignResult(error: errorData);
     }
-  } catch (e) {
-    return LoginResult(exception: e.toString());
+  } catch (err) {
+    return SignResult(exception: err.toString());
+  }
+}
+
+Future<SignResult> signUp(Map formValues) async {
+  final prefs = await SharedPreferences.getInstance();
+  try {
+    final response = await http.post(
+      Uri.parse('$_baseUrl/users'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(formValues),
+    );
+    final result = jsonDecode(utf8.decode(response.bodyBytes));
+    if(response.statusCode == 201){
+      final ResponseSign data = ResponseSign.fromJson(result);
+      await prefs.setString('auth_token', data.token);
+      await prefs.setString('user_id', data.id);
+      return SignResult(success: data);
+    } else {
+        final ErrorResponse errorData = ErrorResponse.fromJson(result);
+        return SignResult(error: errorData);
+    }
+
+  }
+  catch (err) {
+    return SignResult(exception: err.toString());
   }
 }
 }

@@ -18,8 +18,8 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return ReactiveForm(
-      formGroup: _signupController.form,
-      child: Container(
+        formGroup: _signupController.form,
+        child: Container(
           margin: const EdgeInsets.symmetric(vertical: 16),
           child: Column(children: [
             Text(
@@ -36,31 +36,30 @@ class _SignUpState extends State<SignUp> {
             const SizedBox(height: 24),
             Observer(
               builder: (_) {
-                print("Step atual: ${_signupController.step}");
                 // Aqui a lógica de visibilidade é controlada pelo step
                 return IndexedStack(
                   index: _signupController.step,
                   children: [
-                            AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          transitionBuilder: 
-          (Widget child, Animation<double> animation) {
-                                        final inAnimation = Tween<Offset>(
-                                    begin: const Offset(1.0, 0.0),
-                                    end: const Offset(0.0, 0.0))
-                                .animate(animation);
-                            final outAnimation = Tween<Offset>(
-                                    begin: const Offset(0.0, 0.0),
-                                    end: const Offset(-1.0, 0.0))
-                                .animate(animation);
-                            return SlideTransition(
-                                position:
-                                    animation.status == AnimationStatus.reverse
-                                        ? outAnimation
-                                        : inAnimation,
-                                child: child);
-          },
-          child: Column(
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder:
+                          (Widget child, Animation<double> animation) {
+                        final inAnimation = Tween<Offset>(
+                                begin: const Offset(1.0, 0.0),
+                                end: const Offset(0.0, 0.0))
+                            .animate(animation);
+                        final outAnimation = Tween<Offset>(
+                                begin: const Offset(0.0, 0.0),
+                                end: const Offset(-1.0, 0.0))
+                            .animate(animation);
+                        return SlideTransition(
+                            position:
+                                animation.status == AnimationStatus.reverse
+                                    ? outAnimation
+                                    : inAnimation,
+                            child: child);
+                      },
+                      child: Column(
                         children: [
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 8),
@@ -89,74 +88,78 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           Container(
-                            width: double.infinity,
-                            margin: const EdgeInsets.only(top: 24),
-                            child:  ElevatedButton(
-                              onPressed: () => _signupController.nextStep(),
-                              style: buttonStyles['primary'],
-                              child: const Text("Avançar"),
-                            )
-                          ),
+                              width: double.infinity,
+                              margin: const EdgeInsets.only(top: 24),
+                              child: ElevatedButton(
+                                onPressed: () => _signupController.nextStep(),
+                                style: buttonStyles['primary'],
+                                child: const Text("Avançar"),
+                              )),
                         ],
                       ),
-          ),
+                    ),
                     //index 0
-                      
+
                     // Index 1
-                      Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8),
-                            child: const BazarInput(
-                              placeholder: "Digite sua senha",
-                              formControlName: 'password',
-                              hasBorder: true,
-                            ),
+                    Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          child: const BazarInput(
+                            placeholder: "Digite sua senha",
+                            formControlName: 'password',
+                            hasBorder: true,
                           ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8),
-                            child: const BazarInput(
-                              placeholder: "Repita sua senha",
-                              formControlName: 'password',
-                              hasBorder: true,
-                            ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          child: const BazarInput(
+                            placeholder: "Repita sua senha",
+                            formControlName: 'repeat-password',
+                            hasBorder: true,
                           ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8),
-                            child: const BazarInput(
-                              placeholder: "Qual seu estado?",
-                              formControlName: 'state',
-                              hasBorder: true,
-                            ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          child: const BazarInput(
+                            placeholder: "Qual seu estado?",
+                            formControlName: 'state',
+                            hasBorder: true,
                           ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8),
-                            child: const BazarInput(
-                              placeholder: "Qual sua cidade?",
-                              formControlName: 'city',
-                              hasBorder: true,
-                            ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          child: const BazarInput(
+                            placeholder: "Qual sua cidade?",
+                            formControlName: 'city',
+                            hasBorder: true,
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 24),
-                            width: double.infinity,
-                            child: Flex(
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 24),
+                          width: double.infinity,
+                          child: Flex(
                             direction: Axis.horizontal,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ElevatedButton(onPressed: null, style: buttonStyles['textButton'], child: const Text('Voltar')),
-                              ElevatedButton(onPressed: null, style: buttonStyles['primary'], child: const Text('Cadastrar'))
-                            ],) ,
-                          )
-
-                        ],
-                      ),
+                              ElevatedButton(
+                                  onPressed: _signupController.previousStep,
+                                  style: buttonStyles['textButton'],
+                                  child: const Text('Voltar')),
+                              ElevatedButton(
+                                  onPressed: () => _signupController.onSubmit(context),
+                                  style: buttonStyles['primary'],
+                                  child: const Text('Cadastrar'))
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 );
               },
             ),
           ]),
-        )
-    );
+        ));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:bazar_popular/components/input.dart';
 import 'package:bazar_popular/controllers/login/login_controller.dart';
-import 'package:bazar_popular/pages/login/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:bazar_popular/theme/theme.dart';

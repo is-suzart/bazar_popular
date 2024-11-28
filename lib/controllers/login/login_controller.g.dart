@@ -76,7 +76,7 @@ mixin _$LoginController on LoginControllerStore, Store {
   }
 
   @override
-  void openModalSignUp(dynamic context) {
+  void openModalSignUp(BuildContext context) {
     final _$actionInfo = _$LoginControllerStoreActionController.startAction(
         name: 'LoginControllerStore.openModalSignUp');
     try {
@@ -87,7 +87,7 @@ mixin _$LoginController on LoginControllerStore, Store {
   }
 
   @override
-  void openModalForgotPassword(dynamic context) {
+  void openModalForgotPassword(BuildContext context) {
     final _$actionInfo = _$LoginControllerStoreActionController.startAction(
         name: 'LoginControllerStore.openModalForgotPassword');
     try {

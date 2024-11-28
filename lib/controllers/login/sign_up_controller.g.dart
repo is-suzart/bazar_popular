@@ -49,6 +49,14 @@ mixin _$SignupController on SignupControllerBase, Store {
     });
   }
 
+  late final _$onSubmitAsyncAction =
+      AsyncAction('SignupControllerBase.onSubmit', context: context);
+
+  @override
+  Future<void> onSubmit(BuildContext context) {
+    return _$onSubmitAsyncAction.run(() => super.onSubmit(context));
+  }
+
   late final _$SignupControllerBaseActionController =
       ActionController(name: 'SignupControllerBase', context: context);
 
@@ -80,17 +88,6 @@ mixin _$SignupController on SignupControllerBase, Store {
         name: 'SignupControllerBase.markFieldsAsTouched');
     try {
       return super.markFieldsAsTouched();
-    } finally {
-      _$SignupControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void onSubmit() {
-    final _$actionInfo = _$SignupControllerBaseActionController.startAction(
-        name: 'SignupControllerBase.onSubmit');
-    try {
-      return super.onSubmit();
     } finally {
       _$SignupControllerBaseActionController.endAction(_$actionInfo);
     }
