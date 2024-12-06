@@ -91,7 +91,7 @@ class LoginInfos extends StatelessWidget {
 
   double bazarArtSize(context) {
     if (screenType == 'desktop') {
-      return MediaQuery.of(context).size.width / 3.9;
+      return MediaQuery.of(context).size.width / 4.3;
     } else {
       return MediaQuery.of(context).size.width * 0.6;
     }
