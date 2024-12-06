@@ -1,7 +1,9 @@
+import 'package:bazar_popular/shared/validators/message_error_validator.dart';
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:bazar_popular/helpers/routes.dart';
-import 'package:flutter_web_plugins/url_strategy.dart'; // Adicionar
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:reactive_forms/reactive_forms.dart'; // Adicionar
 
 
 void main() {
@@ -15,11 +17,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return ReactiveFormConfig(
+      validationMessages: errorMessages,
+      child: MaterialApp.router(
       title: 'Bazar Popular',
       theme: bazarPopularTheme,
       routerConfig: router,
       debugShowCheckedModeBanner: false,
-    );
+    ));
   }
 }

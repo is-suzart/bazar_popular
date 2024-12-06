@@ -1,4 +1,3 @@
-import 'package:bazar_popular/shared/validators/message_error_validator.dart';
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -41,7 +40,6 @@ class BazarInput extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodySmall!,
                               )),
                               obscureText: obscureText != null ? obscureText == true : false,
-                              validationMessages: errorMessages,
     );
   }
 }
