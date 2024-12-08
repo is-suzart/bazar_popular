@@ -87,14 +87,16 @@ class UserHeader extends StatelessWidget {
           child: PopupMenuButton(
               tooltip: "Ver carrinho",
               icon: const Icon(Icons.shop_2_outlined),
-              offset: Offset.fromDirection(-100, kToolbarHeight + 45),
+              offset: Offset.fromDirection(-100, kToolbarHeight -15),
+              position: PopupMenuPosition.under,
               itemBuilder: (BuildContext context) => []),
         ),
         Container(
             padding: const EdgeInsets.only(right: 24),
             alignment: Alignment.center,
             child: PopupMenuButton(
-                offset: Offset.fromDirection(-100, kToolbarHeight + 45),
+                offset: Offset.fromDirection(-100, kToolbarHeight -15),
+                position: PopupMenuPosition.under,
                 tooltip: "Ver perfil e opções",
                 onSelected: (String selected) {
                   _headerController.onSelectedUserAction(selected);
