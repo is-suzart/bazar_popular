@@ -13,7 +13,7 @@ ShellRoute(
   routes: [ 
     GoRoute(path: '/', builder: (context, state) => const MyHomePage(title: "home") ), 
     GoRoute(path: '/produto', builder: (context, state) => const Produto() ),
-    GoRoute(path: '/divulgar-produto', builder: (context,state) => const CreateProduct())
+    GoRoute(path: '/divulgar-produto', builder: (context,state) => CreateProduct())
 ]),
     
 ]);

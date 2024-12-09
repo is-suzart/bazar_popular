@@ -10,7 +10,8 @@ class LayoutBazar extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: AdaptiveLayout(
+      child: SelectionArea(
+        child: AdaptiveLayout(
       topNavigation: SlotLayout(
         config: {
           Breakpoints.smallAndUp : SlotLayout.from(
@@ -27,7 +28,7 @@ class LayoutBazar extends StatelessWidget{
               return child;
             })
         } ),
-    ),
+    ))
     );
   }
 }

@@ -90,7 +90,7 @@ class UserHeader extends StatelessWidget {
               offset: Offset.fromDirection(-100, kToolbarHeight -15),
               position: PopupMenuPosition.under,
               onSelected: (String selected) {
-                _headerController.onSelectedProductAction(context, selected);
+                _headerController.onSelectedAction(context, selected);
               } ,
               itemBuilder: (BuildContext context) => [
                 const PopupMenuItem(
@@ -112,7 +112,7 @@ class UserHeader extends StatelessWidget {
                 position: PopupMenuPosition.under,
                 tooltip: "Ver perfil e opções",
                 onSelected: (String selected) {
-                  _headerController.onSelectedUserAction(context,selected);
+                  _headerController.onSelectedAction(context,selected);
                 } ,
                 icon: const Icon(Icons.person_2_rounded),
                 itemBuilder: (BuildContext context) => [
