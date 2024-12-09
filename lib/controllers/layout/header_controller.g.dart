@@ -25,15 +25,42 @@ mixin _$HeaderController on HeaderControllerStore, Store {
     });
   }
 
+  late final _$selectProductActionAtom =
+      Atom(name: 'HeaderControllerStore.selectProductAction', context: context);
+
+  @override
+  String get selectProductAction {
+    _$selectProductActionAtom.reportRead();
+    return super.selectProductAction;
+  }
+
+  @override
+  set selectProductAction(String value) {
+    _$selectProductActionAtom.reportWrite(value, super.selectProductAction, () {
+      super.selectProductAction = value;
+    });
+  }
+
   late final _$HeaderControllerStoreActionController =
       ActionController(name: 'HeaderControllerStore', context: context);
 
   @override
-  dynamic onSelectedUserAction(String item) {
+  dynamic onSelectedUserAction(BuildContext context, String item) {
     final _$actionInfo = _$HeaderControllerStoreActionController.startAction(
         name: 'HeaderControllerStore.onSelectedUserAction');
     try {
-      return super.onSelectedUserAction(item);
+      return super.onSelectedUserAction(context, item);
+    } finally {
+      _$HeaderControllerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic onSelectedProductAction(BuildContext context, String item) {
+    final _$actionInfo = _$HeaderControllerStoreActionController.startAction(
+        name: 'HeaderControllerStore.onSelectedProductAction');
+    try {
+      return super.onSelectedProductAction(context, item);
     } finally {
       _$HeaderControllerStoreActionController.endAction(_$actionInfo);
     }
@@ -42,7 +69,8 @@ mixin _$HeaderController on HeaderControllerStore, Store {
   @override
   String toString() {
     return '''
-selectedUserAction: ${selectedUserAction}
+selectedUserAction: ${selectedUserAction},
+selectProductAction: ${selectProductAction}
     ''';
   }
 }

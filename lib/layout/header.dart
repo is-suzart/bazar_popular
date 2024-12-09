@@ -89,6 +89,9 @@ class UserHeader extends StatelessWidget {
               icon: const Icon(Icons.shop_2_outlined),
               offset: Offset.fromDirection(-100, kToolbarHeight -15),
               position: PopupMenuPosition.under,
+              onSelected: (String selected) {
+                _headerController.onSelectedProductAction(context, selected);
+              } ,
               itemBuilder: (BuildContext context) => [
                 const PopupMenuItem(
                           value: 'ver-carrinho',
@@ -109,7 +112,7 @@ class UserHeader extends StatelessWidget {
                 position: PopupMenuPosition.under,
                 tooltip: "Ver perfil e opções",
                 onSelected: (String selected) {
-                  _headerController.onSelectedUserAction(selected);
+                  _headerController.onSelectedUserAction(context,selected);
                 } ,
                 icon: const Icon(Icons.person_2_rounded),
                 itemBuilder: (BuildContext context) => [
@@ -137,7 +140,6 @@ class HeaderActionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Row(
       children: [
         Container(
