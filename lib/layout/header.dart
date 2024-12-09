@@ -89,7 +89,17 @@ class UserHeader extends StatelessWidget {
               icon: const Icon(Icons.shop_2_outlined),
               offset: Offset.fromDirection(-100, kToolbarHeight -15),
               position: PopupMenuPosition.under,
-              itemBuilder: (BuildContext context) => []),
+              itemBuilder: (BuildContext context) => [
+                const PopupMenuItem(
+                          value: 'ver-carrinho',
+                          child: HeaderActionItem(icon: Icons.shopping_cart_rounded, label: "Ver carrinho")),
+                const PopupMenuItem(
+                          value: 'divulgar-produto',
+                          child: HeaderActionItem(icon: Icons.add_business_rounded, label: "Divulgar produto")),
+                const PopupMenuItem(
+                          value: 'ver-carrinho',
+                          child: HeaderActionItem(icon: Icons.shopping_cart_rounded, label: "Ver carrinho")),
+              ]),
         ),
         Container(
             padding: const EdgeInsets.only(right: 24),
@@ -105,14 +115,40 @@ class UserHeader extends StatelessWidget {
                 itemBuilder: (BuildContext context) => [
                       const PopupMenuItem(
                           value: 'meu-perfil',
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [Icon(Icons.person), Text("Meu perfil")],
-                          ))
+                          child: HeaderActionItem(icon: Icons.person_2_rounded, label: "Meu perfil")),
+                                                const PopupMenuItem(
+                          value: 'meus-produtos',
+                          child: HeaderActionItem(icon: Icons.business_center_rounded, label: "Meus Produtos")),
+                          const PopupMenuItem(
+                            value: 'logout',
+                            child: HeaderActionItem(icon: Icons.logout_rounded, label: "Sair da conta"))
                     ])),
       ],
     ).withGridPlacement(columnSpan: 2, columnStart: 10, rowStart: 0);
   }
+}
+
+
+class HeaderActionItem extends StatelessWidget {
+  const HeaderActionItem({super.key,required this.icon,required this.label});
+  final IconData icon;
+  final String label;
+
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Row(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(right: 8),
+          child: Icon(icon,color: primaryColor),
+        ),
+        Text(label,style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w700),)
+      ],
+    );
+  }
+
 }
 /*
 
