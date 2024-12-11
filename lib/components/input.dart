@@ -9,7 +9,7 @@ class BazarInput extends StatelessWidget {
   final void Function(String)? onchaged;
   final Icon? prefixIcon;
   final bool? hasBorder;
-  final MaskTextInputFormatter? inputFormatter;
+  final dynamic inputFormatter;
   final String? formControlName;
   final String? errorText;
   final Widget? suffixIcon;
