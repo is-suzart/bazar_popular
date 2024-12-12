@@ -48,6 +48,7 @@ dependencies:
   http: ^1.2.2
   shared_preferences: ^2.3.3
   quickalert: ^1.1.0
+  expandable: ^5.0.1
 
 dependency_overrides:
   http: ^0.13.0
@@ -80,6 +81,9 @@ flutter:
   assets:
     - assets/
     - assets/logo-bp.png
+    - assets/arts/event.png
+    - assets/arts/rifa.png
+    - assets/arts/product.png
     #- images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

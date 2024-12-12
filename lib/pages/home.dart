@@ -55,16 +55,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: const [
                         BazarCard(
                             img:
-                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas"),
+                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas",title: "Rifa do MLC coisa linda demais!",),
                         BazarCard(
                             img:
-                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas"),
+                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas",title: "Rifa do MLC coisa linda demais!",),
                         BazarCard(
                             img:
-                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas"),
+                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas",title: "Rifa do MLC coisa linda demais!",),
                         BazarCard(
                             img:
-                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas")
+                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas",title: "Rifa do MLC coisa linda demais!",)
                       ],
                     ))
                   ]),

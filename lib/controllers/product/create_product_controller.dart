@@ -17,7 +17,6 @@ var form = FormGroup({
   'value': FormControl<String>(validators: [Validators.required])
 });
 
-@computed
 final currencyMaskFormatter = MaskTextInputFormatter(
   initialText: '0,00',
   mask: 'R\$ ###.###.###,##',
