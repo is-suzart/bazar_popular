@@ -1,5 +1,6 @@
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 class BazarCard extends StatelessWidget {
   const BazarCard({super.key, required this.img,required this.title});
 
@@ -85,7 +86,7 @@ class BazarCard extends StatelessWidget {
 
 class BazarInfoCard extends StatelessWidget {
   const BazarInfoCard({super.key, this.onTap,required this.image, required this.title});
-  final void onTap;
+  final VoidCallback? onTap;
   final String image;
   final String title;
   @override
@@ -94,9 +95,9 @@ class BazarInfoCard extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => onTap,
+        onTap: onTap,
         child: Card(
-          shadowColor: Color(0xFF747474),
+          //shadowColor: Color(0xFF747474),
           child: Container(
             padding: const EdgeInsets.all(16),
             child: Column(

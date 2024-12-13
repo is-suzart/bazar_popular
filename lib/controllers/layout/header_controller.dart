@@ -10,12 +10,7 @@ abstract class HeaderControllerStore with Store {
 
   @action
   onSelectedAction(BuildContext context, String item) {
-    try {
-      context.go("/$item");
-    }
-    catch (err) {
-      print(err);
-    }
+    context.go("/$item");
   }
 
 

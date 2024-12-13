@@ -97,7 +97,7 @@ class UserHeader extends StatelessWidget {
                           value: 'ver-carrinho',
                           child: HeaderActionItem(icon: Icons.shopping_cart_rounded, label: "Ver carrinho")),
                 const PopupMenuItem(
-                          value: 'divulgar-produto',
+                          value: 'divulgar',
                           child: HeaderActionItem(icon: Icons.add_business_rounded, label: "Divulgar produto")),
                 const PopupMenuItem(
                           value: 'ver-carrinho',
