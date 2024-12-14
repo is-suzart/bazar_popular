@@ -12,9 +12,13 @@ abstract class CreateProductControllerStore with Store {
 
 @observable
 var form = FormGroup({
+  'subtitle': FormControl<String>(validators: [Validators.required]),
   'name': FormControl<String>(validators: [Validators.required]),
   'description': FormControl<String>(validators: [Validators.required]),
-  'value': FormControl<String>(validators: [Validators.required])
+  'value': FormControl<String>(validators: [Validators.required]),
+  'is-promo': FormControl<bool>(value: false),
+  'quantidade-promo': FormControl<String>(validators: []),
+  'value-promo': FormControl<String>(validators: []),
 });
 
 final currencyMaskFormatter = MaskTextInputFormatter(

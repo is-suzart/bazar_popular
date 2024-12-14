@@ -1,6 +1,5 @@
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 class BazarCard extends StatelessWidget {
   const BazarCard({super.key, required this.img,required this.title});
 
