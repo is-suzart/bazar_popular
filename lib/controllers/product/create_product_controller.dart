@@ -1,8 +1,8 @@
 
 
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:mobx/mobx.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:bazar_popular/shared/pipes/currency_mask_pipe.dart';
 part 'create_product_controller.g.dart';
 
 
@@ -17,16 +17,12 @@ var form = FormGroup({
   'description': FormControl<String>(validators: [Validators.required]),
   'value': FormControl<String>(validators: [Validators.required]),
   'is-promo': FormControl<bool>(value: false),
-  'quantidade-promo': FormControl<String>(validators: []),
+  'quantidade-promo': FormControl<int>(validators: []),
   'value-promo': FormControl<String>(validators: []),
+  'storage': FormControl<int>(validators: [])
 });
 
-final currencyMaskFormatter = MaskTextInputFormatter(
-  initialText: '0,00',
-  mask: 'R\$ ###.###.###,##',
-  filter: {"#": RegExp(r'[0-9]')},
-  type: MaskAutoCompletionType.lazy,
-);
+final currencyMaskFormatter = CurrencyInputFormatter();
 
 @computed
 bool get isFormValid => form.valid;
