@@ -58,8 +58,8 @@ class CreateProductStepOne extends StatelessWidget {
       rowSizes: [1.0.fr],
       children: [
         BazarInfoCard(image: "assets/arts/product.png", title: "Produto",onTap: _bazarGo.onTapGo(context, "/divulgar/produto")),
-        BazarInfoCard(image: "assets/arts/rifa.png", title: "Rifa",onTap: null,),
-        BazarInfoCard(image: "assets/arts/event.png", title: "Evento",onTap: null,),
+        BazarInfoCard(image: "assets/arts/rifa.png", title: "Rifa",onTap: _bazarGo.onTapGo(context, "/divulgar/rifa"),),
+        BazarInfoCard(image: "assets/arts/event.png", title: "Evento",onTap: _bazarGo.onTapGo(context, "/divulgar/evento"),),
       ],
       )),
       

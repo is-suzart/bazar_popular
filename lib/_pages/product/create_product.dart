@@ -1,6 +1,7 @@
 import 'package:bazar_popular/components/input.dart';
-import 'package:bazar_popular/controllers/product/create_product_controller.dart';
+import 'package:bazar_popular/_controllers/product/create_product_controller.dart';
 import 'package:bazar_popular/helpers/go.dart';
+import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,9 @@ class CreateProduct extends StatelessWidget {
   CreateProduct({super.key});
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?; 
+    final tipo = arguments?['tipo'];
+    CreateProductFormModel formContent = _createProductController.buildForm(tipo);
     return SingleChildScrollView(
       child: Container(
       padding: const EdgeInsets.symmetric(vertical: 36,horizontal: 48),
@@ -24,7 +28,7 @@ class CreateProduct extends StatelessWidget {
         child: Column(
           children: [
             Text("camarada!",style: Theme.of(context).textTheme.headlineSmall),
-            Text("Qual o seu fantástico produto?",style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: primaryColor),)
+            Text(formContent.title,style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: primaryColor),)
           ],
         ),
       ),
@@ -33,15 +37,15 @@ class CreateProduct extends StatelessWidget {
         children: [
           Container(
             margin: inputPadding,
-            child: BazarInput(placeholder: "Subtitulo do produto",formControlName: "subtitle",),
+            child: BazarInput(placeholder: formContent.subtitle,formControlName: "subtitle",),
           ),
           Container(
             margin: inputPadding,
-            child: BazarInput(placeholder: "Nome do produto",formControlName: "name",),
+            child: BazarInput(placeholder: formContent.name,formControlName: "name",),
           ),
           Container(
             margin: inputPadding,
-            child: BazarInput(placeholder: "Valor do produto",formControlName: "value",inputFormatter: _createProductController.currencyMaskFormatter,),
+            child: BazarInput(placeholder: formContent.value,formControlName: "value",inputFormatter: _createProductController.currencyMaskFormatter,),
           ),
           Container(
             margin: inputPadding,
@@ -53,7 +57,7 @@ class CreateProduct extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(left: 16),
-              child: Text("Tem valor promocional?",style: Theme.of(context).textTheme.bodySmall!.copyWith(color: blackColor),),
+              child: Text(formContent.isPromo,style: Theme.of(context).textTheme.bodySmall!.copyWith(color: blackColor),),
             )
               ],
             )
@@ -65,17 +69,22 @@ class CreateProduct extends StatelessWidget {
                   children: [
             Container(
               margin: inputPadding,
-              child: BazarInput(placeholder: "Quantidade para promoção (ex: 4 unidades por R\$30)",formControlName: "quantidade-promo",inputFormatter: FilteringTextInputFormatter.digitsOnly,),
+              child: BazarInput(placeholder: formContent.quantidadePromo,formControlName: "quantidade-promo",inputFormatter: FilteringTextInputFormatter.digitsOnly,),
             ),
             Container(
               margin: inputPadding,
-              child: BazarInput(placeholder: "Valor Promocional",formControlName: "value-promo",inputFormatter: _createProductController.currencyMaskFormatter,),
+              child: BazarInput(placeholder: formContent.valuePromo,formControlName: "value-promo",inputFormatter: _createProductController.currencyMaskFormatter,),
             )
                   ],): Container();
             }, ),
                         Container(
               margin: inputPadding,
-              child: BazarInput(placeholder: "Quantos itens estão disponíveis no total?",formControlName: "storage",inputFormatter: FilteringTextInputFormatter.digitsOnly,),
+              child: BazarInput(placeholder: formContent.storage,formControlName: "storage",inputFormatter: FilteringTextInputFormatter.digitsOnly,),
+            ),
+            if(formContent.place != null)
+            Container(
+              margin: inputPadding,
+              child: BazarInput(placeholder: formContent.place!,formControlName: "place",),
             ),
             Container(
               margin: inputPadding,

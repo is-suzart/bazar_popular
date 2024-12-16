@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
-import 'package:bazar_popular/controllers/layout/header_controller.dart';
+import 'package:bazar_popular/_controllers/layout/header_controller.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});

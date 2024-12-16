@@ -1,9 +1,9 @@
 import 'package:bazar_popular/layout/layout.dart';
-import 'package:bazar_popular/pages/home.dart';
-import 'package:bazar_popular/pages/login/login.dart';
-import 'package:bazar_popular/pages/product/create_product.dart';
-import 'package:bazar_popular/pages/produto.dart';
-import 'package:bazar_popular/pages/product/create_shell.dart';
+import 'package:bazar_popular/_pages/home.dart';
+import 'package:bazar_popular/_pages/login/login.dart';
+import 'package:bazar_popular/_pages/product/create_product.dart';
+import 'package:bazar_popular/_pages/produto.dart';
+import 'package:bazar_popular/_pages/product/create_shell.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(routes: <RouteBase>[
@@ -18,7 +18,7 @@ ShellRoute(
       builder: (context,state,child) => CreateProductShell(child:child),
       routes: [
         GoRoute(path: '/divulgar', builder: (context,state) => CreateProductStepOne()),
-        GoRoute(path: '/divulgar/produto', builder: (context,state) => CreateProduct())
+        GoRoute(path: '/divulgar/:tipo', builder: (context,state) => CreateProduct())
     ])
     
 ]),
