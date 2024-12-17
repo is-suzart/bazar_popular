@@ -1,6 +1,7 @@
 
 
 import 'package:bazar_popular/models/product_models.dart';
+import 'package:bazar_popular/services/product_service.dart';
 import 'package:mobx/mobx.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:bazar_popular/shared/pipes/currency_mask_pipe.dart';
@@ -21,6 +22,7 @@ var form = FormGroup({
   'value-promo': FormControl<String>(validators: []),
   'storage': FormControl<int>(validators: []),
   'place': FormControl<String>(validators: []),
+  'type': FormControl<String>(validators: [Validators.required]),
 });
 
 late CreateProductFormModel frontForm;
@@ -37,6 +39,7 @@ CreateProductFormModel buildForm(String type) {
       quantidadePromo: "Quantidade para promoção (ex: 4 números por R\$30)", 
       valuePromo: "Valor Promocional", 
       storage: "Números totais da rifa");
+      form.control('type').value = "rifa";
     break;
     case 'produto': 
     frontForm = CreateProductFormModel(
@@ -48,6 +51,7 @@ CreateProductFormModel buildForm(String type) {
       quantidadePromo: "Quantidade para promoção (ex: 4 produtos por R\$30)", 
       valuePromo: "Valor Promocional", 
       storage: "Quantos itens estão disponíveis no total?");
+      form.control('type').value = "produto";
     break;
     case 'evento': 
     frontForm = CreateProductFormModel(
@@ -60,6 +64,7 @@ CreateProductFormModel buildForm(String type) {
       valuePromo: "Valor Promocional", 
       storage: "Quantos ingressos estão disponíveis no total?",
       place: "Onde vai ser o evento?");
+      form.control('type').value = "evento";
     break;
   }
   return frontForm;
@@ -75,5 +80,19 @@ void markFieldsAsTouched() {
   form.markAllAsTouched();
 }
 
+@action
+void onSubmit () async {
+  if (form.valid) {
+    //final prefs = await SharedPreferences.getInstance('');
+      final finalValues = CreateProductModel.fromJson({
+        ...form.value,
+        'userId': '12345'
+      });
+      ProductService().CreateProduct(finalValues);
+    } else {
+      print('O formulário possui erros.');
+      form.markAllAsTouched(); // Marca os campos inválidos
+    }
+}
 
 }

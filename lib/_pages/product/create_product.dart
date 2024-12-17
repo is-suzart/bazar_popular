@@ -94,7 +94,9 @@ class CreateProduct extends StatelessWidget {
                   children: [
                     Expanded(child: ElevatedButton(onPressed: _bazarGo.onTapGo(context,'/divulgar'),style: buttonStyles['textButton'], child: Text("Voltar"),)),
                     const SizedBox(width: 16),
-                    Expanded(child: ElevatedButton(onPressed: (){},style: buttonStyles['primary'], child: const Text("Avançar"),))
+                    Expanded(child: ElevatedButton(onPressed: () => _createProductController.onSubmit()
+                    ,
+                    style: buttonStyles['primary'], child: const Text("Avançar"),))
                   ],
                 )),
             )
