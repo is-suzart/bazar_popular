@@ -1,7 +1,7 @@
-import 'package:bazar_popular/components/input.dart';
+import 'package:bazar_popular/shared/components/input.dart';
 import 'package:bazar_popular/_controllers/login/sign_up_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:bazar_popular/theme/theme.dart';
+import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 

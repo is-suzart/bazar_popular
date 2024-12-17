@@ -1,6 +1,6 @@
-import 'package:bazar_popular/components/card.dart';
-import 'package:bazar_popular/helpers/go.dart';
-import 'package:bazar_popular/theme/theme.dart';
+import 'package:bazar_popular/shared/components/card.dart';
+import 'package:bazar_popular/shared/helpers/go.dart';
+import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 

@@ -1,4 +1,4 @@
-import 'package:bazar_popular/theme/theme.dart';
+import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 class BazarCard extends StatelessWidget {
   const BazarCard({super.key, required this.img,required this.title});

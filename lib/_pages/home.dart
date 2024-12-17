@@ -1,5 +1,5 @@
 
-import 'package:bazar_popular/components/card.dart';
+import 'package:bazar_popular/shared/components/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 

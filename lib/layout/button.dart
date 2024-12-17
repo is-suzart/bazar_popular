@@ -1,4 +1,4 @@
-import 'package:bazar_popular/theme/theme.dart';
+import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class BazarButton {

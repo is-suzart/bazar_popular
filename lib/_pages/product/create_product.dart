@@ -1,8 +1,8 @@
-import 'package:bazar_popular/components/input.dart';
+import 'package:bazar_popular/shared/components/input.dart';
 import 'package:bazar_popular/_controllers/product/create_product_controller.dart';
-import 'package:bazar_popular/helpers/go.dart';
+import 'package:bazar_popular/shared/helpers/go.dart';
 import 'package:bazar_popular/models/product_models.dart';
-import 'package:bazar_popular/theme/theme.dart';
+import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:reactive_forms/reactive_forms.dart';
