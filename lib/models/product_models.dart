@@ -22,12 +22,13 @@ class CreateProductModel {
   final bool isPromo;
   final int? promotionalAmount;
   final String? promotionalPrice;
-  final String type;
+  final String productType;
+  final int storage;
   final String? place;
 
-  CreateProductModel({required this.userId,required this.subtitle, required this.name, required this.price, required this.isPromo, required this.promotionalAmount, required this.promotionalPrice, required this.type, required this.place});
+  CreateProductModel({required this.userId,required this.subtitle, required this.name, required this.price, required this.isPromo, this.promotionalAmount, this.promotionalPrice, required this.productType, required this.storage, this.place});
 
-  factory CreateProductModel.fromJson(Map<String, dynamic> json) {
+  factory CreateProductModel.fromJson(Map<String?, dynamic> json) {
     return CreateProductModel(
       userId: json['userId'] as String,
       subtitle: json['subtitle'] as String,
@@ -36,9 +37,28 @@ class CreateProductModel {
       isPromo: json['is-promo'] as bool,
       promotionalAmount: json['quantidade-promo'] as int?,
       promotionalPrice: json['value-promo'] as String?,
-      type: json['type'] as String,
+      storage: json['storage'] as int,
+      productType: json['type'] as String,
       place: json['place'] as String?,
     );
+  }
+
+
+  Map<String, dynamic> toJson() {
+    return {
+      'user_id': userId,
+      'info': {
+        'subtitle': subtitle,
+        'title': name,
+        'price': price,
+        'have_promotion': isPromo,
+        'promotional_amount': promotionalAmount,
+        'promotional_price': promotionalPrice,
+        'product_type': productType,
+        'place': place,
+      },
+      'storage': storage,
+    };
   }
 
 

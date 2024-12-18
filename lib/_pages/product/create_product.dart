@@ -52,7 +52,7 @@ class CreateProduct extends StatelessWidget {
             child: Row(
               children: [
                 ReactiveCheckbox(
-              formControlName: 'is-promo',
+              formControlName: 'isPromo',
               //fillColor: const WidgetStatePropertyAll(primaryColor),
             ),
             Container(
@@ -63,17 +63,17 @@ class CreateProduct extends StatelessWidget {
             )
           ),
           ReactiveValueListenableBuilder<bool>( 
-            formControlName: 'is-promo', builder: (context, control, child) { 
+            formControlName: 'isPromo', builder: (context, control, child) { 
               return control.value == true ? 
             Column(
                   children: [
             Container(
               margin: inputPadding,
-              child: BazarInput(placeholder: formContent.quantidadePromo,formControlName: "quantidade-promo",inputFormatter: FilteringTextInputFormatter.digitsOnly,),
+              child: BazarInput(placeholder: formContent.quantidadePromo,formControlName: "quantidadePromo",inputFormatter: FilteringTextInputFormatter.digitsOnly,),
             ),
             Container(
               margin: inputPadding,
-              child: BazarInput(placeholder: formContent.valuePromo,formControlName: "value-promo",inputFormatter: _createProductController.currencyMaskFormatter,),
+              child: BazarInput(placeholder: formContent.valuePromo,formControlName: "valuePromo",inputFormatter: _createProductController.currencyMaskFormatter,),
             )
                   ],): Container();
             }, ),

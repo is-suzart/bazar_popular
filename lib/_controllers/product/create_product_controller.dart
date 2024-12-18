@@ -2,6 +2,7 @@
 
 import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/services/product_service.dart';
+import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:mobx/mobx.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:bazar_popular/shared/pipes/currency_mask_pipe.dart';
@@ -13,13 +14,13 @@ class CreateProductController = CreateProductControllerStore with _$CreateProduc
 abstract class CreateProductControllerStore with Store {
 
 @observable
-var form = FormGroup({
+FormGroup form = FormGroup({
   'subtitle': FormControl<String>(validators: [Validators.required]),
   'name': FormControl<String>(validators: [Validators.required]),
   'value': FormControl<String>(validators: [Validators.required]),
-  'is-promo': FormControl<bool>(value: false),
-  'quantidade-promo': FormControl<int>(validators: []),
-  'value-promo': FormControl<String>(validators: []),
+  'isPromo': FormControl<bool>(value: false),
+  'quantidadePromo': FormControl<int>(validators: []),
+  'valuePromo': FormControl<String>(validators: []),
   'storage': FormControl<int>(validators: []),
   'place': FormControl<String>(validators: []),
   'type': FormControl<String>(validators: [Validators.required]),
@@ -82,13 +83,19 @@ void markFieldsAsTouched() {
 
 @action
 void onSubmit () async {
+  final String userId = await getInstace('user_id');
   if (form.valid) {
-    //final prefs = await SharedPreferences.getInstance('');
-      final finalValues = CreateProductModel.fromJson({
-        ...form.value,
-        'userId': '12345'
-      });
-      ProductService().CreateProduct(finalValues);
+        final formValues = CreateProductModel(
+    userId: userId, 
+    subtitle: form.control('subtitle').value, 
+    name: form.control('name').value, 
+    price: form.control('value').value, 
+    isPromo: form.control('isPromo').value, 
+    productType: form.control('type').value, 
+    storage: form.control('storage').value,
+    place: form.control('place').value
+    );
+      ProductService().CreateProduct(formValues);
     } else {
       print('O formulário possui erros.');
       form.markAllAsTouched(); // Marca os campos inválidos
