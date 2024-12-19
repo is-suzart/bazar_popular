@@ -33,6 +33,14 @@ mixin _$CreateProductController on CreateProductControllerStore, Store {
     });
   }
 
+  late final _$onSubmitAsyncAction =
+      AsyncAction('CreateProductControllerStore.onSubmit', context: context);
+
+  @override
+  Future<void> onSubmit(BuildContext context) {
+    return _$onSubmitAsyncAction.run(() => super.onSubmit(context));
+  }
+
   late final _$CreateProductControllerStoreActionController =
       ActionController(name: 'CreateProductControllerStore', context: context);
 

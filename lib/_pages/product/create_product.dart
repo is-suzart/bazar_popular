@@ -1,5 +1,5 @@
 import 'package:bazar_popular/shared/components/input.dart';
-import 'package:bazar_popular/_controllers/product/create_product_controller.dart';
+import 'package:bazar_popular/_controllers/product/create/create_product_controller.dart';
 import 'package:bazar_popular/shared/helpers/go.dart';
 import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
@@ -94,7 +94,7 @@ class CreateProduct extends StatelessWidget {
                   children: [
                     Expanded(child: ElevatedButton(onPressed: _bazarGo.onTapGo(context,'/divulgar'),style: buttonStyles['textButton'], child: Text("Voltar"),)),
                     const SizedBox(width: 16),
-                    Expanded(child: ElevatedButton(onPressed: () => _createProductController.onSubmit()
+                    Expanded(child: ElevatedButton(onPressed: () => _createProductController.onSubmit(context)
                     ,
                     style: buttonStyles['primary'], child: const Text("Avançar"),))
                   ],

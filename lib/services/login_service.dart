@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:bazar_popular/models/reponse_models.dart';
+import 'package:bazar_popular/models/res/base_model.dart';
+import 'package:bazar_popular/models/res/reponse_models.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -13,3 +13,13 @@ void openErrorDialog(BuildContext context,String text) {
       cancelBtnTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white)
     );
   }
+void openInfoDialog(BuildContext context, String text, String title, VoidCallback action) {
+  QuickAlert.show(context: context, 
+  type: QuickAlertType.info,
+  text: text,
+  title: title,
+  confirmBtnColor: primaryColor,
+  confirmBtnText: "Avançar",
+  onConfirmBtnTap: action
+  );
+}

@@ -1,4 +1,4 @@
-import 'package:bazar_popular/models/reponse_models.dart';
+import 'package:bazar_popular/models/res/reponse_models.dart';
 import 'package:bazar_popular/_pages/login/forgot_password.dart';
 import 'package:bazar_popular/_pages/login/signup.dart';
 import 'package:bazar_popular/shared/state_dialogs.dart';

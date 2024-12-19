@@ -1,55 +1,60 @@
+import 'package:bazar_popular/_controllers/product/upload/upload_product_controller.dart';
+import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
-class UploadProduct extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => UploadState();
-}
+class UploadProduct extends StatelessWidget {
+  UploadProduct({super.key});
 
-class UploadState extends State<UploadProduct> {
-  final QuillController _controller = QuillController.basic();
-  String _p = "";
+  final _uploadController = UploadProductController();
+
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Column(
+    return SingleChildScrollView(
+      child: Column(
       children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: QuillSimpleToolbar(
-            controller: _controller,
-            configurations: const QuillSimpleToolbarConfigurations(
-                showBackgroundColorButton: false,
-                showCodeBlock: false,
-                showColorButton: false,
-                showFontFamily: false,
-                showFontSize: false,
-                showInlineCode: false,
-                showSubscript: false,
-                showSuperscript: false,
-                showClearFormat: false,
-                showSearchButton: false,
-                showStrikeThrough: false,
-                showIndent: false,
-                headerStyleType: HeaderStyleType.buttons),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 24),
+          child: Column(
+            children: [
+              Text("Falta pouco",style: Theme.of(context).textTheme.headlineSmall,),
+              Text("Esta é a última etapa camarada!", style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: primaryColor),),
+            ],
           ),
         ),
-        const Divider(),
-        QuillEditor.basic(
-          controller: _controller,
-          configurations: const QuillEditorConfigurations(),
+        Container(
+          margin: const EdgeInsets.only(bottom: 16,top: 16),
+          child: Text("Insira a descrição",style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
         ),
-        const Divider(),
-        ElevatedButton(
-            onPressed: () {
-              print(_controller.document.toDelta());
-              setState(() {
-                _p = _controller.document.toPlainText();
-              });
-            },
-            child: Text("veja e verá")),
-        Text(_p),
+        Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF9C9C9C).withOpacity(0.01),
+            borderRadius: BorderRadius.circular(16)
+          ),
+          child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: QuillSimpleToolbar(
+            controller: _uploadController.controller,
+            configurations: _uploadController.toolbarConfig,
+          ),
+        ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Expanded(
+            child: QuillEditor.basic(
+          controller: _uploadController.controller,
+          
+          configurations: const QuillEditorConfigurations(
+            placeholder: "Insira uma descrição",
+            
+          ),
+          ),
+          )
+        ),
       ],
+    ),
     );
   }
 }

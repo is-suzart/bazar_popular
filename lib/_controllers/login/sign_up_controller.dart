@@ -1,4 +1,4 @@
-import 'package:bazar_popular/models/reponse_models.dart';
+import 'package:bazar_popular/models/res/reponse_models.dart';
 import 'package:bazar_popular/shared/state_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
