@@ -11,6 +11,7 @@ class UploadProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -38,6 +39,8 @@ class UploadProduct extends StatelessWidget {
           */
           Container(
             margin: const EdgeInsets.symmetric(vertical: 24),
+            width: screenWidth * 0.4,
+            alignment: Alignment.center,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -121,6 +124,8 @@ class UploadProduct extends StatelessWidget {
 
           Container(
             margin: const EdgeInsets.only(top: 24,bottom: 12),
+            width: screenWidth * 0.4,
+            alignment: Alignment.center,
             child: Text("Qual o tipo de chave pix?",
                 style: Theme.of(context)
                     .textTheme
@@ -129,6 +134,8 @@ class UploadProduct extends StatelessWidget {
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 16),
+            width: screenWidth * 0.4,
+            alignment: Alignment.center,
             child: DropdownButtonFormField(
               items: _uploadController.dropdownItems, 
               onChanged: (value) => _uploadController.setChavePix = value!,
@@ -164,6 +171,8 @@ class UploadProduct extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.bold)),
           ),
           Container(
+            width: screenWidth * 0.4,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
                 color: const Color(0xFF9C9C9C).withOpacity(0.01),
                 borderRadius: BorderRadius.circular(16)),
@@ -176,6 +185,11 @@ class UploadProduct extends StatelessWidget {
             ),
           ),
           Container(
+            width: screenWidth * 0.4,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: const Color(0xFF9C9C9C).withOpacity(0.01),
+                borderRadius: BorderRadius.circular(16)),
               child: QuillEditor.basic(
                 
                   controller: _uploadController.controller,
