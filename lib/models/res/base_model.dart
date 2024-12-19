@@ -22,3 +22,11 @@ class ErrorResponse{
         );
     }
 }
+
+
+class PixKeyType {
+  final String label;
+  final String value;
+
+  PixKeyType({required this.label, required this.value});
+}
