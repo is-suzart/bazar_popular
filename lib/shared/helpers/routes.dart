@@ -20,7 +20,7 @@ ShellRoute(
       routes: [
         GoRoute(path: '/divulgar', builder: (context,state) => CreateProductStepOne()),
         GoRoute(path: '/divulgar/:tipo', builder: (context,state) => CreateProduct()),
-        GoRoute(path: '/divulgar/:tipo/finalizar', builder: (context,state) => UploadProduct()),
+        GoRoute(path: '/divulgar/:tipo/finalizar/:id', builder: (context,state) => UploadProduct()),
 
     ])
     

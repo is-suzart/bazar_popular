@@ -105,6 +105,7 @@ Future<void> onSubmit (BuildContext context) async {
     );
       final CreateProductResult result = await ProductService().createProduct(formValues);
       if(result.isSuccess){
+        print(result.success);
         openInfoDialog(
           context, 
         "Mas ainda falta uma última etapa camarada! vamos terminar de customizar nosso produto revolucionário!", 

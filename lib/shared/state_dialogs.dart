@@ -1,5 +1,6 @@
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quickalert/quickalert.dart';
 
 void openErrorDialog(BuildContext context,String text) {
@@ -13,13 +14,16 @@ void openErrorDialog(BuildContext context,String text) {
       cancelBtnTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white)
     );
   }
-void openInfoDialog(BuildContext context, String text, String title, VoidCallback action) {
+void openInfoDialog(BuildContext context, String text, String title, Function action) {
   QuickAlert.show(context: context, 
   type: QuickAlertType.info,
   text: text,
   title: title,
   confirmBtnColor: primaryColor,
   confirmBtnText: "Avançar",
-  onConfirmBtnTap: action
+  onConfirmBtnTap: () {
+    context.pop(context);
+    action();
+  }
   );
 }
