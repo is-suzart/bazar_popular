@@ -53,6 +53,7 @@ dependencies:
   flutter_quill: ^10.8.5
   image_picker: ^1.1.2
   image_picker_for_web: ^3.0.6
+  dio: ^5.7.0
 
 dependency_overrides:
   http: ^0.13.0

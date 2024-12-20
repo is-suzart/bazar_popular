@@ -1,4 +1,6 @@
 import 'package:bazar_popular/_controllers/product/upload/upload_product_controller.dart';
+import 'package:bazar_popular/models/res/base_model.dart';
+import 'package:bazar_popular/shared/pipes/generic_input_mask.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -98,11 +100,11 @@ class UploadProduct extends StatelessWidget {
                                     _uploadController.imageNames[index],
                                     style: Theme.of(context).textTheme.bodyMedium,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   IconButton(onPressed: () {
                                     _uploadController.removeImageByIndex(index);
                                   }, 
-                                  icon: Icon(Icons.delete, color: Colors.red))
+                                  icon: const Icon(Icons.delete, color: Colors.red))
                                     ],
                                   ),
                                 );
@@ -137,17 +139,59 @@ class UploadProduct extends StatelessWidget {
             width: screenWidth * 0.4,
             alignment: Alignment.center,
             child: DropdownButtonFormField(
-              items: _uploadController.dropdownItems, 
-              onChanged: (value) => _uploadController.setChavePix = value!,
+              items: _uploadController.tiposChavePix.map((PixKeyType type) {
+                return DropdownMenuItem<String>(
+                  value: type.value,
+                  child: Text(type.label,style: Theme.of(context).textTheme.bodySmall,),
+                );
+              }).toList(), 
+              onChanged: (value) {
+                _uploadController.setChavePix = value!;
+                _uploadController.pixInputController.clear();
+              },
               value: _uploadController.chavePix,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(width: 1.0, color: Color(0x4C9C9C9C), strokeAlign: BorderSide.strokeAlignInside),borderRadius: BorderRadius.circular(8),
                 ),
                 contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24), fillColor: backgroundColor, filled: true,
-                prefixIcon: const Icon(Icons.pix_rounded)
+                prefixIcon: const Icon(Icons.pix_rounded),
+                label: Text("Qual o tipo da chave pix?",style: Theme.of(context).textTheme.bodySmall)
               ),
               )
+          ),
+          Container(
+            width: screenWidth * 0.4,
+            alignment: Alignment.center,
+            child: Observer(builder: (_) {
+                return TextField(
+                  controller: _uploadController.pixInputController,
+                  onChanged: (value) => _uploadController.setChavePixValue = value,
+
+                  inputFormatters: _uploadController.chavePix == "cpf" ? [cpfMaskFormatter] : 
+                  _uploadController.chavePix == "celular" ? [telephoneMaskFormatter] : [],
+                  style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: blackColor),
+                  decoration: InputDecoration(
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(width: 1.0,color: Color(0x4C9C9C9C),strokeAlign: BorderSide.strokeAlignInside),
+                    ),
+                    label: Text("Insira sua chave pix",style: Theme.of(context).textTheme.bodySmall!),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                    fillColor: backgroundColor,
+                    filled: true,
+                    
+                    prefixIcon: _uploadController.chavePix == "celular" ? const Icon(Icons.smartphone_rounded) : 
+                    _uploadController.chavePix == "email" ? const Icon(Icons.mail_outline_rounded) : 
+                    _uploadController.chavePix == "cpf" ? const Icon(Icons.card_membership_rounded) : 
+                    const Icon(Icons.pix_rounded)
+                  ),
+                  
+                );
+              
+            }),
           ),
           // Container(
           //   margin: EdgeInsets.symmetric(vertical: 16),
@@ -163,7 +207,7 @@ class UploadProduct extends StatelessWidget {
 
           */
           Container(
-            margin: const EdgeInsets.only(bottom: 16, top: 24),
+            margin: const EdgeInsets.only(bottom: 24, top: 36),
             child: Text("Insira a descrição",
                 style: Theme.of(context)
                     .textTheme
@@ -172,9 +216,10 @@ class UploadProduct extends StatelessWidget {
           ),
           Container(
             width: screenWidth * 0.4,
+            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 4),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: const Color(0xFF9C9C9C).withOpacity(0.01),
+                color: const Color(0xFF9C9C9C).withOpacity(0.03),
                 borderRadius: BorderRadius.circular(16)),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -188,10 +233,9 @@ class UploadProduct extends StatelessWidget {
             width: screenWidth * 0.4,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: const Color(0xFF9C9C9C).withOpacity(0.01),
+                color: const Color(0xFF9C9C9C).withOpacity(0.03),
                 borderRadius: BorderRadius.circular(16)),
               child: QuillEditor.basic(
-                
                   controller: _uploadController.controller,
                   configurations: const QuillEditorConfigurations(
                     placeholder: "Insira uma descrição",
@@ -199,6 +243,13 @@ class UploadProduct extends StatelessWidget {
                   ),
                 ),
               ),
+
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 24),
+                width: screenWidth * 0.4,
+                alignment: Alignment.center,
+                child: ElevatedButton(onPressed: (){},style: buttonStyles['primary'],child: const Text("Concluir Cadastro")),
+              )
         ],
       ),
     );

@@ -1,4 +1,6 @@
+import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/models/res/base_model.dart';
+import 'package:bazar_popular/services/product_service.dart';
 import 'package:bazar_popular/shared/state_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -15,6 +17,8 @@ abstract class UploadProductControllerStore with Store {
   @observable QuillController controller = QuillController.basic();
 
   @observable List<XFile> storeImgs = [];
+  @observable String chavePixValue = "";
+  @observable String chavePix = "cpf";
 
   List<PixKeyType> tiposChavePix = [
     PixKeyType(label: "Chave pix é tipo celular", value: "celular"),
@@ -22,23 +26,14 @@ abstract class UploadProductControllerStore with Store {
     PixKeyType(label: "Chave pix é tipo CPF", value: "cpf"),
     PixKeyType(label: "Chave pix é de outro tipo", value: "outro")
   ];
-    
-  List<DropdownMenuItem<String>> get dropdownItems {
-    return tiposChavePix.map((PixKeyType type) {
-      return DropdownMenuItem<String>(
-        value: type.value,
-        child: Text(type.label),
-      );
-    }).toList();
-  }
-
-  @observable String chavePix = "cpf";
+  final TextEditingController pixInputController = TextEditingController();
 
   @computed List<String> get imageNames {
       return storeImgs.map((img) => img.name).toList();
   }
 
-  @action set setChavePix (String value) => chavePix = value;
+  set setChavePix (String value) => chavePix = value;
+  set setChavePixValue (String value) => chavePixValue = value;
 
   final toolbarConfig = const QuillSimpleToolbarConfigurations(
                 showBackgroundColorButton: false,
@@ -64,7 +59,6 @@ abstract class UploadProductControllerStore with Store {
         openErrorDialog(context, "Não é permitido mais que 4 imagens");
       } else {
         storeImgs = List.from(storeImgs)..addAll(response);
-        print(imageNames);
       } 
   }
 
@@ -73,4 +67,9 @@ abstract class UploadProductControllerStore with Store {
     storeImgs = List.from(storeImgs)..removeAt(index);
   }
 
+  @action
+  void onSubmit(){
+  final form = UploadProductFormModel(description: controller.document.toDelta().toString(),pixKey: chavePixValue,pixType: chavePix,pictures: storeImgs);
+  ProductService().uploadProduct(form);
+  }
 }

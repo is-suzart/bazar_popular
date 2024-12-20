@@ -1,4 +1,6 @@
 
+import 'package:image_picker/image_picker.dart';
+
 class CreateProductFormModel {
    final String title;
    final String subtitle;
@@ -12,6 +14,15 @@ class CreateProductFormModel {
 
   CreateProductFormModel( {required this.title, required this.subtitle, required this.name, required this.value, required this.isPromo, required this.quantidadePromo, required this.valuePromo, required this.storage, this.place});
 
+}
+
+class UploadProductFormModel {
+  final String description;
+  final String pixType;
+  final String pixKey;
+  final List<XFile> pictures;
+
+  UploadProductFormModel({required this.description, required this.pixType, required this.pixKey, required this.pictures});
 }
 
 class CreateProductModel {

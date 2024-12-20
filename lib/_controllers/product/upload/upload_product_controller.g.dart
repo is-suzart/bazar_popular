@@ -49,6 +49,38 @@ mixin _$UploadProductController on UploadProductControllerStore, Store {
     });
   }
 
+  late final _$chavePixValueAtom = Atom(
+      name: 'UploadProductControllerStore.chavePixValue', context: context);
+
+  @override
+  String get chavePixValue {
+    _$chavePixValueAtom.reportRead();
+    return super.chavePixValue;
+  }
+
+  @override
+  set chavePixValue(String value) {
+    _$chavePixValueAtom.reportWrite(value, super.chavePixValue, () {
+      super.chavePixValue = value;
+    });
+  }
+
+  late final _$chavePixAtom =
+      Atom(name: 'UploadProductControllerStore.chavePix', context: context);
+
+  @override
+  String get chavePix {
+    _$chavePixAtom.reportRead();
+    return super.chavePix;
+  }
+
+  @override
+  set chavePix(String value) {
+    _$chavePixAtom.reportWrite(value, super.chavePix, () {
+      super.chavePix = value;
+    });
+  }
+
   late final _$getPhotosAsyncAction =
       AsyncAction('UploadProductControllerStore.getPhotos', context: context);
 
@@ -57,11 +89,27 @@ mixin _$UploadProductController on UploadProductControllerStore, Store {
     return _$getPhotosAsyncAction.run(() => super.getPhotos(context));
   }
 
+  late final _$UploadProductControllerStoreActionController =
+      ActionController(name: 'UploadProductControllerStore', context: context);
+
+  @override
+  void removeImageByIndex(int index) {
+    final _$actionInfo = _$UploadProductControllerStoreActionController
+        .startAction(name: 'UploadProductControllerStore.removeImageByIndex');
+    try {
+      return super.removeImageByIndex(index);
+    } finally {
+      _$UploadProductControllerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 controller: ${controller},
 storeImgs: ${storeImgs},
+chavePixValue: ${chavePixValue},
+chavePix: ${chavePix},
 imageNames: ${imageNames}
     ''';
   }
