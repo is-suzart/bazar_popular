@@ -13,6 +13,8 @@ class UploadProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?; 
+    final id = arguments?['id'];
     double screenWidth = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Column(
@@ -244,12 +246,12 @@ class UploadProduct extends StatelessWidget {
                 ),
               ),
 
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 24),
-                width: screenWidth * 0.4,
-                alignment: Alignment.center,
-                child: ElevatedButton(onPressed: (){},style: buttonStyles['primary'],child: const Text("Concluir Cadastro")),
-              )
+            Expanded(
+                  child: ElevatedButton(onPressed: () =>
+                  _uploadController.onSubmit(context,id)
+                ,style: buttonStyles['primary'],child: const Text("Concluir Cadastro"))
+                ),
+              
         ],
       ),
     );

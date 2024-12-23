@@ -27,3 +27,16 @@ void openInfoDialog(BuildContext context, String text, String title, Function ac
   }
   );
 }
+void openSuccessDialog(BuildContext context, String text, String title, Function action) {
+  QuickAlert.show(context: context, 
+  type: QuickAlertType.success,
+  text: text,
+  title: title,
+  confirmBtnColor: primaryColor,
+  confirmBtnText: "Avançar",
+  onConfirmBtnTap: () {
+    context.pop(context);
+    action();
+  }
+  );
+}

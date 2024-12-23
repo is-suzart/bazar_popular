@@ -17,12 +17,13 @@ class CreateProductFormModel {
 }
 
 class UploadProductFormModel {
+  final String id;
   final String description;
   final String pixType;
   final String pixKey;
   final List<XFile> pictures;
 
-  UploadProductFormModel({required this.description, required this.pixType, required this.pixKey, required this.pictures});
+  UploadProductFormModel({required this.id, required this.description, required this.pixType, required this.pixKey, required this.pictures});
 }
 
 class CreateProductModel {

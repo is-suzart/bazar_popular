@@ -33,12 +33,33 @@ class ResponseCreateProduct{
   }
 }
 
+class ResponseUpdateCreateProduct{
+  final String status;
+  final String message;
+  final int modified;
+
+  ResponseUpdateCreateProduct({required this.status, required this.message, required this.modified});
+
+    factory ResponseUpdateCreateProduct.fromJson(Map<String, dynamic> json) {
+    return ResponseUpdateCreateProduct(
+      status: json['status'] ?? '',
+      message: json['message'] ?? '',
+      modified: json['modified'] ?? 0
+    );
+  }
+}
+
+
 class SignResult extends Result<ResponseSign> {
   SignResult({super.success, super.error, super.exception});
 }
 
 class CreateProductResult extends Result<ResponseCreateProduct> {
   CreateProductResult({super.success, super.error, super.exception});
+}
+
+class UpdateCreateProductResult extends Result<ResponseUpdateCreateProduct> {
+  UpdateCreateProductResult({super.success, super.error, super.exception});
 }
 
 class ResponseUser{

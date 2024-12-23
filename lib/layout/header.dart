@@ -96,9 +96,7 @@ class UserHeader extends StatelessWidget {
                 const PopupMenuItem(
                           value: 'ver-carrinho',
                           child: HeaderActionItem(icon: Icons.shopping_cart_rounded, label: "Ver carrinho")),
-                const PopupMenuItem(
-                          value: 'divulgar',
-                          child: HeaderActionItem(icon: Icons.add_business_rounded, label: "Divulgar produto")),
+
                 const PopupMenuItem(
                           value: 'ver-carrinho',
                           child: HeaderActionItem(icon: Icons.shopping_cart_rounded, label: "Ver carrinho")),
@@ -117,12 +115,15 @@ class UserHeader extends StatelessWidget {
                 icon: const Icon(Icons.person_2_rounded),
                 itemBuilder: (BuildContext context) => [
                       const PopupMenuItem(
-                          value: 'meu-perfil',
-                          child: HeaderActionItem(icon: Icons.person_2_rounded, label: "Meu perfil")),
-                                                const PopupMenuItem(
+                          value: 'divulgar',
+                          child: HeaderActionItem(icon: Icons.add_business_rounded, label: "Divulgar produto")),
+                      const PopupMenuItem(
                           value: 'meus-produtos',
                           child: HeaderActionItem(icon: Icons.business_center_rounded, label: "Meus Produtos")),
-                          const PopupMenuItem(
+                      const PopupMenuItem(
+                          value: 'meu-perfil',
+                          child: HeaderActionItem(icon: Icons.person_2_rounded, label: "Meu perfil")),
+                      const PopupMenuItem(
                             value: 'logout',
                             child: HeaderActionItem(icon: Icons.logout_rounded, label: "Sair da conta"))
                     ])),

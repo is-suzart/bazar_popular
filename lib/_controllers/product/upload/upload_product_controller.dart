@@ -1,6 +1,8 @@
 import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/models/res/base_model.dart';
+import 'package:bazar_popular/models/res/reponse_models.dart';
 import 'package:bazar_popular/services/product_service.dart';
+import 'package:bazar_popular/shared/helpers/go.dart';
 import 'package:bazar_popular/shared/state_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -13,6 +15,8 @@ part 'upload_product_controller.g.dart';
 class UploadProductController = UploadProductControllerStore with _$UploadProductController;
 
 abstract class UploadProductControllerStore with Store {
+
+  final _bazarGo = BazarGo();
 
   @observable QuillController controller = QuillController.basic();
 
@@ -68,8 +72,13 @@ abstract class UploadProductControllerStore with Store {
   }
 
   @action
-  void onSubmit(){
-  final form = UploadProductFormModel(description: controller.document.toDelta().toString(),pixKey: chavePixValue,pixType: chavePix,pictures: storeImgs);
-  ProductService().uploadProduct(form);
+  Future<void> onSubmit(BuildContext context, String id) async {
+    final form = UploadProductFormModel(id: id,description: controller.document.toDelta().toString(),pixKey: chavePixValue,pixType: chavePix,pictures: storeImgs);
+    final UpdateCreateProductResult result = await ProductService().uploadProduct(form);
+    if(result.isSuccess){
+      openSuccessDialog(context, "Sucesso ao cadastrar!", "Sucesso!", _bazarGo.onTapGo(context, "/meus-produtos"));
+    } else {
+      openErrorDialog(context, "Erro ao cadastrar o produto! Tente novamente mais tarde");
+    }
   }
 }

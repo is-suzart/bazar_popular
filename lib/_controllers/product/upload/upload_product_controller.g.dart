@@ -89,6 +89,14 @@ mixin _$UploadProductController on UploadProductControllerStore, Store {
     return _$getPhotosAsyncAction.run(() => super.getPhotos(context));
   }
 
+  late final _$onSubmitAsyncAction =
+      AsyncAction('UploadProductControllerStore.onSubmit', context: context);
+
+  @override
+  Future<void> onSubmit(BuildContext context, String id) {
+    return _$onSubmitAsyncAction.run(() => super.onSubmit(context, id));
+  }
+
   late final _$UploadProductControllerStoreActionController =
       ActionController(name: 'UploadProductControllerStore', context: context);
 

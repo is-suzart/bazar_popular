@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/models/res/base_model.dart';
 import 'package:bazar_popular/models/res/reponse_models.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class ProductService {
   final Dio _dio = Dio(BaseOptions(
@@ -51,22 +52,32 @@ class ProductService {
       };
       FormData formData = FormData();
       formData.fields.addAll([
+        MapEntry('id', form.id),
         MapEntry('pixType', form.pixType),
         MapEntry('pixKey', form.pixKey),
         MapEntry('description', form.description),
       ]);
 
       for (var picture in form.pictures) {
+        XFile file = XFile(picture.path);
+        Uint8List content = await file.readAsBytes();
         formData.files.add(MapEntry(
             'pictures',
-            await MultipartFile.fromFile(picture.path,
+            await MultipartFile.fromBytes(content,
                 filename: picture.name)));
       }
 
-      final response = await _dio.post('/products', data: formData);
+      final response = await _dio.post('/products/finish', data: formData);
 
       if (response.statusCode == 200) {
-      } else {}
-    } catch (err) {}
+        final data = ResponseUpdateCreateProduct.fromJson(response.data);
+        return UpdateCreateProductResult(success: data);
+      } else {
+        final data = ErrorResponse.fromJson(response.data);
+        return UpdateCreateProductResult(error: data);
+      }
+    } catch (error) {
+      return UpdateCreateProductResult(exception: error.toString());
+    }
   }
 }
