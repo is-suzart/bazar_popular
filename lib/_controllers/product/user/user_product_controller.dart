@@ -1,0 +1,31 @@
+import 'package:bazar_popular/models/product_models.dart';
+import 'package:bazar_popular/services/product_service.dart';
+import 'package:bazar_popular/shared/helpers/local.dart';
+import 'package:mobx/mobx.dart';
+
+part 'user_product_controller.g.dart';
+
+class UserProductController = UserProductControllerStore with _$UserProductController;
+
+abstract class UserProductControllerStore with Store {
+
+
+int limit = 15;
+int offset = 0;
+final _productService = ProductService();
+
+@observable
+ObservableList<Product> products = ObservableList<Product>();
+
+@action
+Future getUserProducts() async{
+  final String userId = await getInstace("user_id");
+  final result = await _productService.getUserProducts(userId,limit, offset);
+  if(result.isSuccess){
+    products.addAll(result.success!.products);
+  } else if(result.isError){
+    products.clear();
+  }
+}
+
+}

@@ -1,3 +1,4 @@
+import 'package:bazar_popular/_pages/product/my_product.dart';
 import 'package:bazar_popular/_pages/product/upload_product.dart';
 import 'package:bazar_popular/layout/layout.dart';
 import 'package:bazar_popular/_pages/home.dart';
@@ -15,7 +16,7 @@ ShellRoute(
   routes: [ 
     GoRoute(path: '/', builder: (context, state) => const MyHomePage(title: "home") ), 
     GoRoute(path: '/produto', builder: (context, state) => const Produto() ),
-    GoRoute(path: '/meus-produtos', builder: (context, state) => const Produto() ),
+    GoRoute(path: '/meus-produtos', builder: (context, state) => MyProduct() ),
     ShellRoute(
       builder: (context,state,child) => CreateProductShell(child:child),
       routes: [

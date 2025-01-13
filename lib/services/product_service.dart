@@ -63,7 +63,7 @@ class ProductService {
         Uint8List content = await file.readAsBytes();
         formData.files.add(MapEntry(
             'pictures',
-            await MultipartFile.fromBytes(content,
+            MultipartFile.fromBytes(content,
                 filename: picture.name)));
       }
 
@@ -80,4 +80,64 @@ class ProductService {
       return UpdateCreateProductResult(exception: error.toString());
     }
   }
+
+  Future<GetProductsResult> getUserProducts(String userId,int? limit,int? offset) async {
+    final token = await getInstace('auth_token');
+    try {
+      final response = await _dio.get('/users/$userId/products' ,
+      options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+          },
+          
+        ),
+        queryParameters: {
+          'limit': (limit ?? '15').toString(),
+          'offset': (offset ?? '0').toString()
+        });
+      final result = response.data;
+      if(response.statusCode == 200) {
+        final data = ResponseGetProducts.fromJson(result);
+        return GetProductsResult(success: data);
+      } else {
+        final data = ErrorResponse.fromJson(response.data);
+        return GetProductsResult(error: data);
+      }
+    }
+    catch (error) {
+      print(error);
+      return GetProductsResult(exception: error.toString());
+    }
+  }
+
+    Future<GetProductsResult> getProducts(int? limit,int? offset) async {
+    final token = await getInstace('auth_token');
+    try {
+      final response = await _dio.get('/user/products' ,
+      options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+          },
+          
+        ),
+        queryParameters: {
+          'limit': (limit ?? '15').toString(),
+          'offset': (offset ?? '0').toString()
+        });
+      final result = jsonDecode(utf8.decode(response.data));
+      if(response.statusCode == 200) {
+        final data = ResponseGetProducts.fromJson(result);
+        return GetProductsResult(success: data);
+      } else {
+        final data = ErrorResponse.fromJson(response.data);
+        return GetProductsResult(error: data);
+      }
+    }
+    catch (error) {
+      return GetProductsResult(exception: error.toString());
+    }
+  }
+  
 }

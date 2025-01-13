@@ -1,3 +1,4 @@
+import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/models/res/base_model.dart';
 import 'package:bazar_popular/models/user_models.dart';
 
@@ -49,6 +50,22 @@ class ResponseUpdateCreateProduct{
   }
 }
 
+class ResponseGetProducts{
+  final String status;
+  final String message;
+  final List<Product> products;
+
+  factory ResponseGetProducts.fromJson(Map<String, dynamic> json) {
+    return ResponseGetProducts(
+      status: json['status'] ?? '',
+      message: json['message'] ?? '',
+      products: (json['products'] as List<dynamic>?) ?.map((item) => Product.fromJson(item as Map<String, dynamic>)) .toList() ?? []
+    );
+  }
+
+  ResponseGetProducts({required this.status, required this.message, required this.products});
+}
+
 
 class SignResult extends Result<ResponseSign> {
   SignResult({super.success, super.error, super.exception});
@@ -60,6 +77,10 @@ class CreateProductResult extends Result<ResponseCreateProduct> {
 
 class UpdateCreateProductResult extends Result<ResponseUpdateCreateProduct> {
   UpdateCreateProductResult({super.success, super.error, super.exception});
+}
+
+class GetProductsResult extends Result<ResponseGetProducts> {
+    GetProductsResult({super.success, super.error, super.exception});
 }
 
 class ResponseUser{
