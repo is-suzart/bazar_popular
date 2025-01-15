@@ -25,18 +25,60 @@ mixin _$HomeController on HomeControllerStore, Store {
     });
   }
 
+  late final _$isLoadingAtom =
+      Atom(name: 'HomeControllerStore.isLoading', context: context);
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
+  late final _$isLoadingMoreAtom =
+      Atom(name: 'HomeControllerStore.isLoadingMore', context: context);
+
+  @override
+  bool get isLoadingMore {
+    _$isLoadingMoreAtom.reportRead();
+    return super.isLoadingMore;
+  }
+
+  @override
+  set isLoadingMore(bool value) {
+    _$isLoadingMoreAtom.reportWrite(value, super.isLoadingMore, () {
+      super.isLoadingMore = value;
+    });
+  }
+
   late final _$getProductsAsyncAction =
       AsyncAction('HomeControllerStore.getProducts', context: context);
 
   @override
-  Future<dynamic> getProducts() {
+  Future<void> getProducts() {
     return _$getProductsAsyncAction.run(() => super.getProducts());
+  }
+
+  late final _$loadMoreProductsAsyncAction =
+      AsyncAction('HomeControllerStore.loadMoreProducts', context: context);
+
+  @override
+  Future<void> loadMoreProducts() {
+    return _$loadMoreProductsAsyncAction.run(() => super.loadMoreProducts());
   }
 
   @override
   String toString() {
     return '''
-products: ${products}
+products: ${products},
+isLoading: ${isLoading},
+isLoadingMore: ${isLoadingMore}
     ''';
   }
 }

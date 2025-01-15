@@ -60,7 +60,7 @@ class LoginPageState extends State<LoginPage> {
                                       style: buttonStyles['primary'],
                                       child: const Text("Avançar para login"))
                                 ])
-                              : const LoginForm(key: ValueKey(2)))
+                              : LoginForm(isModal: false,key: const ValueKey(2)))
                     ]);
                   }),
               Breakpoints.largeAndUp: SlotLayout.from(
@@ -76,7 +76,7 @@ class LoginPageState extends State<LoginPage> {
                           const LoginInfos(screenType: 'desktop')
                               .withGridPlacement(
                                   columnSpan: 6, columnStart: 1, rowStart: 0),
-                          const LoginForm().withGridPlacement(
+                          LoginForm(isModal: false,).withGridPlacement(
                               columnSpan: 4, columnStart: 7, rowStart: 0)
                         ]);
                   })
@@ -140,16 +140,11 @@ class LoginInfos extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
-
-  @override
-  State<LoginForm> createState() => _LoginFormState();
-}
-
-class _LoginFormState extends State<LoginForm> {
-  final LoginController _loginController = LoginController();
-
+class LoginForm extends StatelessWidget {
+  LoginForm({super.key,required this.isModal,this.tellIsLogged});
+  final bool isModal;
+  final Future<void> Function()? tellIsLogged;
+  final _loginController = LoginController();
   
   @override
   Widget build(BuildContext context) {
@@ -203,7 +198,12 @@ class _LoginFormState extends State<LoginForm> {
                                         },
                                         icon: const Icon(
                                             Icons.remove_red_eye_rounded)),
-                                        submitVoid: () => _loginController.performLogin(context),
+                                        submitVoid: () {
+                                      _loginController.performLogin(context,isModal);
+                                      if(isModal && tellIsLogged != null){
+                                        tellIsLogged!();
+                                      }
+                                    },
                                   );
                                 })),
                             Container(
@@ -227,8 +227,13 @@ class _LoginFormState extends State<LoginForm> {
                                     const EdgeInsets.symmetric(vertical: 16),
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                    onPressed: () =>
-                                        _loginController.performLogin(context),
+                                    onPressed: () {
+                                      _loginController.performLogin(context,isModal);
+                                      if(isModal && tellIsLogged != null){
+                                        tellIsLogged!();
+                                      }
+                                    }
+                                        ,
                                     style: buttonStyles['primary'],
                                     child: const Text("Login"))),
                             Container(

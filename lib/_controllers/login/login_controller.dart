@@ -71,14 +71,18 @@ abstract class LoginControllerStore with Store {
     return null; // Nenhum erro
   }
 @action
- Future<void> performLogin(BuildContext context) async {
+ Future<void> performLogin(BuildContext context,bool isModal) async {
   final email = form.control('email').value;
   final password = form.control('password').value;
 
   final SignResult result = await LoginService().login(email, password);
 
   if (result.isSuccess) {
-    GoRouter.of(context).go('/');
+    if(isModal){
+      GoRouter.of(context).pop();
+    } else {
+      GoRouter.of(context).go('/');
+    }
   } else if (result.isError) {
     final errorMessage = result.error?.message ?? 'Erro desconhecido';
     openErrorDialog(context, errorMessage);

@@ -46,8 +46,9 @@ mixin _$LoginController on LoginControllerStore, Store {
       AsyncAction('LoginControllerStore.performLogin', context: context);
 
   @override
-  Future<void> performLogin(BuildContext context) {
-    return _$performLoginAsyncAction.run(() => super.performLogin(context));
+  Future<void> performLogin(BuildContext context, bool isModal) {
+    return _$performLoginAsyncAction
+        .run(() => super.performLogin(context, isModal));
   }
 
   late final _$LoginControllerStoreActionController =

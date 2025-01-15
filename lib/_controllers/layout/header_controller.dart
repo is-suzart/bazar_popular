@@ -22,6 +22,7 @@ abstract class HeaderControllerStore with Store {
 
   @action
   checkIsLogged() async {
+    
     final value = await getInstace('user_id');
     userId = value;
   }

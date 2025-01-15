@@ -1,3 +1,4 @@
+import 'package:bazar_popular/_pages/login/login.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
@@ -10,6 +11,17 @@ class Header extends StatelessWidget {
   final _headerController = HeaderController();
   Header({super.key}) {
     _headerController.checkIsLogged();
+  }
+
+  void showLogin(context) {
+    showDialog(context: context, builder: (_) {
+      return SimpleDialog(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 48, vertical: 24),
+        children: [
+          LoginForm(isModal: true,tellIsLogged: () => _headerController.checkIsLogged())
+        ],
+      );
+    });
   }
   
   @override
@@ -91,7 +103,7 @@ class Header extends StatelessWidget {
                 ]),
                       Container(
                         margin: const EdgeInsets.only(left: 8),
-                        child: ElevatedButton(onPressed: null,style: buttonStyles['primary'], child: const Text("Crie sua conta camarada!")),
+                        child: ElevatedButton(onPressed: () => showLogin(context),style: buttonStyles['primary'], child: const Text("Faça login ou Crie sua conta!")),
                       )
                     ],
                   ).withGridPlacement(columnSpan: 2, columnStart: 10, rowStart: 0);
