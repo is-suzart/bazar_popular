@@ -75,6 +75,7 @@ class MyHomePage extends StatelessWidget {
                             return BazarCard(
                               img: product.images[0],
                               info: product.info,
+                              id: product.id
                             );
                           },
                         ),

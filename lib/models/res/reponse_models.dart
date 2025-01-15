@@ -56,10 +56,15 @@ class ResponseGetProducts{
   final List<Product> products;
 
   factory ResponseGetProducts.fromJson(Map<String, dynamic> json) {
+    final productsData = json['products'];
     return ResponseGetProducts(
       status: json['status'] ?? '',
       message: json['message'] ?? '',
-      products: (json['products'] as List<dynamic>?) ?.map((item) => Product.fromJson(item as Map<String, dynamic>)) .toList() ?? []
+      products:  productsData is List
+          ? productsData.map((item) => Product.fromJson(item as Map<String, dynamic>)).toList()
+          : productsData is Map<String, dynamic>
+              ? [Product.fromJson(productsData)]
+              : []
     );
   }
 

@@ -18,7 +18,7 @@ class Header extends StatelessWidget {
       return SimpleDialog(
         contentPadding: const EdgeInsets.symmetric(horizontal: 48, vertical: 24),
         children: [
-          LoginForm(isModal: true,tellIsLogged: () => _headerController.checkIsLogged())
+          LoginForm(isModal: true,tellIsLogged: () => _headerController.checkIsLoggedWithDelay())
         ],
       );
     });

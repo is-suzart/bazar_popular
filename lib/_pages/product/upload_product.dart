@@ -246,12 +246,12 @@ class UploadProduct extends StatelessWidget {
                 ),
               ),
 
-            Expanded(
-                  child: ElevatedButton(onPressed: () =>
-                  _uploadController.onSubmit(context,id)
-                ,style: buttonStyles['primary'],child: const Text("Concluir Cadastro"))
-                ),
-              
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 24),
+                width: screenWidth * 0.4,
+                alignment: Alignment.center,
+                child: ElevatedButton(onPressed: () => _uploadController.onSubmit(context,id),style: buttonStyles['primary'],child: const Text("Concluir Cadastro")),
+              )
         ],
       ),
     );

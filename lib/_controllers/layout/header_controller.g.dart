@@ -41,6 +41,16 @@ mixin _$HeaderController on HeaderControllerStore, Store {
     return _$checkIsLoggedAsyncAction.run(() => super.checkIsLogged());
   }
 
+  late final _$checkIsLoggedWithDelayAsyncAction = AsyncAction(
+      'HeaderControllerStore.checkIsLoggedWithDelay',
+      context: context);
+
+  @override
+  Future checkIsLoggedWithDelay() {
+    return _$checkIsLoggedWithDelayAsyncAction
+        .run(() => super.checkIsLoggedWithDelay());
+  }
+
   late final _$HeaderControllerStoreActionController =
       ActionController(name: 'HeaderControllerStore', context: context);
 

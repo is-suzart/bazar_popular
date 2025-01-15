@@ -1,18 +1,20 @@
 import 'package:bazar_popular/models/product_models.dart';
+import 'package:bazar_popular/shared/helpers/go.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 class BazarCard extends StatelessWidget {
-  const BazarCard({super.key, required this.img,required this.info});
-
+  BazarCard({super.key, required this.img,required this.info,required this.id});
+  final _bazarGo = BazarGo();
   final String img;
   final ProductInfo info;
+  final String id;
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
-            onTap: () => {},
+            onTap: () => _bazarGo.go(context,'/produto/$id'),
             child: Card(
                 child: Column(mainAxisSize: MainAxisSize.max, children: [
               AspectRatio(
@@ -93,7 +95,6 @@ class BazarInfoCard extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
