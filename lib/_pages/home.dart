@@ -1,34 +1,18 @@
-
+import 'package:bazar_popular/_controllers/home/home_controller.dart';
 import 'package:bazar_popular/shared/components/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MyHomePage extends StatelessWidget {
+  final _homeController = HomeController();
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  MyHomePage({super.key, required this.title}) {
+    _homeController.getProducts();
+  }
 
   final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  String texto = "Salve binho";
-  
-  void onPressed() {
-    setState(() {
-      texto = "você mudou o texto!";
-    });
-  }
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,44 +20,78 @@ class _MyHomePageState extends State<MyHomePage> {
     final bool isTabletScreen = Breakpoints.mediumAndUp.isActive(context);
     final bool isLargeTablet = Breakpoints.mediumLarge.isActive(context);
     final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
+
+    // Configurando scroll listener para paginação
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+        _homeController.loadMoreProducts(); // Carrega mais produtos quando o usuário está próximo do final
+      }
+    });
+
     return AdaptiveLayout(
       body: SlotLayout(
         config: {
           Breakpoints.smallAndUp: SlotLayout.from(
-              key: const Key("home-body"),
-              builder: (context) {
-                return Container(
-                  padding: isLargeScreen ? const EdgeInsets.fromLTRB(64, 32, 64, 24) : const EdgeInsets.fromLTRB(16, 32, 16, 24),
-                  child: Column(children: [
-                    Expanded(
-                        child: GridView.count(
-                      crossAxisCount: isLargeScreen ? 4 : isLargeTablet ? 3 : 2,
-                      shrinkWrap: true,
-                      childAspectRatio: isExtraLargeScreen ? 9 / 12 : isLargeScreen ? 8.3 / 12 : isLargeTablet ? 8.1 / 12 : !isTabletScreen ? 7 / 12 :  7.0 / 12,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
-                      children: const [
-                        BazarCard(
-                            img:
-                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas",title: "Rifa do MLC coisa linda demais!",),
-                        BazarCard(
-                            img:
-                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas",title: "Rifa do MLC coisa linda demais!",),
-                        BazarCard(
-                            img:
-                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas",title: "Rifa do MLC coisa linda demais!",),
-                        BazarCard(
-                            img:
-                                "https://fakeimg.pl/1080x1080/0020a1/ffffff?text=Bazar&font=bebas",title: "Rifa do MLC coisa linda demais!",)
-                      ],
-                    ))
-                  ]),
-                );
-              })
+            key: const Key("home-body"),
+            builder: (context) {
+              return Container(
+                padding: isLargeScreen
+                    ? const EdgeInsets.fromLTRB(64, 32, 64, 24)
+                    : const EdgeInsets.fromLTRB(16, 32, 16, 24),
+                child: Observer(builder: (_) {
+                  // Se estiver carregando, mostra o indicador
+                  if (_homeController.isLoading && _homeController.products.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  // Se a lista estiver vazia e não está carregando, exibe mensagem
+                  if (_homeController.products.isEmpty) {
+                    return const Center(child: Text('Nenhum produto encontrado.'));
+                  }
+
+                  // Exibe os produtos em um GridView
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: GridView.builder(
+                          controller: _scrollController,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: isLargeScreen ? 4 : isLargeTablet ? 3 : 2,
+                            childAspectRatio: isExtraLargeScreen
+                                ? 9 / 12
+                                : isLargeScreen
+                                    ? 8.3 / 12
+                                    : isLargeTablet
+                                        ? 8.1 / 12
+                                        : !isTabletScreen
+                                            ? 7 / 12
+                                            : 7.0 / 12,
+                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 16,
+                          ),
+                          itemCount: _homeController.products.length,
+                          itemBuilder: (ctx, index) {
+                            final product = _homeController.products[index];
+                            return BazarCard(
+                              img: product.images[0],
+                              info: product.info,
+                            );
+                          },
+                        ),
+                      ),
+                      if (_homeController.isLoadingMore)
+                        const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                    ],
+                  );
+                }),
+              );
+            },
+          ),
         },
       ),
     );
-
-    /*; */
   }
 }

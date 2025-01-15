@@ -17,7 +17,7 @@ class LayoutBazar extends StatelessWidget{
           Breakpoints.smallAndUp : SlotLayout.from(
             key: const Key("layout-mobile"),
             builder: (context) {
-              return const Header();
+              return Header();
             })
         }),
       body: SlotLayout(

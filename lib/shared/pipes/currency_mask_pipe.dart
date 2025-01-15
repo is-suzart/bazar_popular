@@ -14,7 +14,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
     TextEditingValue newValue,
   ) {
     if (newValue.text.isEmpty) {
-      return TextEditingValue(
+      return const TextEditingValue(
         text: 'R\$ 0,00',
         selection: TextSelection.collapsed(offset: 4), // Cursor após "R\$ "
       );

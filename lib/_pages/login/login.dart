@@ -203,6 +203,7 @@ class _LoginFormState extends State<LoginForm> {
                                         },
                                         icon: const Icon(
                                             Icons.remove_red_eye_rounded)),
+                                        submitVoid: () => _loginController.performLogin(context),
                                   );
                                 })),
                             Container(

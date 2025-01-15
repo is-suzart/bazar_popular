@@ -7,6 +7,7 @@ import 'package:bazar_popular/shared/helpers/go.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:bazar_popular/shared/state_dialogs.dart';
 import 'package:flutter/widgets.dart';
+import 'package:logger/logger.dart';
 import 'package:mobx/mobx.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:bazar_popular/shared/pipes/currency_mask_pipe.dart';
@@ -18,6 +19,8 @@ class CreateProductController = CreateProductControllerStore with _$CreateProduc
 abstract class CreateProductControllerStore with Store {
 
   final _bazarGo = BazarGo();
+  final logger = Logger();
+
 
 @observable
 FormGroup form = FormGroup({
@@ -113,10 +116,10 @@ Future<void> onSubmit (BuildContext context) async {
         );
       } else {
         openErrorDialog(context, "Erro ao cadastrar o produto, tente novamente mais tarde!");
-        print(result);
+        logger.e('Error fetching products: $result');
       }
     } else {
-      print('O formulário possui erros.');
+      logger.e('O formulário possui erros.');
       form.markAllAsTouched(); // Marca os campos inválidos
     }
 }

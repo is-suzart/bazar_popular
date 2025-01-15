@@ -1,10 +1,12 @@
+import 'package:bazar_popular/models/product_models.dart';
+import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 class BazarCard extends StatelessWidget {
-  const BazarCard({super.key, required this.img,required this.title});
+  const BazarCard({super.key, required this.img,required this.info});
 
   final String img;
-  final String title;
+  final ProductInfo info;
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
@@ -17,7 +19,7 @@ class BazarCard extends StatelessWidget {
                   aspectRatio: 11 / 11,
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.network(img, fit: BoxFit.cover))),
+                      child: Image.network(setImageUrl(img), fit: BoxFit.cover))),
               Expanded(
                   // Adicione padding ao redor do texto
 
@@ -34,7 +36,7 @@ class BazarCard extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Text("Rifa Solidária do MLC",
+                                  Text(info.subtitle,
                                   textAlign: TextAlign.left,
                                       style: Theme.of(context)
                                           .textTheme
@@ -43,7 +45,7 @@ class BazarCard extends StatelessWidget {
                                               color: primaryColor,
                                               fontWeight: FontWeight.bold
                                               )),
-                                  Text("Videogame portátil",
+                                  Text(info.title,
                                   textAlign: TextAlign.left,
                                       style: Theme.of(context)
                                           .textTheme
@@ -57,14 +59,15 @@ class BazarCard extends StatelessWidget {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("R\$ 4 por 30,00 ou",
+                                      if(info.havePromotion)
+                                      Text("${info.promotionalAmount.toString()} por ${info.promotionalPrice!} ou",
                                       textAlign: TextAlign.left,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodySmall!
                                               .copyWith(
                                                   color: greyColor)),
-                                      Text("R\$ 10,00",
+                                      Text("R\$ ${info.price}",
                                       textAlign: TextAlign.left,
                                           style: Theme.of(context)
                                               .textTheme

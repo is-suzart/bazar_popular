@@ -7,6 +7,7 @@ import 'package:bazar_popular/models/res/reponse_models.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:logger/logger.dart';
 
 class ProductService {
   final Dio _dio = Dio(BaseOptions(
@@ -14,6 +15,7 @@ class ProductService {
     connectTimeout: const Duration(seconds: 10),
     receiveTimeout: const Duration(seconds: 10),
   ));
+  final logger = Logger();
 
   Future<CreateProductResult> createProduct(CreateProductModel values) async {
     final token = await getInstace('auth_token');
@@ -106,7 +108,7 @@ class ProductService {
       }
     }
     catch (error) {
-      print(error);
+      logger.e('Error fetching products: ${error.toString()}');
       return GetProductsResult(exception: error.toString());
     }
   }
@@ -114,7 +116,7 @@ class ProductService {
     Future<GetProductsResult> getProducts(int? limit,int? offset) async {
     final token = await getInstace('auth_token');
     try {
-      final response = await _dio.get('/user/products' ,
+      final response = await _dio.get('/products' ,
       options: Options(
           headers: {
             'Content-Type': 'application/json',
@@ -126,7 +128,7 @@ class ProductService {
           'limit': (limit ?? '15').toString(),
           'offset': (offset ?? '0').toString()
         });
-      final result = jsonDecode(utf8.decode(response.data));
+      final result = response.data;
       if(response.statusCode == 200) {
         final data = ResponseGetProducts.fromJson(result);
         return GetProductsResult(success: data);
@@ -136,6 +138,7 @@ class ProductService {
       }
     }
     catch (error) {
+      logger.e('Error fetching products: ${error.toString()}');
       return GetProductsResult(exception: error.toString());
     }
   }

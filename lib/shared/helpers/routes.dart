@@ -14,7 +14,7 @@ ShellRoute(
   builder: (context, state, child) => 
   LayoutBazar(child: child), 
   routes: [ 
-    GoRoute(path: '/', builder: (context, state) => const MyHomePage(title: "home") ), 
+    GoRoute(path: '/', builder: (context, state) => MyHomePage(title: "home") ), 
     GoRoute(path: '/produto', builder: (context, state) => const Produto() ),
     GoRoute(path: '/meus-produtos', builder: (context, state) => UserProduct() ),
     ShellRoute(

@@ -1,13 +1,17 @@
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:bazar_popular/_controllers/layout/header_controller.dart';
 
 class Header extends StatelessWidget {
-  const Header({super.key});
-
+  final _headerController = HeaderController();
+  Header({super.key}) {
+    _headerController.checkIsLogged();
+  }
+  
   @override
   Widget build(BuildContext context) {
     final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
@@ -64,7 +68,35 @@ class Header extends StatelessWidget {
                           vertical: 8, horizontal: 24)),
                 ),
               ).withGridPlacement(columnSpan: 4, columnStart: 4, rowStart: 0),
-            UserHeader()
+              Observer(builder: (_) {
+                if(_headerController.isLogged) {
+                  return UserHeader();
+                } else {
+                  return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      PopupMenuButton(
+              tooltip: "Ver carrinho",
+              icon: const Icon(Icons.shop_2_outlined),
+              offset: Offset.fromDirection(-100, kToolbarHeight -15),
+              position: PopupMenuPosition.under,
+              onSelected: (String selected) {
+                _headerController.onSelectedAction(context, selected);
+              } ,
+              itemBuilder: (BuildContext context) => [
+                const PopupMenuItem(
+                          value: 'ver-carrinho',
+                          child: HeaderActionItem(icon: Icons.shopping_cart_rounded, label: "Ver carrinho")),
+                ]),
+                      Container(
+                        margin: const EdgeInsets.only(left: 8),
+                        child: ElevatedButton(onPressed: null,style: buttonStyles['primary'], child: const Text("Crie sua conta camarada!")),
+                      )
+                    ],
+                  ).withGridPlacement(columnSpan: 2, columnStart: 10, rowStart: 0);
+                }
+              })
           ]),
         ));
   }

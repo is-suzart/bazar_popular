@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class BazarInput extends StatelessWidget {
-  const BazarInput({super.key,required this.placeholder, this.onchaged,this.prefixIcon,this.hasBorder,this.inputFormatter,this.formControlName,this.errorText,this.suffixIcon,this.obscureText});
+  const BazarInput({super.key,required this.placeholder, this.onchaged,this.prefixIcon,this.hasBorder,this.inputFormatter,this.formControlName,this.errorText,this.suffixIcon,this.obscureText,this.submitVoid});
   final String placeholder;
   final void Function(String)? onchaged;
   final Icon? prefixIcon;
@@ -13,12 +13,18 @@ class BazarInput extends StatelessWidget {
   final String? errorText;
   final Widget? suffixIcon;
   final bool? obscureText;
+  final void Function()? submitVoid;
 
   @override
   Widget build(BuildContext context) {
     return ReactiveTextField(
       formControlName: formControlName,
       inputFormatters: inputFormatter == null ? [] : [inputFormatter!],
+      onSubmitted: (value) => {
+        if(submitVoid != null) {
+          submitVoid!()
+        }
+        },
       style: Theme.of(context)
                               .textTheme
                               .bodySmall!
