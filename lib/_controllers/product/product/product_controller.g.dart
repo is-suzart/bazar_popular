@@ -13,19 +13,31 @@ mixin _$ProductController on ProductControllerStore, Store {
       Atom(name: 'ProductControllerStore.product', context: context);
 
   @override
-  Product get product {
+  Product? get product {
     _$productAtom.reportRead();
     return super.product;
   }
 
-  bool _productIsInitialized = false;
+  @override
+  set product(Product? value) {
+    _$productAtom.reportWrite(value, super.product, () {
+      super.product = value;
+    });
+  }
+
+  late final _$userAtom =
+      Atom(name: 'ProductControllerStore.user', context: context);
 
   @override
-  set product(Product value) {
-    _$productAtom
-        .reportWrite(value, _productIsInitialized ? super.product : null, () {
-      super.product = value;
-      _productIsInitialized = true;
+  UserModels? get user {
+    _$userAtom.reportRead();
+    return super.user;
+  }
+
+  @override
+  set user(UserModels? value) {
+    _$userAtom.reportWrite(value, super.user, () {
+      super.user = value;
     });
   }
 
@@ -49,7 +61,7 @@ mixin _$ProductController on ProductControllerStore, Store {
       AsyncAction('ProductControllerStore.getProduct', context: context);
 
   @override
-  Future getProduct(String id) {
+  Future<void> getProduct(String id) {
     return _$getProductAsyncAction.run(() => super.getProduct(id));
   }
 
@@ -57,6 +69,7 @@ mixin _$ProductController on ProductControllerStore, Store {
   String toString() {
     return '''
 product: ${product},
+user: ${user},
 isLoading: ${isLoading}
     ''';
   }

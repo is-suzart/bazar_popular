@@ -98,7 +98,8 @@ class ResponseUser{
     ResponseUser({required this.status, required this.user});
 
     factory ResponseUser.fromJson(Map<String, dynamic> json) {
+      final userData = json['user'];
       return ResponseUser(
-        status: json['status'], user: json['user']);
+        status: json['status'], user: UserModels.fromJson(userData));
     }
 }

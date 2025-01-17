@@ -14,7 +14,7 @@ class UserService {
   Future<GetUserResult> getUserInfo(String id) async {
     try{
       final response = await _dio.get(
-        '/user/$id',
+        '/users/$id',
          options: Options(
           headers: {
             'Content-Type': 'application/json',

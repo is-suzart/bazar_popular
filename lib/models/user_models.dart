@@ -8,9 +8,11 @@ class UserModels {
   final String city;
   final String role;
   final String? profilePicture;
+  final String? created;
+  final String? updated;
 
   UserModels({required this.id, required this.name, required this.email, this.password, required this.telephone,
-      required this.state, required this.city, required this.role, this.profilePicture});
+      required this.state, required this.city, required this.role, this.profilePicture, this.created,this.updated});
 
   factory UserModels.fromJson(Map<String, dynamic> json) {
     return UserModels(
@@ -21,7 +23,9 @@ class UserModels {
       state: json['state'],
       city: json['city'],
       role: json['role'],
-      profilePicture: json['profile_picure']
+      profilePicture: json['profile_picure'],
+      created: json['created_at'],
+      updated: json['updated_at']
     );
   }
 

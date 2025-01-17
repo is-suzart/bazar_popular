@@ -14,7 +14,9 @@ class ProductPage extends StatelessWidget {
   final String id;
   final _productController = ProductController();
   ProductPage({super.key, required this.id}) {
-    _productController.getProduct(id);
+    if(_productController.product == null && _productController.user == null) {
+      _productController.getProduct(id);
+    }
   }
   final CarouselSliderController buttonCarouselController =
       CarouselSliderController();
@@ -38,7 +40,7 @@ class ProductPage extends StatelessWidget {
                 children: [
                   CarouselSlider(
                     carouselController: buttonCarouselController,
-                    items: _productController.product.images.map((i) {
+                    items: _productController.product!.images.map((i) {
                       return Builder(
                         builder: (context) {
                           return AspectRatio(
@@ -78,23 +80,23 @@ class ProductPage extends StatelessWidget {
                     ),
                   ),
                 ],
-              ).withGridPlacement(columnSpan: 4, columnStart: 0, rowStart: 0),
+              ).withGridPlacement(columnSpan: 5, columnStart: 0, rowStart: 0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _productController.product.info.subtitle,
+                    _productController.product!.info.subtitle,
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall!
                         .copyWith(color: primaryColor),
                     textAlign: TextAlign.left,
                   ),
-                  Text(_productController.product.info.title,
+                  Text(_productController.product!.info.title,
                       style: Theme.of(context).textTheme.headlineLarge,
                       textAlign: TextAlign.left),
                   Text(
-                      "${_productController.product.storage.saled} compraram - ${_productController.product.storage.total - _productController.product.storage.saled} restantes",
+                      "${_productController.product!.storage.saled} compraram - ${_productController.product!.storage.total - _productController.product!.storage.saled} restantes",
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
@@ -110,12 +112,12 @@ class ProductPage extends StatelessWidget {
                           readOnly: true,
                           document: Document.fromDelta(Delta.fromJson(
                               jsonDecode(
-                                  _productController.product.description))),
+                                  _productController.product!.description))),
                           selection: const TextSelection.collapsed(offset: 0)),
                     ),
                   )
                 ],
-              ).withGridPlacement(columnSpan: 4, columnStart: 4, rowStart: 0),
+              ).withGridPlacement(columnSpan: 4, columnStart: 5, rowStart: 0),
 
 
               Container(
@@ -142,12 +144,27 @@ class ProductPage extends StatelessWidget {
                           .bodyMedium!
                           .copyWith(color: greyColor),
                     ),
-                    Text("nome do usuário"),
-                    const Spacer(),
-                    Text(_productController.product.info.price,style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: primaryColor),),
-                    if(_productController.product.info.havePromotion)
-                    Text("ou ${_productController.product.info.promotionalAmount} por ${_productController.product.info.promotionalPrice}",
+
+                    Row(
+                      children: [
+                    if(_productController.user!.profilePicture != null && _productController.user!.profilePicture != "")
+                    Image.network(setImageUrl(_productController.user!.profilePicture!))
+                    else
+                    const Icon(Icons.person_rounded,size: 36,),
+                    Container(
+                      margin: const EdgeInsets.only(left: 8),
+                      child: Text(_productController.user!.name,style: Theme.of(context).textTheme.headlineSmall!
+                    .copyWith(color: greyColor)),
+                    )
+                      ],
+                    ),
+
+                    const SizedBox(height: 100,),
+                    Text(_productController.product!.info.price,style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: primaryColor),),
+                    if(_productController.product!.info.havePromotion)
+                    Text("ou ${_productController.product!.info.promotionalAmount} por ${_productController.product!.info.promotionalPrice}",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: greyColor),),
+                    const SizedBox(height: 36,),
                     Container(
                       width: double.infinity,
                       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -193,7 +210,7 @@ class ProductPage extends StatelessWidget {
                     )
                   ],
                 ),
-              ).withGridPlacement(columnSpan: 4, columnStart: 8, rowStart: 0)
+              ).withGridPlacement(columnSpan: 3, columnStart: 9, rowStart: 0)
             ],
           ),
         );
