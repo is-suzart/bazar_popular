@@ -1,11 +1,11 @@
-import 'package:bazar_popular/_pages/product/my_product.dart';
-import 'package:bazar_popular/_pages/product/product.dart';
-import 'package:bazar_popular/_pages/product/upload_product.dart';
+import 'package:bazar_popular/_pages/product/user/my_product.dart';
+import 'package:bazar_popular/_pages/product/product/product.dart';
+import 'package:bazar_popular/_pages/product/upload/upload_product.dart';
 import 'package:bazar_popular/layout/layout.dart';
 import 'package:bazar_popular/_pages/home.dart';
 import 'package:bazar_popular/_pages/login/login.dart';
-import 'package:bazar_popular/_pages/product/create_product.dart';
-import 'package:bazar_popular/_pages/product/create_shell.dart';
+import 'package:bazar_popular/_pages/product/create/create_product.dart';
+import 'package:bazar_popular/_pages/product/create/create_shell.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(routes: <RouteBase>[

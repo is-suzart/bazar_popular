@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/models/res/base_model.dart';
 import 'package:bazar_popular/models/res/reponse_models.dart';
@@ -73,7 +75,8 @@ abstract class UploadProductControllerStore with Store {
 
   @action
   Future<void> onSubmit(BuildContext context, String id) async {
-    final form = UploadProductFormModel(id: id,description: controller.document.toDelta().toString(),pixKey: chavePixValue,pixType: chavePix,pictures: storeImgs);
+    final String deltaJson = jsonEncode(controller.document.toDelta().toJson());
+    final form = UploadProductFormModel(id: id,description: deltaJson,pixKey: chavePixValue,pixType: chavePix,pictures: storeImgs);
     final UpdateCreateProductResult result = await ProductService().uploadProduct(form);
     if(result.isSuccess){
       openSuccessDialog(context, "Sucesso ao cadastrar!", "Sucesso!", _bazarGo.onTapGo(context, "/meus-produtos"));

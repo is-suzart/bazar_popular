@@ -87,10 +87,18 @@ class UpdateCreateProductResult extends Result<ResponseUpdateCreateProduct> {
 class GetProductsResult extends Result<ResponseGetProducts> {
     GetProductsResult({super.success, super.error, super.exception});
 }
+class GetUserResult extends Result<ResponseUser>{
+  GetUserResult({super.success,super.error,super.exception});
+}
 
 class ResponseUser{
     String status;
     UserModels user;
 
-    ResponseUser(this.status, this.user);
+    ResponseUser({required this.status, required this.user});
+
+    factory ResponseUser.fromJson(Map<String, dynamic> json) {
+      return ResponseUser(
+        status: json['status'], user: json['user']);
+    }
 }
