@@ -14,7 +14,7 @@ class ProductPage extends StatelessWidget {
   final String id;
   final _productController = ProductController();
   ProductPage({super.key, required this.id}) {
-    if(_productController.product == null && _productController.user == null) {
+    if (_productController.product == null && _productController.user == null) {
       _productController.getProduct(id);
     }
   }
@@ -118,8 +118,6 @@ class ProductPage extends StatelessWidget {
                   )
                 ],
               ).withGridPlacement(columnSpan: 4, columnStart: 5, rowStart: 0),
-
-
               Container(
                 padding: const EdgeInsets.only(top: 24, left: 24, right: 24),
                 width: double.infinity,
@@ -137,51 +135,75 @@ class ProductPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Vendendor",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: greyColor),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        "Vendendor",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: greyColor),
+                      ),
                     ),
-
                     Row(
                       children: [
-                    if(_productController.user!.profilePicture != null && _productController.user!.profilePicture != "")
-                    Image.network(setImageUrl(_productController.user!.profilePicture!))
-                    else
-                    const Icon(Icons.person_rounded,size: 36,),
-                    Container(
-                      margin: const EdgeInsets.only(left: 8),
-                      child: Text(_productController.user!.name,style: Theme.of(context).textTheme.headlineSmall!
-                    .copyWith(color: greyColor)),
-                    )
+                        if (_productController.user!.profilePicture != null &&
+                            _productController.user!.profilePicture != "")
+                          Image.network(setImageUrl(
+                              _productController.user!.profilePicture!))
+                        else
+                          Image.asset(
+                            "assets/default-profile.png",
+                            width: 36,
+                            height: 36,
+                          ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 8),
+                          child: Text(_productController.user!.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(color: greyColor)),
+                        )
                       ],
                     ),
-
-                    const SizedBox(height: 100,),
-                    Text(_productController.product!.info.price,style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: primaryColor),),
-                    if(_productController.product!.info.havePromotion)
-                    Text("ou ${_productController.product!.info.promotionalAmount} por ${_productController.product!.info.promotionalPrice}",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: greyColor),),
-                    const SizedBox(height: 36,),
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    Text(
+                      _productController.product!.info.price,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(color: primaryColor),
+                    ),
+                    if (_productController.product!.info.havePromotion)
+                      Text(
+                        "ou ${_productController.product!.info.promotionalAmount} por ${_productController.product!.info.promotionalPrice}",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: greyColor),
+                      ),
+                    const SizedBox(
+                      height: 36,
+                    ),
+                    Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        child: ElevatedButton(
+                          onPressed: null,
+                          style: buttonStyles['primary'],
+                          child: const Text("Avançar para compra"),
+                        )),
                     Container(
                       width: double.infinity,
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       child: ElevatedButton(
-                      onPressed: null,
-                      style: buttonStyles['primary'],
-                      child: const Text("Avançar para compra"),
-                    )
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      child: ElevatedButton(
-                      onPressed: null,
-                      style: buttonStyles['outlined'],
-                      child: const Text("Adicionar ao carrinho"),
-                    ),
+                        onPressed: null,
+                        style: buttonStyles['outlined'],
+                        child: const Text("Adicionar ao carrinho"),
+                      ),
                     ),
                     const Divider(),
                     Padding(
@@ -191,9 +213,12 @@ class ProductPage extends StatelessWidget {
                         children: [
                           TextButton(
                               onPressed: null,
-                              child: const Row(
+                              child: Row(
                                 children: [
-                                  Icon(Icons.favorite_border_outlined),
+                                  Container(
+                                    margin: const EdgeInsets.only(right: 8),
+                                    child: const Icon(Icons.favorite_border_outlined),
+                                  ),
                                   Text("favoritar")
                                 ],
                               )),
