@@ -1,3 +1,4 @@
+import 'package:bazar_popular/_pages/logout/logout.dart';
 import 'package:bazar_popular/_pages/product/user/my_product.dart';
 import 'package:bazar_popular/_pages/product/product/product.dart';
 import 'package:bazar_popular/_pages/product/upload/upload_product.dart';
@@ -10,6 +11,7 @@ import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(routes: <RouteBase>[
 GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
+GoRoute(path: '/logout', builder: (context, state) => Logout()),
 ShellRoute(
   builder: (context, state, child) => 
   LayoutBazar(child: child), 

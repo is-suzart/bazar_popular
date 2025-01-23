@@ -10,6 +10,12 @@ setInstance(String instance, String value) async {
   return prefs.setString(instance, value);
 }
 
+removeInstance(String instance) async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.remove(instance);
+}
+
+
 String setImageUrl(String url) {
   const String apiUrl = 'http://localhost:8080';
   if (!url.startsWith('http')) {

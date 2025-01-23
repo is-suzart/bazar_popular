@@ -20,6 +20,9 @@ abstract class HomeControllerStore with Store {
   @observable
   bool isLoadingMore = false;
 
+  @observable
+  bool canLoadMore = true;
+
   @action
   Future<void> getProducts() async {
     isLoading = true;
@@ -39,7 +42,7 @@ abstract class HomeControllerStore with Store {
 
   @action
   Future<void> loadMoreProducts() async {
-    if (isLoadingMore) return; // Evita múltiplas requisições simultâneas
+    if (isLoadingMore || canLoadMore == false) return; // Evita múltiplas requisições simultâneas
 
     isLoadingMore = true;
     offset += limit; // Incrementa o offset para buscar a próxima "página"
@@ -47,11 +50,12 @@ abstract class HomeControllerStore with Store {
       final result = await _productService.getProducts(limit, offset);
       if (result.isSuccess) {
         products.addAll(result.success!.products);
-      } else if (result.isError) {
-        // Trate caso necessário
+      } else {
+        canLoadMore = false;
       }
     } catch (e) {
       offset -= limit; // Reverte o offset em caso de erro
+      canLoadMore = false;
     } finally {
       isLoadingMore = false;
     }

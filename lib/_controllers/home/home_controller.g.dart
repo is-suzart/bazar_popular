@@ -57,6 +57,22 @@ mixin _$HomeController on HomeControllerStore, Store {
     });
   }
 
+  late final _$canLoadMoreAtom =
+      Atom(name: 'HomeControllerStore.canLoadMore', context: context);
+
+  @override
+  bool get canLoadMore {
+    _$canLoadMoreAtom.reportRead();
+    return super.canLoadMore;
+  }
+
+  @override
+  set canLoadMore(bool value) {
+    _$canLoadMoreAtom.reportWrite(value, super.canLoadMore, () {
+      super.canLoadMore = value;
+    });
+  }
+
   late final _$getProductsAsyncAction =
       AsyncAction('HomeControllerStore.getProducts', context: context);
 
@@ -78,7 +94,8 @@ mixin _$HomeController on HomeControllerStore, Store {
     return '''
 products: ${products},
 isLoading: ${isLoading},
-isLoadingMore: ${isLoadingMore}
+isLoadingMore: ${isLoadingMore},
+canLoadMore: ${canLoadMore}
     ''';
   }
 }

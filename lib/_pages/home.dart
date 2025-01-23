@@ -23,7 +23,7 @@ class MyHomePage extends StatelessWidget {
 
     // Configurando scroll listener para paginação
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200 && _homeController.canLoadMore == true) {
         _homeController.loadMoreProducts(); // Carrega mais produtos quando o usuário está próximo do final
       }
     });
