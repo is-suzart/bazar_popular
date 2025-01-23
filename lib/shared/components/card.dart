@@ -69,7 +69,7 @@ class BazarCard extends StatelessWidget {
                                               .bodySmall!
                                               .copyWith(
                                                   color: greyColor)),
-                                      Text("${info.price}",
+                                      Text(info.price,
                                       textAlign: TextAlign.left,
                                           style: Theme.of(context)
                                               .textTheme
