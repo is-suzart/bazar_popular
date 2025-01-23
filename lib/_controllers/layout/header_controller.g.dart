@@ -51,6 +51,15 @@ mixin _$HeaderController on HeaderControllerStore, Store {
         .run(() => super.checkIsLoggedWithDelay());
   }
 
+  late final _$typeAheadProductsAsyncAction =
+      AsyncAction('HeaderControllerStore.typeAheadProducts', context: context);
+
+  @override
+  Future typeAheadProducts(String term) {
+    return _$typeAheadProductsAsyncAction
+        .run(() => super.typeAheadProducts(term));
+  }
+
   late final _$HeaderControllerStoreActionController =
       ActionController(name: 'HeaderControllerStore', context: context);
 

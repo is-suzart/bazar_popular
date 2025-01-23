@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bazar_popular/services/product_service.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +12,7 @@ class HeaderController = HeaderControllerStore with _$HeaderController;
 
 abstract class HeaderControllerStore with Store {
 
+  final _productService = ProductService();
   @observable
   String? userId;
 
@@ -33,6 +35,13 @@ abstract class HeaderControllerStore with Store {
     Timer(const Duration(milliseconds: 1000), () async {
       await checkIsLogged();
     });
+  }
+  @action
+  typeAheadProducts(String term) async {
+    final result = await _productService.getProductsByTitle(term,null,null);
+    if(result.isSuccess){
+      return result.success!.products;
+    }
   }
 
 }

@@ -143,6 +143,37 @@ class ProductService {
     }
   }
 
+  Future<GetProductsResult> getProductsByTitle(String title,int? limit,int? offset) async {
+    final token = await getInstace('auth_token');
+    try {
+      final response = await _dio.get('/products' ,
+      options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+          },
+          
+        ),
+        queryParameters: {
+          'limit': (limit ?? '15').toString(),
+          'offset': (offset ?? '0').toString(),
+          'title':title
+        });
+      final result = response.data;
+      if(response.statusCode == 200) {
+        final data = ResponseGetProducts.fromJson(result);
+        return GetProductsResult(success: data);
+      } else {
+        final data = ErrorResponse.fromJson(response.data);
+        return GetProductsResult(error: data);
+      }
+    }
+    catch (error) {
+      logger.e('Error fetching products: ${error.toString()}');
+      return GetProductsResult(exception: error.toString());
+    }
+  }
+
     Future<GetProductsResult> getProductWithId(String id) async {
     //final token = await getInstace('auth_token');
     try {

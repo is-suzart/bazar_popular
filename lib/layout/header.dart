@@ -1,14 +1,19 @@
 import 'package:bazar_popular/_pages/login/login.dart';
+import 'package:bazar_popular/models/product_models.dart';
+import 'package:bazar_popular/shared/helpers/go.dart';
+import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:bazar_popular/_controllers/layout/header_controller.dart';
 
 class Header extends StatelessWidget {
   final _headerController = HeaderController();
+  final _bazarGo = BazarGo();
   Header({super.key}) {
     _headerController.checkIsLogged();
   }
@@ -62,7 +67,17 @@ class Header extends StatelessWidget {
                 rowStart: 0),
             if (isLargeScreen)
               Center(
-                child: TextField(
+                child: TypeAheadField<Product>(
+                  suggestionsCallback: (term) async {
+                    final result = await _headerController.typeAheadProducts(term);
+                    return result;
+
+                  },
+                  builder: (context, controller, focusNode) {
+                    return TextField(
+                      focusNode: focusNode,
+                      controller: controller,
+                      autofocus: true,
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall!
@@ -78,7 +93,19 @@ class Header extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8)),
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 24)),
-                ),
+                  );
+                  },
+                  itemBuilder: (context,product) {
+                    return ListTile(
+                      title: Text(product.info.title,style: Theme.of(context).textTheme.bodyMedium),
+                      subtitle: Text(product.info.subtitle,style: Theme.of(context).textTheme.bodySmall!.copyWith(color: primaryColor)),
+                      leading: Image.network(setImageUrl(product.images[0])),
+                    );
+                  }, 
+                  onSelected: (product) {
+                    _bazarGo.go(context, '/produto/${product.id}');
+                  }, 
+                   ),
               ).withGridPlacement(columnSpan: 4, columnStart: 4, rowStart: 0),
               Observer(builder: (_) {
                 if(_headerController.isLogged) {

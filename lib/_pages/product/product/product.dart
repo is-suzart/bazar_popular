@@ -12,7 +12,7 @@ import 'package:flutter_quill/quill_delta.dart';
 
 class ProductPage extends StatelessWidget {
   final String id;
-  final _productController = ProductController();
+  final ProductController _productController = ProductController();
   ProductPage({super.key, required this.id}) {
     if (_productController.product == null && _productController.user == null) {
       _productController.getProduct(id);
