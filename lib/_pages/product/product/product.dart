@@ -214,11 +214,11 @@ class ProductPage extends StatelessWidget {
                           Observer(
                             builder: (_) => TextButton.icon(
                               style: _productController.favoriteButtonStyle,
-                              onPressed: () =>
+                              onPressed: () => _productController.loggedUser != null ?
                                   _productController.setFavoriteProduct(
                                 _productController.product!.id,
-                                _productController.user!.id,
-                              ),
+                                _productController.loggedUser!,
+                              ) : null,
                               icon: Icon(
                                 _productController.isFavorite
                                     ? Icons.favorite

@@ -1,6 +1,7 @@
 import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/models/user_models.dart';
 import 'package:bazar_popular/services/product_service.dart';
+import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -52,6 +53,9 @@ abstract class ProductControllerStore with Store {
   UserModels? user;
   @observable
   bool isLoading = true;
+  
+  @observable
+  String? loggedUser;
 
   @observable
   bool isFavorite = false;
@@ -74,7 +78,10 @@ abstract class ProductControllerStore with Store {
       if (productResult.isSuccess) {
         product = productResult.success!.products;
         user = productResult.success!.user;
-        getFavoriteProduct(product!.id, user!.id);
+        loggedUser = await getInstace("user_id");
+        if (loggedUser != null){
+          getFavoriteProduct(product!.id, loggedUser!);
+        }
         isLoading = false;
       } else {
         logger.e(productResult.error!.message);
