@@ -199,5 +199,100 @@ class ProductService {
       return GetProductsResult(exception: error.toString());
     }
   }
-  
+
+  Future<GetProductAndUserInfo> getProductWithIdAndUserInfo(String id) async {
+    //final token = await getInstace('auth_token');
+    try {
+      final response = await _dio.get('/products/full/$id' ,
+      options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            //'authorization': token,
+          },
+          
+        ));
+      final result = response.data;
+      if(response.statusCode == 200) {
+        final data = ResponseGetProductAndUserInfo.fromJson(result);
+        return GetProductAndUserInfo(success: data);
+      } else {
+        final data = ErrorResponse.fromJson(response.data);
+        return GetProductAndUserInfo(error: data);
+      }
+    }
+    catch (error) {
+      logger.e('Error fetching products: ${error.toString()}');
+      return GetProductAndUserInfo(exception: error.toString());
+    }
+  }
+
+  Future<bool> setFavoriteProduct(String productId,String userId) async {
+    final token = await getInstace('auth_token');
+    try {
+      final response = await _dio.post('/users/favorite' ,
+      options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+          },
+          
+        ),
+        data: jsonEncode({'user_id':userId,'product_id':productId})
+        );
+      if(response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    catch (error) {
+      logger.e('Error fetching products: ${error.toString()}');
+      return false;
+    }
+  }
+  Future<bool> getFavoriteProduct(String productId,String userId) async {
+    final token = await getInstace('auth_token');
+    try {
+      final response = await _dio.get('/users/favorite/$userId/$productId' ,
+      options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+          }, 
+        )
+        );
+      if(response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    catch (error) {
+      logger.e('Error fetching products: ${error.toString()}');
+      return false;
+    }
+  }
+  Future<bool> removeFavoriteProduct(String productID,String userId) async {
+    final token = await getInstace('auth_token');
+    try {
+      final response = await _dio.delete('/users/favorite/$userId/$productID' ,
+      options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+          },
+          
+        )
+        );
+      if(response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    catch (error) {
+      logger.e('Error fetching products: ${error.toString()}');
+      return false;
+    }
+  }
 }

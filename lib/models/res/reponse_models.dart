@@ -70,7 +70,24 @@ class ResponseGetProducts{
 
   ResponseGetProducts({required this.status, required this.message, required this.products});
 }
+class ResponseGetProductAndUserInfo{
+  final String status;
+  final String message;
+  final Product products;
+  final UserModels user;
 
+  factory ResponseGetProductAndUserInfo.fromJson(Map<String, dynamic> json) {
+    final productsData = json['products'];
+    return ResponseGetProductAndUserInfo(
+      status: json['status'] ?? '',
+      message: json['message'] ?? '',
+      products:  Product.fromJson(productsData),
+      user: UserModels.fromJson(json['user'])
+    );
+  }
+
+  ResponseGetProductAndUserInfo({required this.status, required this.message, required this.products,required this.user});
+}
 
 class SignResult extends Result<ResponseSign> {
   SignResult({super.success, super.error, super.exception});
@@ -90,7 +107,9 @@ class GetProductsResult extends Result<ResponseGetProducts> {
 class GetUserResult extends Result<ResponseUser>{
   GetUserResult({super.success,super.error,super.exception});
 }
-
+class GetProductAndUserInfo extends Result<ResponseGetProductAndUserInfo>{
+  GetProductAndUserInfo({super.success,super.error,super.exception});
+}
 class ResponseUser{
     String status;
     UserModels user;

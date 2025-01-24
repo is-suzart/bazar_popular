@@ -211,17 +211,26 @@ class ProductPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          TextButton(
-                              onPressed: null,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(right: 8),
-                                    child: const Icon(Icons.favorite_border_outlined),
-                                  ),
-                                  Text("favoritar")
-                                ],
-                              )),
+                          Observer(
+                            builder: (_) => TextButton.icon(
+                              style: _productController.favoriteButtonStyle,
+                              onPressed: () =>
+                                  _productController.setFavoriteProduct(
+                                _productController.product!.id,
+                                _productController.user!.id,
+                              ),
+                              icon: Icon(
+                                _productController.isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border_outlined,
+                              ),
+                              label: Text(
+                                _productController.isFavorite
+                                    ? "Desfavoritar"
+                                    : "Favoritar",
+                              ),
+                            ),
+                          ),
                           TextButton(
                               onPressed: null,
                               child: const Row(

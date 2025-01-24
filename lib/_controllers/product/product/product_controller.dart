@@ -1,8 +1,6 @@
 import 'package:bazar_popular/models/product_models.dart';
-import 'package:bazar_popular/models/res/base_model.dart';
 import 'package:bazar_popular/models/user_models.dart';
 import 'package:bazar_popular/services/product_service.dart';
-import 'package:bazar_popular/services/user_service.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -15,23 +13,25 @@ class ProductController = ProductControllerStore with _$ProductController;
 
 abstract class ProductControllerStore with Store {
   final _productService = ProductService();
-  final _userService = UserService();
   final logger = Logger();
   final customStylesQuill = DefaultStyles(
       h1: DefaultTextBlockStyle(
-          bazarPopularTheme.textTheme.headlineMedium!.copyWith(color: primaryColor),
+          bazarPopularTheme.textTheme.headlineMedium!
+              .copyWith(color: primaryColor),
           const HorizontalSpacing(0, 0),
           const VerticalSpacing(16, 0),
           const VerticalSpacing(16, 0),
           null),
       h2: DefaultTextBlockStyle(
-          bazarPopularTheme.textTheme.headlineSmall!.copyWith(color: primaryColor),
+          bazarPopularTheme.textTheme.headlineSmall!
+              .copyWith(color: primaryColor),
           const HorizontalSpacing(0, 0),
           const VerticalSpacing(16, 0),
           const VerticalSpacing(16, 0),
           null),
       h3: DefaultTextBlockStyle(
-          bazarPopularTheme.textTheme.bodyLarge!.copyWith(color: primaryColor,fontWeight: FontWeight.bold),
+          bazarPopularTheme.textTheme.bodyLarge!
+              .copyWith(color: primaryColor, fontWeight: FontWeight.bold),
           const HorizontalSpacing(0, 0),
           const VerticalSpacing(16, 0),
           const VerticalSpacing(16, 0),
@@ -53,28 +53,66 @@ abstract class ProductControllerStore with Store {
   @observable
   bool isLoading = true;
 
+  @observable
+  bool isFavorite = false;
+  @computed
+  ButtonStyle get favoriteButtonStyle => isFavorite == true
+      ? TextButton.styleFrom(
+          iconColor: Colors.red,
+          textStyle: bazarPopularTheme.textTheme.bodyMedium!
+              .copyWith(color: Colors.red))
+      : TextButton.styleFrom(
+          iconColor: greyColor,
+          textStyle: bazarPopularTheme.textTheme.bodyMedium!
+              .copyWith(color: greyColor));
   @action
   Future<void> getProduct(String id) async {
     isLoading = true;
     try {
-      final productResult = _productService.getProductWithId(id);
-      final userResult = productResult.then((productResult) {
-        if (productResult.isSuccess) {
-          product = productResult.success!.products[0];
-          return _userService.getUserInfo(product!.userId);
-        } else {
-          throw Exception("Failed to load product");
-        }
-      });
-      final results = await Future.wait([productResult, userResult]);
-      if ((results[0] as Result).isSuccess &&
-          (results[1] as Result).isSuccess) {
-        user = (results[1] as Result).success!.user;
+      final productResult =
+          await _productService.getProductWithIdAndUserInfo(id);
+      if (productResult.isSuccess) {
+        product = productResult.success!.products;
+        user = productResult.success!.user;
+        getFavoriteProduct(product!.id, user!.id);
+        isLoading = false;
+      } else {
+        logger.e(productResult.error!.message);
+        isLoading = false;
       }
-      isLoading = false;
     } catch (e) {
       logger.e(e);
       isLoading = false;
+    }
+  }
+
+  @action
+  Future<void> setFavoriteProduct(String productId, String userId) async {
+    if(isFavorite == false) {
+      try {
+        final result = await _productService.setFavoriteProduct(productId, userId);
+        isFavorite = true;
+      } catch (e) {
+        logger.e(e);
+      }
+    } else {
+      try {
+        final result = await _productService.removeFavoriteProduct(productId, userId);
+        isFavorite = false;
+      } catch (e) {
+        logger.e(e);
+      }
+    }
+
+  }
+
+  @action
+  Future<void> getFavoriteProduct(String productId, String userId) async {
+    try {
+      final result = await _productService.getFavoriteProduct(productId, userId);
+      isFavorite = result;
+    } catch (e) {
+      isFavorite = false;
     }
   }
 }

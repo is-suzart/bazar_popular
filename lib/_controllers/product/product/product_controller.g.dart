@@ -9,6 +9,14 @@ part of 'product_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ProductController on ProductControllerStore, Store {
+  Computed<ButtonStyle>? _$favoriteButtonStyleComputed;
+
+  @override
+  ButtonStyle get favoriteButtonStyle => (_$favoriteButtonStyleComputed ??=
+          Computed<ButtonStyle>(() => super.favoriteButtonStyle,
+              name: 'ProductControllerStore.favoriteButtonStyle'))
+      .value;
+
   late final _$productAtom =
       Atom(name: 'ProductControllerStore.product', context: context);
 
@@ -57,6 +65,22 @@ mixin _$ProductController on ProductControllerStore, Store {
     });
   }
 
+  late final _$isFavoriteAtom =
+      Atom(name: 'ProductControllerStore.isFavorite', context: context);
+
+  @override
+  bool get isFavorite {
+    _$isFavoriteAtom.reportRead();
+    return super.isFavorite;
+  }
+
+  @override
+  set isFavorite(bool value) {
+    _$isFavoriteAtom.reportWrite(value, super.isFavorite, () {
+      super.isFavorite = value;
+    });
+  }
+
   late final _$getProductAsyncAction =
       AsyncAction('ProductControllerStore.getProduct', context: context);
 
@@ -65,12 +89,34 @@ mixin _$ProductController on ProductControllerStore, Store {
     return _$getProductAsyncAction.run(() => super.getProduct(id));
   }
 
+  late final _$setFavoriteProductAsyncAction = AsyncAction(
+      'ProductControllerStore.setFavoriteProduct',
+      context: context);
+
+  @override
+  Future<void> setFavoriteProduct(String productId, String userId) {
+    return _$setFavoriteProductAsyncAction
+        .run(() => super.setFavoriteProduct(productId, userId));
+  }
+
+  late final _$getFavoriteProductAsyncAction = AsyncAction(
+      'ProductControllerStore.getFavoriteProduct',
+      context: context);
+
+  @override
+  Future<void> getFavoriteProduct(String productId, String userId) {
+    return _$getFavoriteProductAsyncAction
+        .run(() => super.getFavoriteProduct(productId, userId));
+  }
+
   @override
   String toString() {
     return '''
 product: ${product},
 user: ${user},
-isLoading: ${isLoading}
+isLoading: ${isLoading},
+isFavorite: ${isFavorite},
+favoriteButtonStyle: ${favoriteButtonStyle}
     ''';
   }
 }
