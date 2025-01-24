@@ -40,3 +40,17 @@ void openSuccessDialog(BuildContext context, String text, String title, Function
   }
   );
 }
+
+void openAlertDialog(BuildContext context, String text, String title, Function action) {
+  QuickAlert.show(context: context, 
+  type: QuickAlertType.warning,
+  text: text,
+  title: title,
+  confirmBtnColor: primaryColor,
+  confirmBtnText: "Avançar",
+  onConfirmBtnTap: () {
+    context.pop(context);
+    action();
+  }
+  );
+}

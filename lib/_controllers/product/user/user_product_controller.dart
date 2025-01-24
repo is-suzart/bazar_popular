@@ -1,6 +1,8 @@
 import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/services/product_service.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
+import 'package:bazar_popular/shared/state_dialogs.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 part 'user_product_controller.g.dart';
@@ -28,4 +30,13 @@ Future getUserProducts() async{
   }
 }
 
+@action
+Future deleteProduct(String productId,BuildContext context) async {
+  openAlertDialog(context, "essa ação não pode ser desfeita!", "Tem Certeza que deseja remover esse produto?", () async {
+  final result = await _productService.turnProductInactive(productId);
+  if(result){
+    products.removeWhere((element) => element.id == productId);
+  }
+  });
+}
 }

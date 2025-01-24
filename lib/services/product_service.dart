@@ -295,4 +295,26 @@ class ProductService {
       return false;
     }
   }
+  Future<bool> turnProductInactive(String productID) async {
+    final token = await getInstace('auth_token');
+    try {
+      final response = await _dio.post('/products/inactive/$productID' ,
+      options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+          },
+        )
+        );
+      if(response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    catch (error) {
+      logger.e('Error fetching products: ${error.toString()}');
+      return false;
+    }
+  }
 }

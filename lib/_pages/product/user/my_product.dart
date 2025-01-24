@@ -49,8 +49,10 @@ class UserProduct extends StatelessWidget {
                       child: Flex(
                       direction: Axis.horizontal,
                       children: [
-                        IconButton(onPressed: null, icon: Icon(Icons.edit_note_rounded)),
-                        IconButton(onPressed: null, icon: Icon(Icons.delete_rounded)),
+                        IconButton(onPressed: () => _userProductController.deleteProduct(
+                          _userProductController.products[index].id,context), icon: const Icon(Icons.edit_note_rounded)),
+                        IconButton(onPressed: () => _userProductController.deleteProduct(
+                          _userProductController.products[index].id,context), icon: const Icon(Icons.delete_rounded)),
                       ],
                     ),
                     ),

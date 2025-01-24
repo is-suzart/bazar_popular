@@ -97,14 +97,14 @@ abstract class ProductControllerStore with Store {
   Future<void> setFavoriteProduct(String productId, String userId) async {
     if(isFavorite == false) {
       try {
-        final result = await _productService.setFavoriteProduct(productId, userId);
+        _productService.setFavoriteProduct(productId, userId);
         isFavorite = true;
       } catch (e) {
         logger.e(e);
       }
     } else {
       try {
-        final result = await _productService.removeFavoriteProduct(productId, userId);
+        _productService.removeFavoriteProduct(productId, userId);
         isFavorite = false;
       } catch (e) {
         logger.e(e);
