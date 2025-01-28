@@ -59,7 +59,7 @@ Map<String, ButtonStyle> buttonStyles = {
 ),
       padding: WidgetStateProperty.all<EdgeInsets>(
           const EdgeInsets.symmetric(vertical: 18, horizontal: 24)),
-      backgroundColor: WidgetStateProperty.all<Color>(const Color(0xFF9C9C9C).withOpacity(0.01)),
+      backgroundColor: WidgetStateProperty.all<Color>(const Color(0xFF9C9C9C).withAlpha(3)),
       foregroundColor: WidgetStateProperty.all<Color>(primaryColor),
       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(

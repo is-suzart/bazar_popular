@@ -293,7 +293,7 @@ class HeaderLogin extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.25),
+              color: Colors.black.withAlpha(64),
               spreadRadius: 0,
               blurRadius: 4,
               offset: const Offset(0, 0))

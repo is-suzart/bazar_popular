@@ -126,7 +126,7 @@ class ProductPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
+                          color: Colors.black.withAlpha(64),
                           spreadRadius: 0,
                           blurRadius: 4,
                           offset: const Offset(0, 0))

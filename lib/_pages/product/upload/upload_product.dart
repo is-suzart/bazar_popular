@@ -221,7 +221,7 @@ class UploadProduct extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 4),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: const Color(0xFF9C9C9C).withOpacity(0.03),
+                color: const Color(0xFF9C9C9C).withAlpha(8),
                 borderRadius: BorderRadius.circular(16)),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -235,7 +235,7 @@ class UploadProduct extends StatelessWidget {
             width: screenWidth * 0.4,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: const Color(0xFF9C9C9C).withOpacity(0.03),
+                color: const Color(0xFF9C9C9C).withAlpha(8),
                 borderRadius: BorderRadius.circular(16)),
               child: QuillEditor.basic(
                   controller: _uploadController.controller,
