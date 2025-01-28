@@ -39,8 +39,8 @@ abstract class HeaderControllerStore with Store {
   @action
   typeAheadProducts(String term) async {
     final result = await _productService.getProductsByTitle(term,null,null);
-    if(result.isSuccess){
-      return result.success!.products;
+    if(result != null){
+      return result;
     }
   }
 

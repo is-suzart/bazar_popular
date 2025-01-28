@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bazar_popular/models/product_models.dart';
-import 'package:bazar_popular/models/res/base_model.dart';
 import 'package:bazar_popular/models/res/reponse_models.dart';
+import 'package:bazar_popular/models/user_models.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +17,7 @@ class ProductService {
   ));
   final logger = Logger();
 
-  Future<CreateProductResult> createProduct(CreateProductModel values) async {
+  Future<String?> createProduct(CreateProductModel values) async {
     final token = await getInstace('auth_token');
     final jsonValues = values.toJson();
     try {
@@ -33,18 +33,17 @@ class ProductService {
       );
       final result = response.data;
       if (response.statusCode == 201) {
-        final data = ResponseCreateProduct.fromJson(result);
-        return CreateProductResult(success: data);
+        final data = result['productId'];
+        return data;
       } else {
-        final data = ErrorResponse.fromJson(result);
-        return CreateProductResult(error: data);
+        return null;
       }
     } catch (err) {
-      return CreateProductResult(exception: err.toString());
+      return null;
     }
   }
 
-  Future uploadProduct(UploadProductFormModel form) async {
+  Future<bool> uploadProduct(UploadProductFormModel form) async {
     final token = await getInstace('auth_token');
 
     try {
@@ -72,18 +71,16 @@ class ProductService {
       final response = await _dio.post('/products/finish', data: formData);
 
       if (response.statusCode == 200) {
-        final data = ResponseUpdateCreateProduct.fromJson(response.data);
-        return UpdateCreateProductResult(success: data);
+        return true;
       } else {
-        final data = ErrorResponse.fromJson(response.data);
-        return UpdateCreateProductResult(error: data);
+        return false;
       }
     } catch (error) {
-      return UpdateCreateProductResult(exception: error.toString());
+      return false;
     }
   }
 
-  Future<GetProductsResult> getUserProducts(String userId,int? limit,int? offset) async {
+  Future<List<Product>?> getUserProducts(String userId,int? limit,int? offset) async {
     final token = await getInstace('auth_token');
     try {
       final response = await _dio.get('/users/$userId/products' ,
@@ -100,20 +97,19 @@ class ProductService {
         });
       final result = response.data;
       if(response.statusCode == 200) {
-        final data = ResponseGetProducts.fromJson(result);
-        return GetProductsResult(success: data);
+        final data = ResponseGetProducts.fromJson(result).products;
+        return data;
       } else {
-        final data = ErrorResponse.fromJson(response.data);
-        return GetProductsResult(error: data);
+        return null;
       }
     }
     catch (error) {
       logger.e('Error fetching products: ${error.toString()}');
-      return GetProductsResult(exception: error.toString());
+      return null;
     }
   }
 
-    Future<GetProductsResult> getProducts(int? limit,int? offset) async {
+    Future<List<Product>?> getProducts(int? limit,int? offset) async {
     final token = await getInstace('auth_token');
     try {
       final response = await _dio.get('/products' ,
@@ -130,20 +126,19 @@ class ProductService {
         });
       final result = response.data;
       if(response.statusCode == 200) {
-        final data = ResponseGetProducts.fromJson(result);
-        return GetProductsResult(success: data);
+        final data = ResponseGetProducts.fromJson(result).products;
+        return data;
       } else {
-        final data = ErrorResponse.fromJson(response.data);
-        return GetProductsResult(error: data);
+        return null;
       }
     }
     catch (error) {
       logger.e('Error fetching products: ${error.toString()}');
-      return GetProductsResult(exception: error.toString());
+      return null;
     }
   }
 
-  Future<GetProductsResult> getProductsByTitle(String title,int? limit,int? offset) async {
+  Future<List<Product>?> getProductsByTitle(String title,int? limit,int? offset) async {
     final token = await getInstace('auth_token');
     try {
       final response = await _dio.get('/products' ,
@@ -161,20 +156,18 @@ class ProductService {
         });
       final result = response.data;
       if(response.statusCode == 200) {
-        final data = ResponseGetProducts.fromJson(result);
-        return GetProductsResult(success: data);
+        return ResponseGetProducts.fromJson(result).products;
       } else {
-        final data = ErrorResponse.fromJson(response.data);
-        return GetProductsResult(error: data);
+        return null;
       }
     }
     catch (error) {
       logger.e('Error fetching products: ${error.toString()}');
-      return GetProductsResult(exception: error.toString());
+      return null;
     }
   }
 
-    Future<GetProductsResult> getProductWithId(String id) async {
+    Future<List<Product>?> getProductWithId(String id) async {
     //final token = await getInstace('auth_token');
     try {
       final response = await _dio.get('/products/$id' ,
@@ -187,20 +180,18 @@ class ProductService {
         ));
       final result = response.data;
       if(response.statusCode == 200) {
-        final data = ResponseGetProducts.fromJson(result);
-        return GetProductsResult(success: data);
+        return ResponseGetProducts.fromJson(result).products;
       } else {
-        final data = ErrorResponse.fromJson(response.data);
-        return GetProductsResult(error: data);
+        return null;
       }
     }
     catch (error) {
       logger.e('Error fetching products: ${error.toString()}');
-      return GetProductsResult(exception: error.toString());
+      return null;
     }
   }
 
-  Future<GetProductAndUserInfo> getProductWithIdAndUserInfo(String id) async {
+  Future<(Product,UserModels)?> getProductWithIdAndUserInfo(String id) async {
     //final token = await getInstace('auth_token');
     try {
       final response = await _dio.get('/products/full/$id' ,
@@ -214,15 +205,14 @@ class ProductService {
       final result = response.data;
       if(response.statusCode == 200) {
         final data = ResponseGetProductAndUserInfo.fromJson(result);
-        return GetProductAndUserInfo(success: data);
+        return (data.products,data.user);
       } else {
-        final data = ErrorResponse.fromJson(response.data);
-        return GetProductAndUserInfo(error: data);
+        return null;
       }
     }
     catch (error) {
       logger.e('Error fetching products: ${error.toString()}');
-      return GetProductAndUserInfo(exception: error.toString());
+      return null;
     }
   }
 
@@ -272,6 +262,32 @@ class ProductService {
       return false;
     }
   }
+  Future<List<Product>?> getUserFavorites(String userId) async {
+    final token = await getInstace('auth_token');
+    try {
+      final response = await _dio.get('/users/favorite/$userId' ,
+      options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+          },
+          
+        )
+        );
+      if(response.statusCode == 200) {
+        final result = response.data;
+        final data = ResponseGetProducts.fromJson(result);
+        return data.products;
+      } else {
+        return null;
+      }
+    }
+    catch (error) {
+      logger.e('Error fetching products: ${error.toString()}');
+      return null;
+    }
+  }
+
   Future<bool> removeFavoriteProduct(String productID,String userId) async {
     final token = await getInstace('auth_token');
     try {

@@ -16,15 +16,20 @@ removeInstance(String instance) async {
 }
 
 
-String setImageUrl(String url) {
+String setImageUrl(String? url) {
   const String apiUrl = 'http://localhost:8080';
-  if (!url.startsWith('http')) {
+  if(url != null) {
+      if (!url.startsWith('http')) {
     if (url.startsWith('./')) {
       url = url.substring(1);
     }
     return '$apiUrl$url';
   }
   return url;
+  } else {
+    return 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHFzM2t4bmo1cGFtaHNjdGxvN3c0b2RnZXA2c3hyOWs0MmpvY3lvbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/C21GGDOpKT6Z4VuXyn/giphy.gif';
+  }
+
 }
 
 String sanitizeString(String input) {

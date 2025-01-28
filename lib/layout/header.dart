@@ -195,6 +195,9 @@ class UserHeader extends StatelessWidget {
                           value: 'meu-perfil',
                           child: HeaderActionItem(icon: Icons.person_2_rounded, label: "Meu perfil")),
                       const PopupMenuItem(
+                          value: 'favoritos',
+                          child: HeaderActionItem(icon: Icons.favorite_rounded, label: "Favoritos")),
+                      const PopupMenuItem(
                             value: 'logout',
                             child: HeaderActionItem(icon: Icons.logout_rounded, label: "Sair da conta"))
                     ])),

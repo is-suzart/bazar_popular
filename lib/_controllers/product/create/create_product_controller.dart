@@ -1,7 +1,6 @@
 
 
 import 'package:bazar_popular/models/product_models.dart';
-import 'package:bazar_popular/models/res/reponse_models.dart';
 import 'package:bazar_popular/services/product_service.dart';
 import 'package:bazar_popular/shared/helpers/go.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
@@ -106,13 +105,13 @@ Future<void> onSubmit (BuildContext context) async {
     storage: form.control('storage').value,
     place: form.control('place').value
     );
-      final CreateProductResult result = await ProductService().createProduct(formValues);
-      if(result.isSuccess){
+      final String? result = await ProductService().createProduct(formValues);
+      if(result != null){
         openInfoDialog(
           context, 
         "Mas ainda falta uma última etapa camarada! vamos terminar de customizar nosso produto revolucionário!", 
         "Produto cadastrado com sucesso!", 
-        _bazarGo.onTapGo(context, "/divulgar/${formValues.productType}/finalizar/${result.success!.productId}")
+        _bazarGo.onTapGo(context, "/divulgar/${formValues.productType}/finalizar/$result")
         );
       } else {
         openErrorDialog(context, "Erro ao cadastrar o produto, tente novamente mais tarde!");

@@ -75,16 +75,16 @@ abstract class ProductControllerStore with Store {
     try {
       final productResult =
           await _productService.getProductWithIdAndUserInfo(id);
-      if (productResult.isSuccess) {
-        product = productResult.success!.products;
-        user = productResult.success!.user;
+      if (productResult != null) {
+        product = productResult.$1;
+        user = productResult.$2;
         loggedUser = await getInstace("user_id");
         if (loggedUser != null){
           getFavoriteProduct(product!.id, loggedUser!);
         }
         isLoading = false;
       } else {
-        logger.e(productResult.error!.message);
+        logger.e("Não conseguimos pegar produto e usuário");
         isLoading = false;
       }
     } catch (e) {

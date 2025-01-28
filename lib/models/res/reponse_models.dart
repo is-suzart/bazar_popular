@@ -3,15 +3,13 @@ import 'package:bazar_popular/models/res/base_model.dart';
 import 'package:bazar_popular/models/user_models.dart';
 
 class ResponseSign{
-    String status;
     String token;
     String id;
 
-    ResponseSign(this.status, this.token,this.id);
+    ResponseSign(this.token,this.id);
 
     factory ResponseSign.fromJson(Map<String, dynamic> json) {
-        return ResponseSign(
-        json['status'] ?? "", // Valor padrão vazio caso a chave não exista
+        return ResponseSign(// Valor padrão vazio caso a chave não exista
         json['token'] ?? "",
         json['id'] ?? "",
         );
@@ -19,16 +17,12 @@ class ResponseSign{
 }
 
 class ResponseCreateProduct{
-  final String status;
   final String productId;
-  final String message;
 
-  ResponseCreateProduct({required this.status, required this.productId, required this.message});
+  ResponseCreateProduct({required this.productId});
 
   factory ResponseCreateProduct.fromJson(Map<String, dynamic> json) {
     return ResponseCreateProduct(
-      status: json['status'] ?? '',
-      message: json['message'] ?? '',
       productId: json['productId'] ?? ''
     );
   }
@@ -51,15 +45,11 @@ class ResponseUpdateCreateProduct{
 }
 
 class ResponseGetProducts{
-  final String status;
-  final String message;
   final List<Product> products;
 
   factory ResponseGetProducts.fromJson(Map<String, dynamic> json) {
     final productsData = json['products'];
     return ResponseGetProducts(
-      status: json['status'] ?? '',
-      message: json['message'] ?? '',
       products:  productsData is List
           ? productsData.map((item) => Product.fromJson(item as Map<String, dynamic>)).toList()
           : productsData is Map<String, dynamic>
@@ -68,7 +58,7 @@ class ResponseGetProducts{
     );
   }
 
-  ResponseGetProducts({required this.status, required this.message, required this.products});
+  ResponseGetProducts({required this.products});
 }
 class ResponseGetProductAndUserInfo{
   final String status;
@@ -111,14 +101,13 @@ class GetProductAndUserInfo extends Result<ResponseGetProductAndUserInfo>{
   GetProductAndUserInfo({super.success,super.error,super.exception});
 }
 class ResponseUser{
-    String status;
     UserModels user;
 
-    ResponseUser({required this.status, required this.user});
+    ResponseUser({required this.user});
 
     factory ResponseUser.fromJson(Map<String, dynamic> json) {
       final userData = json['user'];
       return ResponseUser(
-        status: json['status'], user: UserModels.fromJson(userData));
+        user: UserModels.fromJson(userData));
     }
 }

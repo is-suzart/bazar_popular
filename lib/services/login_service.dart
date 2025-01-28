@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:bazar_popular/models/res/base_model.dart';
 import 'package:bazar_popular/models/res/reponse_models.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +7,7 @@ class LoginService {
 
   final String _baseUrl = 'http://localhost:8080';
 
-  Future<SignResult> login(String email, String password) async {
+  Future<(String,String)?> login(String email, String password) async {
   final prefs = await SharedPreferences.getInstance();
 
   try {
@@ -30,17 +29,16 @@ class LoginService {
       final ResponseSign data = ResponseSign.fromJson(result);
       await prefs.setString('auth_token', data.token);
       await prefs.setString('user_id', data.id);
-      return SignResult(success: data);
+      return (data.token,data.id);
     } else {
-      final ErrorResponse errorData = ErrorResponse.fromJson(result);
-      return SignResult(error: errorData);
+      return null;
     }
   } catch (err) {
-    return SignResult(exception: err.toString());
+    return null;
   }
 }
 
-Future<SignResult> signUp(Map formValues) async {
+Future<(String,String)?> signUp(Map formValues) async {
   final prefs = await SharedPreferences.getInstance();
   try {
     final response = await http.post(
@@ -55,15 +53,14 @@ Future<SignResult> signUp(Map formValues) async {
       final ResponseSign data = ResponseSign.fromJson(result);
       await prefs.setString('auth_token', data.token);
       await prefs.setString('user_id', data.id);
-      return SignResult(success: data);
+      return (data.token,data.id);
     } else {
-        final ErrorResponse errorData = ErrorResponse.fromJson(result);
-        return SignResult(error: errorData);
+        return null;
     }
 
   }
   catch (err) {
-    return SignResult(exception: err.toString());
+    return null;
   }
 }
 }

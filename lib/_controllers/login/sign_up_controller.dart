@@ -1,4 +1,3 @@
-import 'package:bazar_popular/models/res/reponse_models.dart';
 import 'package:bazar_popular/shared/state_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -56,15 +55,12 @@ abstract class SignupControllerBase with Store {
   @action
   Future<void> onSubmit(BuildContext context) async {
     if (form.valid) {
-      final SignResult result = await LoginService().signUp(form.value);
+      final (String,String)? result = await LoginService().signUp(form.value);
 
-      if (result.isSuccess) {
+      if (result !=null) {
         GoRouter.of(context).go('/');
-      } else if (result.isError) {
-        final errorMessage = result.error?.message ?? 'Erro desconhecido';
-        openErrorDialog(context, errorMessage);
-      } else if (result.isException) {
-        openErrorDialog(context, result.exception.toString());
+      } else {
+        openErrorDialog(context, "Errp ao tentar criar o usuário, tente novamente mais tarde");
       }
     } else {
       markFieldsAsTouched();

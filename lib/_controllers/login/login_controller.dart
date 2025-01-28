@@ -1,4 +1,3 @@
-import 'package:bazar_popular/models/res/reponse_models.dart';
 import 'package:bazar_popular/_pages/login/forgot_password.dart';
 import 'package:bazar_popular/_pages/login/signup.dart';
 import 'package:bazar_popular/shared/state_dialogs.dart';
@@ -75,21 +74,17 @@ abstract class LoginControllerStore with Store {
   final email = form.control('email').value;
   final password = form.control('password').value;
 
-  final SignResult result = await LoginService().login(email, password);
+  final (String,String)? result = await LoginService().login(email, password);
 
-  if (result.isSuccess) {
+  if (result != null) {
     if(isModal){
       GoRouter.of(context).pop();
     } else {
       GoRouter.of(context).go('/');
     }
-  } else if (result.isError) {
-    final errorMessage = result.error?.message ?? 'Erro desconhecido';
-    openErrorDialog(context, errorMessage);
-  } else if (result.isException) {
-    openErrorDialog(context, result.exception.toString());
+  } else {
+    openErrorDialog(context, "Erro ao tentar efetuar o login, tente novamente mais tarde"); 
   }
-}
-
+ }
 }
 

@@ -1,4 +1,5 @@
 import 'package:bazar_popular/_pages/logout/logout.dart';
+import 'package:bazar_popular/_pages/product/favorites/favorites.dart';
 import 'package:bazar_popular/_pages/product/user/my_product.dart';
 import 'package:bazar_popular/_pages/product/product/product.dart';
 import 'package:bazar_popular/_pages/product/upload/upload_product.dart';
@@ -22,6 +23,7 @@ ShellRoute(
           return ProductPage(id: productId); // Passa o ID como parâmetro
     } ),
     GoRoute(path: '/meus-produtos', builder: (context, state) => UserProduct() ),
+    GoRoute(path: '/favoritos', builder: (context, state) => Favorites() ),
     ShellRoute(
       builder: (context,state,child) => CreateProductShell(child:child),
       routes: [

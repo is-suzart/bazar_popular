@@ -1,5 +1,5 @@
-import 'package:bazar_popular/models/res/base_model.dart';
 import 'package:bazar_popular/models/res/reponse_models.dart';
+import 'package:bazar_popular/models/user_models.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
@@ -11,7 +11,7 @@ class UserService {
   ));
   final logger = Logger();
 
-  Future<GetUserResult> getUserInfo(String id) async {
+  Future<UserModels?> getUserInfo(String id) async {
     try{
       final response = await _dio.get(
         '/users/$id',
@@ -21,16 +21,14 @@ class UserService {
           },
         ));
         if(response.statusCode == 200) {
-          final data = ResponseUser.fromJson(response.data);
-          return GetUserResult(success: data);
+          return ResponseUser.fromJson(response.data).user;
         } else {
-          final error = ErrorResponse.fromJson(response.data);
-          return GetUserResult(error: error);
+          return null;
         }
     }
     catch (err){
       logger.e(err);
-      return GetUserResult(exception: err.toString());
+      return null;
     }
   }
 }

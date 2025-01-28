@@ -23,9 +23,9 @@ ObservableList<Product> products = ObservableList<Product>();
 Future getUserProducts() async{
   final String userId = await getInstace("user_id");
   final result = await _productService.getUserProducts(userId,limit, offset);
-  if(result.isSuccess){
-    products.addAll(result.success!.products);
-  } else if(result.isError){
+  if(result != null){
+    products.addAll(result);
+  } else{
     products.clear();
   }
 }

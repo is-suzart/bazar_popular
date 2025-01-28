@@ -110,10 +110,11 @@ class ProductPage extends StatelessWidget {
                           maxHeight: MediaQuery.of(context).size.height * 0.65),
                       controller: QuillController(
                           readOnly: true,
+                          editorFocusNode: FocusNode(),
                           document: Document.fromDelta(Delta.fromJson(
                               jsonDecode(
                                   _productController.product!.description))),
-                          selection: const TextSelection.collapsed(offset: 0)),
+                          selection: const TextSelection.collapsed(offset: 1,affinity: TextAffinity.upstream)),
                     ),
                   )
                 ],
@@ -214,7 +215,7 @@ class ProductPage extends StatelessWidget {
                           Observer(
                             builder: (_) => TextButton.icon(
                               style: _productController.favoriteButtonStyle,
-                              onPressed: () => _productController.loggedUser != null ?
+                              onPressed: _productController.loggedUser != null ? () => 
                                   _productController.setFavoriteProduct(
                                 _productController.product!.id,
                                 _productController.loggedUser!,

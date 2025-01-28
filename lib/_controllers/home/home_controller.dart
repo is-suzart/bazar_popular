@@ -28,9 +28,9 @@ abstract class HomeControllerStore with Store {
     isLoading = true;
     try {
       final result = await _productService.getProducts(limit, offset);
-      if (result.isSuccess) {
-        products.addAll(result.success!.products);
-      } else if (result.isError) {
+      if (result != null) {
+        products.addAll(result);
+      } else{
         products.clear();
       }
     } catch (e) {
@@ -48,8 +48,8 @@ abstract class HomeControllerStore with Store {
     offset += limit; // Incrementa o offset para buscar a próxima "página"
     try {
       final result = await _productService.getProducts(limit, offset);
-      if (result.isSuccess) {
-        products.addAll(result.success!.products);
+      if (result != null) {
+        products.addAll(result);
       } else {
         canLoadMore = false;
       }
