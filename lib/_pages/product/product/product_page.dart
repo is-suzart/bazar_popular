@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bazar_popular/_controllers/product/product/product_controller.dart';
+import 'package:bazar_popular/shared/emitter/emitter_store.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_quill/quill_delta.dart';
 class ProductPage extends StatelessWidget {
   final String id;
   final ProductController _productController = ProductController();
+  final _emitterStore = emitterStore;
   ProductPage({super.key, required this.id}) {
     if (_productController.product == null && _productController.user == null) {
       _productController.getProduct(id);
@@ -23,6 +25,7 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Observer(builder: (_) {
       if (_productController.isLoading) {
         return const Center(child: CircularProgressIndicator());
@@ -215,10 +218,10 @@ class ProductPage extends StatelessWidget {
                           Observer(
                             builder: (_) => TextButton.icon(
                               style: _productController.favoriteButtonStyle,
-                              onPressed: _productController.loggedUser != null ? () => 
+                              onPressed: _emitterStore.isLogged ? () => 
                                   _productController.setFavoriteProduct(
                                 _productController.product!.id,
-                                _productController.loggedUser!,
+                                _emitterStore.loggedUserId!,
                               ) : null,
                               icon: Icon(
                                 _productController.isFavorite

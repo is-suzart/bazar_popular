@@ -1,7 +1,7 @@
 import 'package:bazar_popular/models/product_models.dart';
 import 'package:bazar_popular/models/user_models.dart';
 import 'package:bazar_popular/services/product_service.dart';
-import 'package:bazar_popular/shared/helpers/local.dart';
+import 'package:bazar_popular/shared/emitter/emitter_store.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -14,6 +14,7 @@ class ProductController = ProductControllerStore with _$ProductController;
 
 abstract class ProductControllerStore with Store {
   final _productService = ProductService();
+  final EmitterStore _emitterStore = emitterStore;
   final logger = Logger();
   final customStylesQuill = DefaultStyles(
       h1: DefaultTextBlockStyle(
@@ -54,8 +55,6 @@ abstract class ProductControllerStore with Store {
   @observable
   bool isLoading = true;
   
-  @observable
-  String? loggedUser;
 
   @observable
   bool isFavorite = false;
@@ -78,9 +77,8 @@ abstract class ProductControllerStore with Store {
       if (productResult != null) {
         product = productResult.$1;
         user = productResult.$2;
-        loggedUser = await getInstace("user_id");
-        if (loggedUser != null){
-          getFavoriteProduct(product!.id, loggedUser!);
+        if (_emitterStore.isLogged){
+          getFavoriteProduct(product!.id, _emitterStore.loggedUserId!);
         }
         isLoading = false;
       } else {

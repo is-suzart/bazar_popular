@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'package:bazar_popular/models/res/reponse_models.dart';
+import 'package:bazar_popular/shared/emitter/emitter_store.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginService {
 
   final String _baseUrl = 'http://localhost:8080';
+  final _logger = Logger();
+  final _emitterStore = emitterStore;
 
   Future<(String,String)?> login(String email, String password) async {
   final prefs = await SharedPreferences.getInstance();
@@ -29,11 +33,13 @@ class LoginService {
       final ResponseSign data = ResponseSign.fromJson(result);
       await prefs.setString('auth_token', data.token);
       await prefs.setString('user_id', data.id);
+      _emitterStore.checkIsLogged();
       return (data.token,data.id);
     } else {
       return null;
     }
   } catch (err) {
+    _logger.e(err);
     return null;
   }
 }
@@ -60,6 +66,7 @@ Future<(String,String)?> signUp(Map formValues) async {
 
   }
   catch (err) {
+    _logger.e(err);
     return null;
   }
 }

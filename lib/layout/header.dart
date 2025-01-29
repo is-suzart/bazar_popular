@@ -1,5 +1,6 @@
-import 'package:bazar_popular/_pages/login/login.dart';
+import 'package:bazar_popular/_pages/login/login_page.dart';
 import 'package:bazar_popular/models/product_models.dart';
+import 'package:bazar_popular/shared/emitter/emitter_store.dart';
 import 'package:bazar_popular/shared/helpers/go.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
@@ -13,9 +14,10 @@ import 'package:bazar_popular/_controllers/layout/header_controller.dart';
 
 class Header extends StatelessWidget {
   final _headerController = HeaderController();
+  final _emitterStore = emitterStore;
   final _bazarGo = BazarGo();
   Header({super.key}) {
-    _headerController.checkIsLogged();
+    _emitterStore.checkIsLogged();
   }
 
   void showLogin(context) {
@@ -23,7 +25,7 @@ class Header extends StatelessWidget {
       return SimpleDialog(
         contentPadding: const EdgeInsets.symmetric(horizontal: 48, vertical: 24),
         children: [
-          LoginForm(isModal: true,tellIsLogged: () => _headerController.checkIsLoggedWithDelay())
+          LoginForm(isModal: true,tellIsLogged: () async => {})
         ],
       );
     });
@@ -108,7 +110,7 @@ class Header extends StatelessWidget {
                    ),
               ).withGridPlacement(columnSpan: 4, columnStart: 4, rowStart: 0),
               Observer(builder: (_) {
-                if(_headerController.isLogged) {
+                if(_emitterStore.isLogged) {
                   return UserHeader();
                 } else {
                   return Row(

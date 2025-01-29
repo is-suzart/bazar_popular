@@ -65,22 +65,6 @@ mixin _$ProductController on ProductControllerStore, Store {
     });
   }
 
-  late final _$loggedUserAtom =
-      Atom(name: 'ProductControllerStore.loggedUser', context: context);
-
-  @override
-  String? get loggedUser {
-    _$loggedUserAtom.reportRead();
-    return super.loggedUser;
-  }
-
-  @override
-  set loggedUser(String? value) {
-    _$loggedUserAtom.reportWrite(value, super.loggedUser, () {
-      super.loggedUser = value;
-    });
-  }
-
   late final _$isFavoriteAtom =
       Atom(name: 'ProductControllerStore.isFavorite', context: context);
 
@@ -131,7 +115,6 @@ mixin _$ProductController on ProductControllerStore, Store {
 product: ${product},
 user: ${user},
 isLoading: ${isLoading},
-loggedUser: ${loggedUser},
 isFavorite: ${isFavorite},
 favoriteButtonStyle: ${favoriteButtonStyle}
     ''';

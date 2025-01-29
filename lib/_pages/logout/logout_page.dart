@@ -1,24 +1,21 @@
+import 'package:bazar_popular/shared/emitter/emitter_store.dart';
 import 'package:bazar_popular/shared/helpers/go.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
 import 'package:flutter/material.dart';
 
 class Logout extends StatelessWidget {
   final _bazarGo = BazarGo();
+  final _emitterStore = emitterStore;
 
   Logout({super.key});
 
   Future<void> _handleLogout(BuildContext context) async {
-    final bool isLogged = await checkIsLogged();
-    if (isLogged) {
+    if (_emitterStore.isLogged) {
       await removeInstance('user_id');
       await removeInstance('auth_token');
+      _emitterStore.checkIsLogged();
     }
     _bazarGo.go(context, '/login');
-  }
-
-  Future<bool> checkIsLogged() async {
-    final userId = await getInstace('user_id');
-    return userId != null;
   }
 
   @override

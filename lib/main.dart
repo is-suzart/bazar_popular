@@ -6,6 +6,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:reactive_forms/reactive_forms.dart'; // Adicionar
 
 
+
 void main() {
   usePathUrlStrategy();
   runApp(const MyApp());

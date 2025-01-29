@@ -25,6 +25,15 @@ mixin _$FavoritesController on FavoritesControllerStore, Store {
     });
   }
 
+  late final _$getUserFavoritesAsyncAction = AsyncAction(
+      'FavoritesControllerStore.getUserFavorites',
+      context: context);
+
+  @override
+  Future getUserFavorites() {
+    return _$getUserFavoritesAsyncAction.run(() => super.getUserFavorites());
+  }
+
   @override
   String toString() {
     return '''
