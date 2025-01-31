@@ -12,7 +12,7 @@ class UserModels {
   final String? updated;
 
   UserModels({required this.id, required this.name, required this.email, this.password, required this.telephone,
-      required this.state, required this.city, required this.role, this.profilePicture, this.created,this.updated});
+      required this.state, required this.city, required this.role, required this.profilePicture, required this.created,required this.updated});
 
   factory UserModels.fromJson(Map<String, dynamic> json) {
     return UserModels(
@@ -23,9 +23,24 @@ class UserModels {
       state: json['state'],
       city: json['city'],
       role: json['role'],
-      profilePicture: json['profile_picure'],
+      profilePicture: json['profile_picture'],
       created: json['created_at'],
       updated: json['updated_at']
+    );
+  }
+
+  factory UserModels.fromLocalJson(Map<String, dynamic> json) {
+    return UserModels(
+      id: json['id'],
+      name: json['name'],
+      email: json['email'],
+      telephone: json['telephone'],
+      state: json['state'],
+      city: json['city'],
+      role: json['role'],
+      profilePicture: json['profilePicture'],
+      created: json['created'],
+      updated: json['updated']
     );
   }
 

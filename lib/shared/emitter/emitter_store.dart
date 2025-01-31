@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bazar_popular/models/user_models.dart';
 import 'package:bazar_popular/services/user_service.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
@@ -8,23 +10,11 @@ part 'emitter_store.g.dart';
 class EmitterStore = EventEmitterStore with _$EmitterStore;
 
 abstract class EventEmitterStore with Store {
+
   @observable
   UserModels? userInfo;
-  final _userService = UserService();
 
-  EventEmitterStore() {
-  reaction<String?>(
-    (_) => loggedUserId,
-    (id) async {
-      if (id != null) {
-        userInfo = await _userService.getUserInfo(id);
-      } else {
-        userInfo = null;
-      }
-    },
-    fireImmediately: true, // Executa imediatamente se loggedUserId já tiver valor
-  );
-}
+  final _userService = UserService();
 
   @observable
   String eventData = '';
@@ -34,6 +24,9 @@ abstract class EventEmitterStore with Store {
 
   @computed
   bool get isLogged => loggedUserId != null; 
+
+  @computed
+  bool get hasUserInfo => userInfo != null;
 
   @action
   void setEventData(String data) {
@@ -46,6 +39,13 @@ abstract class EventEmitterStore with Store {
     final value = await getInstace('user_id');
     loggedUserId = value;
   }
+  
+  @action
+  updateUserInfo(String? id) async {
+    userInfo = await _userService.getUserInfo(id ?? loggedUserId!);
+  }
 }
+
+
 
 final emitterStore = EmitterStore();

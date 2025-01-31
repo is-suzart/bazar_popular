@@ -12,9 +12,6 @@ class HeaderController = HeaderControllerStore with _$HeaderController;
 abstract class HeaderControllerStore with Store {
 
   final _productService = ProductService();
-
-
-
   @action
   onSelectedAction(BuildContext context, String item) {
     context.go("/$item");

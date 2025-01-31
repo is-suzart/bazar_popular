@@ -33,7 +33,7 @@ class LoginService {
       final ResponseSign data = ResponseSign.fromJson(result);
       await prefs.setString('auth_token', data.token);
       await prefs.setString('user_id', data.id);
-      _emitterStore.checkIsLogged();
+      _emitterStore.updateUserInfo(data.id);
       return (data.token,data.id);
     } else {
       return null;

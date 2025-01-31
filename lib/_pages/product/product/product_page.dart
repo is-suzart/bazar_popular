@@ -25,7 +25,6 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Observer(builder: (_) {
       if (_productController.isLoading) {
         return const Center(child: CircularProgressIndicator());
@@ -117,7 +116,8 @@ class ProductPage extends StatelessWidget {
                           document: Document.fromDelta(Delta.fromJson(
                               jsonDecode(
                                   _productController.product!.description))),
-                          selection: const TextSelection.collapsed(offset: 1,affinity: TextAffinity.upstream)),
+                          selection: const TextSelection.collapsed(
+                              offset: 1, affinity: TextAffinity.upstream)),
                     ),
                   )
                 ],
@@ -153,8 +153,18 @@ class ProductPage extends StatelessWidget {
                       children: [
                         if (_productController.user!.profilePicture != null &&
                             _productController.user!.profilePicture != "")
-                          Image.network(setImageUrl(
-                              _productController.user!.profilePicture!))
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                                18), // Raio de 18 para um círculo perfeito (metade da largura/altura)
+                            child: Image.network(
+                              setImageUrl(
+                                  _productController.user!.profilePicture!),
+                              width: 36,
+                              height: 36,
+                              fit: BoxFit
+                                  .cover, // Garante que a imagem cubra o espaço sem distorção
+                            ),
+                          )
                         else
                           Image.asset(
                             "assets/default-profile.png",
@@ -218,11 +228,12 @@ class ProductPage extends StatelessWidget {
                           Observer(
                             builder: (_) => TextButton.icon(
                               style: _productController.favoriteButtonStyle,
-                              onPressed: _emitterStore.isLogged ? () => 
-                                  _productController.setFavoriteProduct(
-                                _productController.product!.id,
-                                _emitterStore.loggedUserId!,
-                              ) : null,
+                              onPressed: _emitterStore.isLogged
+                                  ? () => _productController.setFavoriteProduct(
+                                        _productController.product!.id,
+                                        _emitterStore.loggedUserId!,
+                                      )
+                                  : null,
                               icon: Icon(
                                 _productController.isFavorite
                                     ? Icons.favorite

@@ -1,14 +1,91 @@
 import 'package:bazar_popular/_controllers/home/home_controller.dart';
 import 'package:bazar_popular/shared/components/card.dart';
+import 'package:bazar_popular/shared/emitter/emitter_store.dart';
+import 'package:bazar_popular/shared/helpers/local.dart';
+import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mobx/mobx.dart';
 
 class MyHomePage extends StatelessWidget {
   final _homeController = HomeController();
-
+  final _emitterStore = emitterStore;
   MyHomePage({super.key, required this.title}) {
+    _emitterStore.checkIsLogged();
     _homeController.getProducts();
+    
+  }
+
+  Future<void> shouldRunModal(BuildContext context) async {
+    bool? check = await getInstace("rejected_image");
+
+    if (check == null) {
+
+      showDialog(context: context, builder: (_) {
+        return SimpleDialog(
+          title: Text("Você deseja adicionar uma foto de perfil?",textAlign: TextAlign.center,style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: primaryColor)),
+          contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 48, vertical: 24),
+          children: [
+            IconButton.filled(onPressed: () => selectImage(context), icon: const Icon(Icons.camera_alt_rounded))
+
+          ],
+        );
+      });
+
+    }
+  }
+  selectImage(BuildContext context) async {
+          final imagePicker = ImagePicker();
+      final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+          if (pickedFile != null) {
+        final croppedFile = await _cropImage(pickedFile.path,context);
+        
+        if (croppedFile != null) {
+          _homeController.uploadProfilePicture(croppedFile, _emitterStore.userInfo!.id,context);
+          //_emitterStore.updateProfilePicture(croppedFile.path);
+        }
+      }
+  }
+  Future<CroppedFile?> _cropImage(String imagePath,BuildContext context) async {
+    return await ImageCropper().cropImage(
+      sourcePath: imagePath,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      uiSettings: [
+        AndroidUiSettings(
+        toolbarTitle: 'Editar Imagem',
+        toolbarColor: Colors.blue,
+        toolbarWidgetColor: Colors.white,
+        initAspectRatio: CropAspectRatioPreset.square,
+        lockAspectRatio: true,
+      ),
+      IOSUiSettings(
+        title: 'Editar Imagem',
+        minimumAspectRatio: 1.0,
+        aspectRatioLockDimensionSwapEnabled: true,
+        aspectRatioPickerButtonHidden: true,
+        aspectRatioLockEnabled: true,
+      ),
+      WebUiSettings(
+        context: context, // Contexto é necessário para a Web
+        size: const CropperSize(
+          width: 500,
+          height: 500,
+        ),
+        scalable: true,
+        rotatable: false,
+        zoomable: true,
+        viewwMode: WebViewMode.mode_1,
+        translations: const WebTranslations(title: "Cortar Imagem", rotateLeftTooltip: "Rotacionar para a esquerda", rotateRightTooltip: "Rotacionar para a direita", cancelButton: "Cancelar", cropButton: "Cortar")
+      ),
+      ],
+
+      compressFormat: ImageCompressFormat.jpg,
+      compressQuality: 80,
+    );
   }
 
   final String title;
@@ -20,7 +97,16 @@ class MyHomePage extends StatelessWidget {
     final bool isTabletScreen = Breakpoints.mediumAndUp.isActive(context);
     final bool isLargeTablet = Breakpoints.mediumLarge.isActive(context);
     final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
-
+    reaction(
+          (_) => _emitterStore.isLogged &&
+              (_emitterStore.userInfo?.profilePicture == null ||
+                  _emitterStore.userInfo?.profilePicture == ""),
+          (shouldShowModal) {
+            if (shouldShowModal) {
+              Future.microtask(() => shouldRunModal(context));
+            }
+          },
+        );
     // Configurando scroll listener para paginação
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200 && _homeController.canLoadMore == true) {

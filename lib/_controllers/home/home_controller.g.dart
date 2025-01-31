@@ -89,6 +89,16 @@ mixin _$HomeController on HomeControllerStore, Store {
     return _$loadMoreProductsAsyncAction.run(() => super.loadMoreProducts());
   }
 
+  late final _$uploadProfilePictureAsyncAction =
+      AsyncAction('HomeControllerStore.uploadProfilePicture', context: context);
+
+  @override
+  Future uploadProfilePicture(
+      CroppedFile? image, String userId, BuildContext context) {
+    return _$uploadProfilePictureAsyncAction
+        .run(() => super.uploadProfilePicture(image, userId, context));
+  }
+
   @override
   String toString() {
     return '''

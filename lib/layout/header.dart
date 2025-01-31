@@ -144,10 +144,11 @@ class Header extends StatelessWidget {
 }
 
 class UserHeader extends StatelessWidget {
+
   UserHeader({super.key});
 
   final _headerController = HeaderController();
-
+  
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -185,7 +186,7 @@ class UserHeader extends StatelessWidget {
                 onSelected: (String selected) {
                   _headerController.onSelectedAction(context,selected);
                 } ,
-                icon: const Icon(Icons.person_2_rounded),
+                icon: UserIcon(),
                 itemBuilder: (BuildContext context) => [
                       const PopupMenuItem(
                           value: 'divulgar',
@@ -249,3 +250,42 @@ Row(
         ],
       ),
 */
+
+class UserIcon extends StatelessWidget {
+  final _emitterStore = emitterStore;
+  UserIcon({super.key}) {
+    _emitterStore.updateUserInfo(null);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(
+      builder: (_) {
+        if (_emitterStore.hasUserInfo) {
+          bool hasProfilePicture = _emitterStore.userInfo?.profilePicture != null &&
+                                   _emitterStore.userInfo!.profilePicture!.isNotEmpty;
+
+          return CircleAvatar(
+            child: ClipOval(
+  child: Container(
+    width: double.infinity, // Set width
+    height: double.infinity, // Set height
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      image: DecorationImage(
+        image: hasProfilePicture
+            ? NetworkImage(setImageUrl(_emitterStore.userInfo!.profilePicture!))
+            : const AssetImage('assets/default-profile.png') as ImageProvider,
+        fit: BoxFit.contain, // Ensures the image fits well inside
+      ),
+    ),
+  ),
+),
+          );
+        } else {
+          return const Icon(Icons.person);
+        }
+      },
+    );
+  }
+}

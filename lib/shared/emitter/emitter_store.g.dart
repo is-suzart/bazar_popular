@@ -16,6 +16,29 @@ mixin _$EmitterStore on EventEmitterStore, Store {
       (_$isLoggedComputed ??= Computed<bool>(() => super.isLogged,
               name: 'EventEmitterStore.isLogged'))
           .value;
+  Computed<bool>? _$hasUserInfoComputed;
+
+  @override
+  bool get hasUserInfo =>
+      (_$hasUserInfoComputed ??= Computed<bool>(() => super.hasUserInfo,
+              name: 'EventEmitterStore.hasUserInfo'))
+          .value;
+
+  late final _$userInfoAtom =
+      Atom(name: 'EventEmitterStore.userInfo', context: context);
+
+  @override
+  UserModels? get userInfo {
+    _$userInfoAtom.reportRead();
+    return super.userInfo;
+  }
+
+  @override
+  set userInfo(UserModels? value) {
+    _$userInfoAtom.reportWrite(value, super.userInfo, () {
+      super.userInfo = value;
+    });
+  }
 
   late final _$eventDataAtom =
       Atom(name: 'EventEmitterStore.eventData', context: context);
@@ -57,6 +80,14 @@ mixin _$EmitterStore on EventEmitterStore, Store {
     return _$checkIsLoggedAsyncAction.run(() => super.checkIsLogged());
   }
 
+  late final _$updateUserInfoAsyncAction =
+      AsyncAction('EventEmitterStore.updateUserInfo', context: context);
+
+  @override
+  Future updateUserInfo(String? id) {
+    return _$updateUserInfoAsyncAction.run(() => super.updateUserInfo(id));
+  }
+
   late final _$EventEmitterStoreActionController =
       ActionController(name: 'EventEmitterStore', context: context);
 
@@ -74,9 +105,11 @@ mixin _$EmitterStore on EventEmitterStore, Store {
   @override
   String toString() {
     return '''
+userInfo: ${userInfo},
 eventData: ${eventData},
 loggedUserId: ${loggedUserId},
-isLogged: ${isLogged}
+isLogged: ${isLogged},
+hasUserInfo: ${hasUserInfo}
     ''';
   }
 }
