@@ -10,7 +10,6 @@ part 'emitter_store.g.dart';
 class EmitterStore = EventEmitterStore with _$EmitterStore;
 
 abstract class EventEmitterStore with Store {
-
   @observable
   UserModels? userInfo;
 
@@ -23,7 +22,7 @@ abstract class EventEmitterStore with Store {
   String? loggedUserId; // ID do usuário logado (null se não estiver logado)
 
   @computed
-  bool get isLogged => loggedUserId != null; 
+  bool get isLogged => loggedUserId != null || userInfo != null;
 
   @computed
   bool get hasUserInfo => userInfo != null;
@@ -32,20 +31,24 @@ abstract class EventEmitterStore with Store {
   void setEventData(String data) {
     eventData = data;
   }
-  
+
   @action
   checkIsLogged() async {
-    
-    final value = await getInstace('user_id');
+    final value = await getInstance('user_id');
     loggedUserId = value;
   }
-  
+
   @action
   updateUserInfo(String? id) async {
-    userInfo = await _userService.getUserInfo(id ?? loggedUserId!);
+    final String? value = await getInstance('user_id');
+    final UserModels? user = await getInstance('user_info');
+    if (user == null) {
+      userInfo = await _userService.getUserInfo(id ?? value!);
+      setInstance('user_info', userInfo!);
+    } else {
+      userInfo = user;
+    }
   }
 }
-
-
 
 final emitterStore = EmitterStore();

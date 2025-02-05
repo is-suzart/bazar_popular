@@ -1,35 +1,33 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-getInstace(String instance) async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.getString(instance);
+Future<dynamic> getInstance(String instance) async {
+  final box = await Hive.openBox('appBox');
+  return box.get(instance);
 }
 
-setInstance(String instance, String value) async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.setString(instance, value);
+Future<void> setInstance(String instance, dynamic value) async {
+  final box = await Hive.openBox('appBox');
+  await box.put(instance, value);
 }
 
-removeInstance(String instance) async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.remove(instance);
+Future<void> removeInstance(String instance) async {
+  final box = await Hive.openBox('appBox');
+  await box.delete(instance);
 }
-
 
 String setImageUrl(String? url) {
   const String apiUrl = 'http://localhost:8080';
-  if(url != null) {
-      if (!url.startsWith('http')) {
-    if (url.startsWith('./')) {
-      url = url.substring(1);
+  if (url != null) {
+    if (!url.startsWith('http')) {
+      if (url.startsWith('./')) {
+        url = url.substring(1);
+      }
+      return '$apiUrl$url';
     }
-    return '$apiUrl$url';
-  }
-  return url;
+    return url;
   } else {
     return 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHFzM2t4bmo1cGFtaHNjdGxvN3c0b2RnZXA2c3hyOWs0MmpvY3lvbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/C21GGDOpKT6Z4VuXyn/giphy.gif';
   }
-
 }
 
 String sanitizeString(String input) {

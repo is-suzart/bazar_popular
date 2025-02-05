@@ -13,6 +13,7 @@ class Logout extends StatelessWidget {
     if (_emitterStore.isLogged) {
       await removeInstance('user_id');
       await removeInstance('auth_token');
+      await removeInstance('user_info');
       _emitterStore.checkIsLogged();
     }
     _bazarGo.go(context, '/login');

@@ -14,7 +14,7 @@ abstract class FavoritesControllerStore with Store {
 
   @action
   getUserFavorites() async {
-    final userId = await getInstace("user_id");
+    final userId = await getInstance("user_id");
     final result = await _productService.getUserFavorites(userId);
     if (result != null) {
       products.addAll(result);
