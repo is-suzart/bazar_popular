@@ -24,11 +24,23 @@ class Header extends StatelessWidget {
     showDialog(
         context: context,
         builder: (_) {
-          return SimpleDialog(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 48, vertical: 24),
-            children: [LoginForm(isModal: true, tellIsLogged: () async => {})],
-          );
+          final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
+          if (isLargeScreen) {
+            return SimpleDialog(
+              contentPadding: isLargeScreen
+                  ? const EdgeInsets.symmetric(horizontal: 48, vertical: 24)
+                  : const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              children: [
+                LoginForm(isModal: true, tellIsLogged: () async => {})
+              ],
+            );
+          } else {
+            return Dialog(
+              insetPadding:
+                  const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
+              child: LoginForm(isModal: true, tellIsLogged: () async => {}),
+            );
+          }
         });
   }
 
@@ -65,9 +77,7 @@ class Header extends StatelessWidget {
                 ),
               ),
             ).withGridPlacement(
-                columnSpan: isLargeScreen ? 2 : 10,
-                columnStart: 0,
-                rowStart: 0),
+                columnSpan: isLargeScreen ? 2 : 6, columnStart: 0, rowStart: 0),
             if (isLargeScreen)
               Center(
                 child: TypeAheadField<Product>(
@@ -138,16 +148,23 @@ class Header extends StatelessWidget {
                                       icon: Icons.shopping_cart_rounded,
                                       label: "Ver carrinho")),
                             ]),
-                    Container(
-                      margin: const EdgeInsets.only(left: 8),
-                      child: ElevatedButton(
+                    if (isLargeScreen)
+                      Container(
+                        margin: const EdgeInsets.only(left: 8),
+                        child: ElevatedButton(
+                            onPressed: () => showLogin(context),
+                            style: buttonStyles['primary'],
+                            child: const Text("Faça login ou Crie sua conta!")),
+                      )
+                    else
+                      IconButton(
                           onPressed: () => showLogin(context),
-                          style: buttonStyles['primary'],
-                          child: const Text("Faça login ou Crie sua conta!")),
-                    )
+                          icon: const Icon(Icons.login_rounded))
                   ],
                 ).withGridPlacement(
-                    columnSpan: 2, columnStart: 10, rowStart: 0);
+                    columnSpan: isLargeScreen ? 2 : 6,
+                    columnStart: isLargeScreen ? 10 : 6,
+                    rowStart: 0);
               }
             })
           ]),
@@ -162,12 +179,13 @@ class UserHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          padding: const EdgeInsets.only(right: 24),
+          padding: isLargeScreen ? const EdgeInsets.only(right: 24) : null,
           alignment: Alignment.center,
           child: PopupMenuButton(
               tooltip: "Ver carrinho",
@@ -191,7 +209,7 @@ class UserHeader extends StatelessWidget {
                   ]),
         ),
         Container(
-            padding: const EdgeInsets.only(right: 24),
+            padding: isLargeScreen ? const EdgeInsets.only(right: 24) : null,
             alignment: Alignment.center,
             child: PopupMenuButton(
                 offset: Offset.fromDirection(-100, kToolbarHeight - 15),
@@ -229,7 +247,10 @@ class UserHeader extends StatelessWidget {
                               label: "Sair da conta"))
                     ])),
       ],
-    ).withGridPlacement(columnSpan: 2, columnStart: 10, rowStart: 0);
+    ).withGridPlacement(
+        columnSpan: isLargeScreen ? 2 : 6,
+        columnStart: isLargeScreen ? 10 : 6,
+        rowStart: 0);
   }
 }
 

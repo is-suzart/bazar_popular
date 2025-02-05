@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bazar_popular/models/user_models.dart';
 import 'package:bazar_popular/services/user_service.dart';
 import 'package:bazar_popular/shared/helpers/local.dart';
@@ -41,6 +39,9 @@ abstract class EventEmitterStore with Store {
   @action
   updateUserInfo(String? id) async {
     final String? value = await getInstance('user_id');
+    if (value == null && id == null) {
+      return null;
+    }
     final UserModels? user = await getInstance('user_info');
     if (user == null) {
       userInfo = await _userService.getUserInfo(id ?? value!);

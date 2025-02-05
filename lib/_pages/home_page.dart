@@ -165,7 +165,7 @@ class MyHomePage extends StatelessWidget {
                                 ? 4
                                 : isLargeTablet
                                     ? 3
-                                    : 2,
+                                    : 1,
                             childAspectRatio: isExtraLargeScreen
                                 ? 9 / 12
                                 : isLargeScreen
@@ -173,8 +173,8 @@ class MyHomePage extends StatelessWidget {
                                     : isLargeTablet
                                         ? 8.1 / 12
                                         : !isTabletScreen
-                                            ? 7 / 12
-                                            : 7.0 / 12,
+                                            ? 8.5 / 12
+                                            : 8.5 / 12,
                             mainAxisSpacing: 16,
                             crossAxisSpacing: 16,
                           ),

@@ -60,7 +60,8 @@ class LoginPageState extends State<LoginPage> {
                                       style: buttonStyles['primary'],
                                       child: const Text("Avançar para login"))
                                 ])
-                              : LoginForm(isModal: false,key: const ValueKey(2)))
+                              : LoginForm(
+                                  isModal: false, key: const ValueKey(2)))
                     ]);
                   }),
               Breakpoints.largeAndUp: SlotLayout.from(
@@ -76,7 +77,9 @@ class LoginPageState extends State<LoginPage> {
                           const LoginInfos(screenType: 'desktop')
                               .withGridPlacement(
                                   columnSpan: 6, columnStart: 1, rowStart: 0),
-                          LoginForm(isModal: false,).withGridPlacement(
+                          LoginForm(
+                            isModal: false,
+                          ).withGridPlacement(
                               columnSpan: 4, columnStart: 7, rowStart: 0)
                         ]);
                   })
@@ -141,21 +144,25 @@ class LoginInfos extends StatelessWidget {
 }
 
 class LoginForm extends StatelessWidget {
-  LoginForm({super.key,required this.isModal,this.tellIsLogged});
+  LoginForm({super.key, required this.isModal, this.tellIsLogged});
   final bool isModal;
   final Future<void> Function()? tellIsLogged;
   final _loginController = LoginController();
-  
+
   @override
   Widget build(BuildContext context) {
+    final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
     return ReactiveForm(
         formGroup: _loginController.form,
         child: Container(
             padding: const EdgeInsets.symmetric(vertical: 48),
             child: Card(
                 child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 24, horizontal: 64),
+                    padding: !isLargeScreen && isModal
+                        ? const EdgeInsets.symmetric(
+                            vertical: 24, horizontal: 8)
+                        : const EdgeInsets.symmetric(
+                            vertical: 24, horizontal: 64),
                     alignment: Alignment.center,
                     child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -180,7 +187,7 @@ class LoginForm extends StatelessWidget {
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 16),
                                 child: const BazarInput(
-                                    placeholder: "Email", 
+                                    placeholder: "Email",
                                     formControlName: 'email')),
                             Container(
                                 margin:
@@ -198,9 +205,10 @@ class LoginForm extends StatelessWidget {
                                         },
                                         icon: const Icon(
                                             Icons.remove_red_eye_rounded)),
-                                        submitVoid: () {
-                                      _loginController.performLogin(context,isModal);
-                                      if(isModal && tellIsLogged != null){
+                                    submitVoid: () {
+                                      _loginController.performLogin(
+                                          context, isModal);
+                                      if (isModal && tellIsLogged != null) {
                                         tellIsLogged!();
                                       }
                                     },
@@ -211,7 +219,8 @@ class LoginForm extends StatelessWidget {
                                 margin: const EdgeInsets.only(bottom: 36),
                                 child: TextButton(
                                     style: buttonStyles['textButton'],
-                                    onPressed: () => _loginController.openModalForgotPassword(context),
+                                    onPressed: () => _loginController
+                                        .openModalForgotPassword(context),
                                     child: Text("Esqueci minha senha",
                                         style: Theme.of(context)
                                             .textTheme
@@ -228,12 +237,12 @@ class LoginForm extends StatelessWidget {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                     onPressed: () {
-                                      _loginController.performLogin(context,isModal);
-                                      if(isModal && tellIsLogged != null){
+                                      _loginController.performLogin(
+                                          context, isModal);
+                                      if (isModal && tellIsLogged != null) {
                                         tellIsLogged!();
                                       }
-                                    }
-                                        ,
+                                    },
                                     style: buttonStyles['primary'],
                                     child: const Text("Login"))),
                             Container(
@@ -257,7 +266,8 @@ class LoginForm extends StatelessWidget {
                                 margin: const EdgeInsets.only(bottom: 36),
                                 child: TextButton(
                                     style: buttonStyles['textButton'],
-                                    onPressed: () =>  _loginController.openModalSignUp(context),
+                                    onPressed: () => _loginController
+                                        .openModalSignUp(context),
                                     child: Text("Criar conta",
                                         style: Theme.of(context)
                                             .textTheme

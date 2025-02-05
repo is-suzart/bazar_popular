@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bazar_popular/models/user_models.dart';
 import 'package:hive/hive.dart';
 
