@@ -2,6 +2,7 @@ import 'package:bazar_popular/shared/components/card.dart';
 import 'package:bazar_popular/shared/helpers/go.dart';
 import 'package:bazar_popular/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
 class CreateProductShell extends StatelessWidget {
@@ -10,19 +11,28 @@ class CreateProductShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 36, bottom: 36),
-      child: LayoutGrid(
-        columnSizes: twelveGrid,
-        rowSizes: const [auto],
-        rowGap: 24,
-        children: [
-          Card(
-              child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 48),
-            child: child,
-          )).withGridPlacement(columnSpan: 8, columnStart: 2, rowStart: 0)
-        ],
+    final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
+    return SingleChildScrollView(
+      physics: isLargeScreen ? const NeverScrollableScrollPhysics() : null,
+      child: Container(
+        margin: isLargeScreen
+            ? const EdgeInsets.only(top: 36, bottom: 36)
+            : const EdgeInsets.only(top: 24, bottom: 24, left: 16, right: 16),
+        child: LayoutGrid(
+          columnSizes: twelveGrid,
+          rowSizes: const [auto],
+          rowGap: 24,
+          children: [
+            Card(
+                child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 48),
+              child: child,
+            )).withGridPlacement(
+                columnSpan: isLargeScreen ? 8 : 12,
+                columnStart: isLargeScreen ? 2 : 0,
+                rowStart: 0)
+          ],
+        ),
       ),
     );
   }
@@ -35,6 +45,7 @@ class CreateProductStepOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
     return Column(
       children: [
         Container(
@@ -42,9 +53,11 @@ class CreateProductStepOne extends StatelessWidget {
           child: Column(
             children: [
               Text("Olá camarada!",
-                  style: Theme.of(context).textTheme.headlineSmall),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  textAlign: !isLargeScreen ? TextAlign.center : null),
               Text(
                 "O que vamos divulgar hoje?",
+                textAlign: !isLargeScreen ? TextAlign.center : null,
                 style: Theme.of(context)
                     .textTheme
                     .headlineLarge!
@@ -55,23 +68,21 @@ class CreateProductStepOne extends StatelessWidget {
         ),
         Expanded(
             child: LayoutGrid(
-          columnSizes: [1.0.fr, 1.0.fr, 1.0.fr],
-          rowSizes: [1.0.fr],
+          columnSizes: isLargeScreen ? [1.0.fr, 1.0.fr, 1.0.fr] : [1.0.fr],
+          rowSizes: isLargeScreen ? [1.0.fr] : [auto, auto, auto],
           children: [
             BazarInfoCard(
                 image: "assets/arts/product.png",
                 title: "Produto",
                 onTap: _bazarGo.onTapGo(context, "/divulgar/produto")),
             BazarInfoCard(
-              image: "assets/arts/rifa.png",
-              title: "Rifa",
-              onTap: _bazarGo.onTapGo(context, "/divulgar/rifa"),
-            ),
+                image: "assets/arts/rifa.png",
+                title: "Rifa",
+                onTap: _bazarGo.onTapGo(context, "/divulgar/rifa")),
             BazarInfoCard(
-              image: "assets/arts/event.png",
-              title: "Evento",
-              onTap: _bazarGo.onTapGo(context, "/divulgar/evento"),
-            ),
+                image: "assets/arts/event.png",
+                title: "Evento",
+                onTap: _bazarGo.onTapGo(context, "/divulgar/evento")),
           ],
         )),
       ],

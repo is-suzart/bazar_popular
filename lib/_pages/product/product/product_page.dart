@@ -27,7 +27,8 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
+    final bool isLargeScreen = Breakpoints.extraLarge.isActive(context);
+    final bool isTabletScreen = Breakpoints.largeAndUp.isActive(context);
     return Observer(builder: (_) {
       if (_productController.isLoading) {
         return const Center(child: CircularProgressIndicator());
@@ -39,7 +40,9 @@ class ProductPage extends StatelessWidget {
                   vertical: 24, horizontal: isLargeScreen ? 64 : 16),
               child: LayoutGrid(
                 columnSizes: twelveGrid,
-                rowSizes: isLargeScreen ? [auto] : [auto, auto, auto],
+                rowSizes: isLargeScreen || isTabletScreen
+                    ? [auto]
+                    : [auto, auto, auto],
                 columnGap: isLargeScreen ? 64 : 0,
                 children: [
                   Stack(
@@ -89,7 +92,11 @@ class ProductPage extends StatelessWidget {
                       ),
                     ],
                   ).withGridPlacement(
-                      columnSpan: isLargeScreen ? 5 : 12,
+                      columnSpan: isLargeScreen
+                          ? 5
+                          : isTabletScreen
+                              ? 5
+                              : 12,
                       columnStart: 0,
                       rowStart: 0),
                   Column(
@@ -146,15 +153,22 @@ class ProductPage extends StatelessWidget {
                       )
                     ],
                   ).withGridPlacement(
-                      columnSpan: isLargeScreen ? 4 : 12,
-                      columnStart: isLargeScreen ? 5 : 0,
-                      rowStart: isLargeScreen ? 0 : 1),
+                      columnSpan: isLargeScreen || isTabletScreen ? 4 : 12,
+                      columnStart: isLargeScreen
+                          ? 5
+                          : isTabletScreen
+                              ? 5
+                              : 0,
+                      rowStart: isLargeScreen || isTabletScreen ? 0 : 1),
                   Container(
                     padding:
                         const EdgeInsets.only(top: 24, left: 24, right: 24),
-                    margin:
-                        !isLargeScreen ? const EdgeInsets.only(top: 24) : null,
-                    width: isLargeScreen ? double.infinity : null,
+                    margin: !isLargeScreen && !isTabletScreen
+                        ? const EdgeInsets.only(top: 24)
+                        : null,
+                    width: isLargeScreen || isTabletScreen
+                        ? double.infinity
+                        : null,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8),
@@ -293,9 +307,21 @@ class ProductPage extends StatelessWidget {
                       ],
                     ),
                   ).withGridPlacement(
-                      columnSpan: isLargeScreen ? 3 : 12,
-                      columnStart: isLargeScreen ? 9 : 0,
-                      rowStart: isLargeScreen ? 0 : 2)
+                      columnSpan: isLargeScreen
+                          ? 3
+                          : isTabletScreen
+                              ? 3
+                              : 12,
+                      columnStart: isLargeScreen
+                          ? 9
+                          : isTabletScreen
+                              ? 9
+                              : 0,
+                      rowStart: isLargeScreen
+                          ? 0
+                          : isTabletScreen
+                              ? 0
+                              : 2)
                 ],
               ),
             ));

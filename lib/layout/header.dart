@@ -24,29 +24,19 @@ class Header extends StatelessWidget {
     showDialog(
         context: context,
         builder: (_) {
-          final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
-          if (isLargeScreen) {
-            return SimpleDialog(
-              contentPadding: isLargeScreen
-                  ? const EdgeInsets.symmetric(horizontal: 48, vertical: 24)
-                  : const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              children: [
-                LoginForm(isModal: true, tellIsLogged: () async => {})
-              ],
-            );
-          } else {
-            return Dialog(
-              insetPadding:
-                  const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
-              child: LoginForm(isModal: true, tellIsLogged: () async => {}),
-            );
-          }
+          final bool isLargeScreen = Breakpoints.extraLarge.isActive(context);
+          return SimpleDialog(
+            contentPadding: isLargeScreen
+                ? const EdgeInsets.symmetric(horizontal: 48, vertical: 24)
+                : const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            children: [LoginForm(isModal: true, tellIsLogged: () async => {})],
+          );
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool isLargeScreen = Breakpoints.largeAndUp.isActive(context);
+    final bool isLargeScreen = Breakpoints.extraLarge.isActive(context);
     return Container(
         height: kToolbarHeight,
         padding: isLargeScreen
@@ -124,7 +114,7 @@ class Header extends StatelessWidget {
                     _bazarGo.go(context, '/produto/${product.id}');
                   },
                 ),
-              ).withGridPlacement(columnSpan: 4, columnStart: 4, rowStart: 0),
+              ).withGridPlacement(columnSpan: 3, columnStart: 4, rowStart: 0),
             Observer(builder: (_) {
               if (_emitterStore.userInfo != null) {
                 return UserHeader();
@@ -162,8 +152,8 @@ class Header extends StatelessWidget {
                           icon: const Icon(Icons.login_rounded))
                   ],
                 ).withGridPlacement(
-                    columnSpan: isLargeScreen ? 2 : 6,
-                    columnStart: isLargeScreen ? 10 : 6,
+                    columnSpan: isLargeScreen ? 3 : 6,
+                    columnStart: isLargeScreen ? 9 : 6,
                     rowStart: 0);
               }
             })
@@ -248,8 +238,8 @@ class UserHeader extends StatelessWidget {
                     ])),
       ],
     ).withGridPlacement(
-        columnSpan: isLargeScreen ? 2 : 6,
-        columnStart: isLargeScreen ? 10 : 6,
+        columnSpan: isLargeScreen ? 3 : 6,
+        columnStart: isLargeScreen ? 9 : 6,
         rowStart: 0);
   }
 }
