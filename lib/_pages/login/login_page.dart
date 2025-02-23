@@ -50,18 +50,23 @@ class LoginPageState extends State<LoginPage> {
                                         : inAnimation,
                                 child: child);
                           },
-                          child: _loginController.showLoginInfoMobile
-                              ? Column(key: const ValueKey(1), children: [
-                                  const LoginInfos(screenType: "mobile"),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        _loginController.toggleLoginInfo();
-                                      },
-                                      style: buttonStyles['primary'],
-                                      child: const Text("Avançar para login"))
-                                ])
-                              : LoginForm(
-                                  isModal: false, key: const ValueKey(2)))
+                          child: Observer(builder: (_) {
+                            if(_loginController.showLoginInfoMobile){
+                              return Column(key: const ValueKey(1), children: [
+                                const LoginInfos(screenType: "mobile"),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      _loginController.toggleLoginInfo();
+                                    },
+                                    style: buttonStyles['primary'],
+                                    child: const Text("Avançar para login"))
+                              ]);
+                            } else {
+                              return LoginForm(
+                                isModal: false, key: const ValueKey(2)
+                              );
+                            }
+                          }))
                     ]);
                   }),
               Breakpoints.largeAndUp: SlotLayout.from(

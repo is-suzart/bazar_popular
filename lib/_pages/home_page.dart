@@ -164,17 +164,17 @@ class MyHomePage extends StatelessWidget {
                             crossAxisCount: isLargeScreen
                                 ? 4
                                 : isLargeTablet
-                                    ? 3
+                                    ? 3 : isTabletScreen
+                                        ? 2
                                     : 1,
                             childAspectRatio: isExtraLargeScreen
                                 ? 9 / 12
                                 : isLargeScreen
                                     ? 8.3 / 12
                                     : isLargeTablet
-                                        ? 8.1 / 12
-                                        : !isTabletScreen
-                                            ? 8.5 / 12
-                                            : 8.5 / 12,
+                                        ? 8.1 / 12 : isTabletScreen ?
+                                        8.5 / 12 : !isTabletScreen
+                                        ? 8.4 / 12 : 8.4 / 12,
                             mainAxisSpacing: 16,
                             crossAxisSpacing: 16,
                           ),
